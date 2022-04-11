@@ -1,0 +1,15 @@
+package:
+  name: "stationverification"
+  version: "1.0.0"
+
+requirements:
+  build:
+    - python
+    - setuptools
+  run:
+    - python
+
+test:
+  imports:
+    - stationverification
+

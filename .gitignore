@@ -1,0 +1,51 @@
+# Ignore python compiled
+*pyc
+
+# Ignore setup.py build information
+*egg-info
+dist/*
+build/*
+
+# Ignore pytest caching
+.pytest_cach
+__pycache__
+
+# Ignore visual studio code
+.vscode
+
+# Ignore ispaq generated files
+*/csv/*
+*/PDFs/*
+*/PSDs/*
+csv/*
+PDFs/*
+PSDs/*
+*ISPAQ_TRANSCRIPT.log
+*.json
+*.png
+
+# Ignore experimental files
+depricated/*
+experimental/*
+
+# Ignore test data
+latency/*
+
+
+# Ignore any loose log files
+*.log
+
+# Ignore .tgz files
+*.tgz
+
+# ignore results and data
+stationvalidation_output/*
+station_validation_results/*
+hasan/*
+distribution/*
+tests/data/*
+tests/generate_ratio_plot/data/*
+tests/run_ispaq/preffile
+stationverification/data/resp_files/*
+stationverification/data/stationXML.dataless
+station_validation_latency_results/*
