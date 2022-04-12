@@ -32,12 +32,13 @@ json_dict = {
 # enddate = date(2022, 3, 23)
 
 # Returns the file paths containing the latencies in the validation period for the required network and station
-files = getfiles(typeofinstrument=typeofinstrument,
-                 network=required_network,
-                 station=required_station,
-                 path=path,
-                 startdate=startdate,
-                 enddate=enddate)
+# files = getfiles(typeofinstrument=typeofinstrument,
+#                  network=required_network,
+#                  station=required_station,
+#                  path=path,
+#                  startdate=startdate,
+#                  enddate=enddate)
+files = ["tests/latency/smallTest.json"]
 # Returns the latency handling both Guralp and Apollo
 combined_latency_dataframe_for_all_days_dataframe, array_of_daily_latency_dataframes = getlatencies(
     typeofinstrument=typeofinstrument,
@@ -84,7 +85,7 @@ latency_line_plot(latencies=array_of_daily_latency_dataframes,
 
 json_of_latency = populate_json_with_latency_info(
     json_dict=json_dict,
-    combined_latency_dataframe_for_all_days=combined_latency_dataframe_for_all_days_dataframe,
+    combined_latency_dataframe_for_all_days_dataframe=combined_latency_dataframe_for_all_days_dataframe,
     network=required_network,
     station=required_station,
     timely_threshold=3,
