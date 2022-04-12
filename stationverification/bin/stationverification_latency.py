@@ -51,6 +51,8 @@ from stationverification.utilities.latency import (
     timely_availability_plot)
 from stationverification.utilities.upload_results_to_s3 import \
     upload_results_to_s3
+from tests.latency.test_scripts.isolated_components.\
+    test_calculate_total_availability import calculate_total_availability
 
 
 class TimeSeriesError(Exception):
@@ -201,8 +203,7 @@ the enddate to the day after the startdate')
                      path=latencyFiles,
                      startdate=startdate,
                      enddate=enddate)
-    # Returns the latency handling both Guralp and Apollo
-    combined_latency_dataframe_for_all_days,\
+    combined_latency_dataframe_for_all_days_dataframe, \
         array_of_daily_latency_dataframes = getlatencies(
             typeofinstrument=typeofinstrument,
             files=files,
@@ -210,11 +211,11 @@ the enddate to the day after the startdate')
             station=station,
             startdate=startdate,
             enddate=enddate)
-
-    number_of_validation_period_days = len(array_of_daily_latency_dataframes)
+    # Produce latency plots
+    total_availability = calculate_total_availability(files)
 
     generate_CSV_from_failed_latencies(
-        latencies=combined_latency_dataframe_for_all_days,
+        latencies=combined_latency_dataframe_for_all_days_dataframe,
         station=station,
         network=network,
         startdate=startdate,
@@ -230,15 +231,15 @@ the enddate to the day after the startdate')
                              timely_threshold=thresholds.getfloat(
                                  'thresholds', 'data_timeliness', fallback=3),)
 
-    latency_log_plot(latencies=combined_latency_dataframe_for_all_days,
+    latency_log_plot(latencies=combined_latency_dataframe_for_all_days_dataframe,  # noqa
                      station=station,
                      startdate=startdate,
                      enddate=enddate,
                      typeofinstrument=typeofinstrument,
                      network=network,
-                     number_of_days=number_of_validation_period_days,
                      timely_threshold=thresholds.getfloat(
-                         'thresholds', 'data_timeliness', fallback=3),)
+                         'thresholds', 'data_timeliness', fallback=3),
+                     total_availability=total_availability)
 
     latency_line_plot(latencies=array_of_daily_latency_dataframes,
                       station=station,
@@ -251,7 +252,7 @@ the enddate to the day after the startdate')
 
     populate_json_with_latency_info(
         json_dict=json_dict,
-        combined_latency_dataframe_for_all_days=combined_latency_dataframe_for_all_days,  # noqa
+        combined_latency_dataframe_for_all_days_dataframe=combined_latency_dataframe_for_all_days_dataframe,  # noqa
         network=network, station=station,
         timely_threshold=thresholds.getfloat(
                 'thresholds', 'data_timeliness', fallback=3),

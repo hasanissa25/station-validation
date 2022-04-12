@@ -23,7 +23,6 @@ def handle_running_ispaq_command(
         station_url: str = None,
         stationconf: str = None):
     if stationconf is None:
-        print("We are using the stationXML file!")
         run_ispaq_command_with_stationXML(ispaqloc=ispaqloc,
                                           metrics=metrics,
                                           startdate=startdate,
@@ -35,7 +34,6 @@ def handle_running_ispaq_command(
                                           station=station,
                                           station_url=station_url)
     else:
-        print("We are using the config file!")
         run_ispaq_command_with_configfile(ispaqloc=ispaqloc,
                                           metrics=metrics,
                                           startdate=startdate,

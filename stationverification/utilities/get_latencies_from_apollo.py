@@ -5,9 +5,9 @@ import pandas as pd
 from pandas.core.frame import DataFrame
 
 
-def calculate_apollo_latencies(files: list,
-                               network: str,
-                               station: str) -> Tuple[DataFrame, list]:
+def get_latencies_from_apollo(files: list,
+                              network: str,
+                              station: str) -> Tuple[DataFrame, list]:
     # Dataframe used to hold latency information for the station
     columns = ('network', 'station', 'channel',
                'startTime', 'data_latency')
