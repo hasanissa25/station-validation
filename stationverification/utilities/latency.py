@@ -6,7 +6,6 @@ import logging
 import subprocess
 import json
 import os
-import math
 import numpy as np
 from typing import List, Tuple
 from datetime import date, timedelta
@@ -20,10 +19,14 @@ import matplotlib.dates as mdates
 import pandas as pd
 from pandas.core.frame import DataFrame
 from pandas.plotting import register_matplotlib_converters
+from stationverification.utilities.get_latencies_from_apollo \
+    import get_latencies_from_apollo
 
 
 from stationverification.utilities.julian_day_converter import \
     datetime_to_year_and_julian_day
+from tests.latency.test_scripts.isolated_components.\
+    test_calculate_total_availability import calculate_total_availability
 
 
 class StationNotInFileException(Exception):
@@ -88,10 +91,8 @@ def latencyreport(
                      enddate=enddate)
 
     # Gather the latency information for the station
-    combined_latency_dataframe_for_all_days, \
-        array_of_daily_latency_dataframes, \
-        = \
-        getlatencies(
+    combined_latency_dataframe_for_all_days_dataframe, \
+        array_of_daily_latency_dataframes = getlatencies(
             typeofinstrument=typeofinstrument,
             files=files,
             network=network,
@@ -99,7 +100,7 @@ def latencyreport(
             startdate=startdate,
             enddate=enddate)
     # Produce latency plots
-    number_of_validation_period_days = len(array_of_daily_latency_dataframes)
+    total_availability = calculate_total_availability(files)
 
     timely_availability_plot(latencies=array_of_daily_latency_dataframes,
                              station=station,
@@ -108,14 +109,14 @@ def latencyreport(
                              network=network,
                              timely_threshold=timely_threshold,
                              )
-    latency_log_plot(latencies=combined_latency_dataframe_for_all_days,
+    latency_log_plot(latencies=combined_latency_dataframe_for_all_days_dataframe,  # noqa
                      station=station,
                      startdate=startdate,
                      enddate=enddate,
                      typeofinstrument=typeofinstrument,
                      network=network,
-                     number_of_days=number_of_validation_period_days,
-                     timely_threshold=timely_threshold
+                     timely_threshold=timely_threshold,
+                     total_availability=total_availability
                      )
 
     latency_line_plot(latencies=array_of_daily_latency_dataframes,
@@ -128,7 +129,7 @@ def latencyreport(
                       )
 
     generate_CSV_from_failed_latencies(
-        latencies=combined_latency_dataframe_for_all_days,
+        latencies=combined_latency_dataframe_for_all_days_dataframe,
         station=station,
         network=network,
         startdate=startdate,
@@ -138,7 +139,7 @@ def latencyreport(
 
     final_json_dict = populate_json_with_latency_info(
         json_dict=json_dict,
-        combined_latency_dataframe_for_all_days=combined_latency_dataframe_for_all_days,  # noqa 501
+        combined_latency_dataframe_for_all_days_dataframe=combined_latency_dataframe_for_all_days_dataframe,  # noqa 501
         network=network,
         station=station,
         timely_threshold=timely_threshold,
@@ -149,7 +150,7 @@ def latencyreport(
 
 def populate_json_with_latency_info(
         json_dict: dict,
-        combined_latency_dataframe_for_all_days: DataFrame,
+        combined_latency_dataframe_for_all_days_dataframe: DataFrame,
         network: str,
         station: str,
         timely_threshold: float,
@@ -161,8 +162,8 @@ def populate_json_with_latency_info(
     # Calculate average latency for the individual channels and\
     #  timely_percentage and failed latencies
     for channel in channels:
-        average = combined_latency_dataframe_for_all_days[
-            combined_latency_dataframe_for_all_days.channel
+        average = combined_latency_dataframe_for_all_days_dataframe[
+            combined_latency_dataframe_for_all_days_dataframe.channel
             == channel].data_latency.mean()
         logging.info(
             f'Average latency for channel {channel} is \
@@ -172,15 +173,15 @@ def populate_json_with_latency_info(
             round(float(average), 3)
         below_threshold = percentbelowthreshold(
             f'{station}.{channel}',
-            combined_latency_dataframe_for_all_days
-            [combined_latency_dataframe_for_all_days.channel ==
+            combined_latency_dataframe_for_all_days_dataframe
+            [combined_latency_dataframe_for_all_days_dataframe.channel ==
              channel].data_latency,
             timely_threshold)
         json_dict['channels'][channel]['latency']['timely_availability'] = \
             round(float(below_threshold), 2)
         latencies_for_current_channel = \
-            combined_latency_dataframe_for_all_days[
-                combined_latency_dataframe_for_all_days.channel
+            combined_latency_dataframe_for_all_days_dataframe[
+                combined_latency_dataframe_for_all_days_dataframe.channel
                 == channel]
         number_of_latencies_for_current_channel = \
             latencies_for_current_channel.data_latency.size
@@ -194,7 +195,8 @@ def populate_json_with_latency_info(
             number_of_failed_latencies_for_current_channel
 
     # JSON report calculations
-    average = combined_latency_dataframe_for_all_days.data_latency.mean()
+    average = \
+        combined_latency_dataframe_for_all_days_dataframe.data_latency.mean()
     logging.info(
         f'Overall average latency for {network}-{station} is \
 {round(float(average), 3)} seconds')
@@ -202,7 +204,7 @@ def populate_json_with_latency_info(
     json_dict['station_latency']['average_latency'] = round(float(average), 3)
     below_threshold = percentbelowthreshold(
         station,
-        combined_latency_dataframe_for_all_days.data_latency,
+        combined_latency_dataframe_for_all_days_dataframe.data_latency,
         timely_threshold)
     json_dict['station_latency']['timely_availability'] = round(
         float(below_threshold), 2)
@@ -306,25 +308,25 @@ def getlatencies(
 
     Returns
     -------
-    combined_latency_dataframe_for_all_days: Dataframe
+    combined_latency_dataframe_for_all_days_dataframe: Dataframe
         A pandas DataFrame containing a list of latency values for the Station
     array_of_daily_latency_dataframes: list
         A list containing pandas latency dataframes for each day
     '''
     if typeofinstrument == "APOLLO":
-        combined_latency_dataframe_for_all_days,\
-            array_of_daily_latency_dataframes = get_apollo_latencies(
+        combined_latency_dataframe_for_all_days_dataframe,\
+            array_of_daily_latency_dataframes = get_latencies_from_apollo(
                 files=files,
                 network=network,
                 station=station)
 
     elif typeofinstrument == "GURALP":
-        combined_latency_dataframe_for_all_days, \
+        combined_latency_dataframe_for_all_days_dataframe, \
             array_of_daily_latency_dataframes = get_guralp_latencies(
                 files=files,
                 startdate=startdate,
                 enddate=enddate)
-    return combined_latency_dataframe_for_all_days,\
+    return combined_latency_dataframe_for_all_days_dataframe,\
         array_of_daily_latency_dataframes,
 
 
@@ -569,8 +571,8 @@ def latency_log_plot(
     enddate: date,
     typeofinstrument: str,
     network: str,
-    number_of_days: int,
-    timely_threshold: float
+    timely_threshold: float,
+    total_availability: float
 ):
     '''
     Generates a log plot of latency values for a station
@@ -623,17 +625,8 @@ def latency_log_plot(
     ax1.set_ylabel('Occurrences')  # Add a y-label to the axes.
     ax1.set_yscale('log')
     if typeofinstrument == "APOLLO":
-        # Setting up the expected number of values
-        # Apollo latency data is coming in every 1 second. Therefore in a 24
-        # hour period, we have (24 * 60 * 60 = 86400) for 1 channel.
-        # Since we have 3 channels when considering latency HNN, HNE, HNZ,
-        # we expect (86400 * 3 = 259200) packets per day
-        apollo_expected_total_number_of_packets = 259200 * number_of_days
-        data_availability = float(latencies.data_latency.size / apollo_expected_total_number_of_packets * 100)  # noqa
         note_content = f'Type of Instrument: TitanSMA\n\
-Actual number of data points: {latencies.data_latency.size}\n\
-Expected number of data points: {apollo_expected_total_number_of_packets}\
-\nData availability: {math.floor(data_availability * 10 ** 2) / 10 ** 2}%\n\
+Data availability: {total_availability}%\n\
 Average latency:{round(latencies.data_latency.mean(),2)} seconds\n\
 Standard deviation: {round(np.std(latencies.data_latency),1)}'
     elif typeofinstrument == "GURALP":
@@ -783,6 +776,7 @@ def get_timely_availability_arrays(
     HNZ_timely_availability_percentage_array = []
 
     for latency_dataframe in latencies:
+        print("latencies passed to timely_availability", latencies)
         HNN_latencies = latency_dataframe[latency_dataframe['channel'] ==
                                           "HNN"]
         total_number_of_HNN_latencies = HNN_latencies["data_latency"].size
@@ -911,9 +905,9 @@ def get_apollo_latencies(files: list,
             data=current_day_latency_data, index=columns).T
         array_of_daily_latency_dataframes.append(
             daily_latency_dataframe)
-    combined_latency_dataframe_for_all_days = pd.DataFrame(
+    combined_latency_dataframe_for_all_days_dataframe = pd.DataFrame(
         data=combined_latency_data_for_all_days, index=columns).T
-    return combined_latency_dataframe_for_all_days, \
+    return combined_latency_dataframe_for_all_days_dataframe, \
         array_of_daily_latency_dataframes
 
 
@@ -921,7 +915,7 @@ def get_guralp_latencies(files: list,
                          startdate: date,
                          enddate: date) -> \
         Tuple[DataFrame, list]:
-    combined_latency_dataframe_for_all_days = pd.DataFrame(
+    combined_latency_dataframe_for_all_days_dataframe = pd.DataFrame(
         {'network': [], 'station': [], 'channel': [], "startTime": [],
          'data_latency': []})
     array_of_daily_latency_dataframes = []
@@ -949,35 +943,36 @@ def get_guralp_latencies(files: list,
         current_file_dataframe['data_latency'] = \
             current_file_dataframe['network_latency'] + \
             current_file_dataframe['data_latency']
-        combined_latency_dataframe_for_all_days = \
-            combined_latency_dataframe_for_all_days.append(
+        combined_latency_dataframe_for_all_days_dataframe = \
+            combined_latency_dataframe_for_all_days_dataframe.append(
                 current_file_dataframe[[
                     'network', 'station', 'channel', 'startTime',
                     'data_latency']], sort=False)
     # Populating the daily latency array by looping over the dates in the
     # validation period, and filtering the
-    # combined_latency_dataframe_for_all_days to only those dates,
+    # combined_latency_dataframe_for_all_days_dataframe to only those dates,
     # then creating a dataframe with that dates data
     # We then add that dates dataframe into the daily latency array
 
     # Adding a column that represents the start time in a YY-MM-DD format, in
     # order to compare it to the current date we are looping over
-    combined_latency_dataframe_for_all_days_with_datetime = \
-        combined_latency_dataframe_for_all_days
-    combined_latency_dataframe_for_all_days_with_datetime["date"] =\
+    combined_latency_dataframe_for_all_days_dataframe_with_datetime = \
+        combined_latency_dataframe_for_all_days_dataframe
+    combined_latency_dataframe_for_all_days_dataframe_with_datetime["date"] =\
         pd.to_datetime(
-        combined_latency_dataframe_for_all_days["startTime"],
+        combined_latency_dataframe_for_all_days_dataframe["startTime"],
         infer_datetime_format=True).apply(lambda x: x.strftime('%Y-%m-%d'))
 
     while startdate < enddate:
         array_of_daily_latency_dataframes.append(
-            combined_latency_dataframe_for_all_days_with_datetime[
-                combined_latency_dataframe_for_all_days_with_datetime["date"]
+            combined_latency_dataframe_for_all_days_dataframe_with_datetime[
+                combined_latency_dataframe_for_all_days_dataframe_with_datetime["date"]  # noqa
                 == str(startdate)])
         startdate += timedelta(days=+1)
 
-    if 'date' in combined_latency_dataframe_for_all_days_with_datetime.columns:
-        combined_latency_dataframe_for_all_days_with_datetime.drop(
+    if 'date' in\
+            combined_latency_dataframe_for_all_days_dataframe_with_datetime.columns:  # noqa
+        combined_latency_dataframe_for_all_days_dataframe_with_datetime.drop(
             'date', axis=1, inplace=True)
-    return combined_latency_dataframe_for_all_days, \
+    return combined_latency_dataframe_for_all_days_dataframe, \
         array_of_daily_latency_dataframes

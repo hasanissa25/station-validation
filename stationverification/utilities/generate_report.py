@@ -462,38 +462,35 @@ def add_soh_results_to_report(network: str,
                               typeofinstrument: str,
                               json_dict: dict,
                               thresholds: ConfigParser):
-    # TODO: Need to handle Guralp SOH channels when they are available
-    # TODO: Might be the wrong channel, need to double check
-    # try:
-    #     # Get a list of "LCE" channel sohmetric files and merge the \
-    # resulting
-    #     # streams before passing them to check_timing_quality()
-    #     clock_offset_sohfiles = sohmetrics.getsohfiles(network=network,
-    #                                                    station=station,
-    #                                                    startdate=startdate,
-    #                                                    enddate=enddate,
-    #                                                    channel="LCE",
-    #                                                    directory=directory)
-    #     clock_offset_merged_streams =\
-    #         sohmetrics.get_list_of_streams_from_list_of_files(
-    #             clock_offset_sohfiles)
-    #     results = sohmetrics.check_clock_offset(
-    #         list_of_streams=clock_offset_merged_streams,
-    #         threshold=thresholds.getfloat(
-    #             'thresholds', 'clock_offset', fallback=0.100),
-    #         startdate=startdate
-    #     )
+    try:
+        # Get a list of "LCE" channel sohmetric files and merge the \
+        # resulting streams before passing them to check_timing_quality()
+        clock_offset_sohfiles = sohmetrics.getsohfiles(network=network,
+                                                       station=station,
+                                                       startdate=startdate,
+                                                       enddate=enddate,
+                                                       channel="LCE",
+                                                       directory=directory)
+        clock_offset_merged_streams =\
+            sohmetrics.get_list_of_streams_from_list_of_files(
+                clock_offset_sohfiles)
+        results = sohmetrics.check_clock_offset(
+            list_of_streams=clock_offset_merged_streams,
+            threshold=thresholds.getfloat(
+                'thresholds', 'clock_offset', fallback=0.100),
+            startdate=startdate
+        )
 
-    #     if results is not None:
-    #         json_dict['clock_offset'] = {}
-    #         json_dict['clock_offset']['passed'] = results.passed
-    #         json_dict['clock_offset']['values'] = results.results
-    #         if results.passed is False:
-    #             json_dict['clock_offset']['details'] = results.details
-    # except exceptions.StreamError as e:
-    #     logging.error(e)
-    #     logging.warning(
-    #         'LCE data does not exist. Skipping clock offset metric.')
+        if results is not None:
+            json_dict['clock_offset'] = {}
+            json_dict['clock_offset']['passed'] = results.passed
+            json_dict['clock_offset']['values'] = results.results
+            if results.passed is False:
+                json_dict['clock_offset']['details'] = results.details
+    except exceptions.StreamError as e:
+        logging.error(e)
+        logging.warning(
+            'LCE data does not exist. Skipping clock offset metric.')
 
     try:
         # Get a list of "LCQ" channel sohmetric files and merge the resulting \
