@@ -316,45 +316,44 @@ def check_clock_locked(
             passed = False
     return MetricResults(passed=passed, details=details, results=results)
 
-# TODO: Might be the wrong channel, need to double check
-# def check_clock_offset(
-#     list_of_streams: List[obspy.Stream],
-#         threshold: float, startdate=date) -> MetricResults:
-#     '''
-#     Check the average clock offset for each day.
 
-#     Parameters
-#     ----------
-#         list_of_streams
-#             List of SOH stream data to read (A stream is a set of traces /
-#              one merged trace)
-#             Channel='LCE'
-#     Returns
-#     -------
-#     bool
-#         Indicates if the metric passed
+def check_clock_offset(
+    list_of_streams: List[obspy.Stream],
+        threshold: float, startdate=date) -> MetricResults:
+    '''
+    Check the average clock offset for each day.
 
-#     string
-#         Text indicating the reason why the metric may have failed
+    Parameters
+    ----------
+        list_of_streams
+            List of SOH stream data to read (A stream is a set of traces /
+             one merged trace)
+            Channel='LCE'
+    Returns
+    -------
+    bool
+        Indicates if the metric passed
 
-#     list
-#         List of the results for the metric
-#     '''
+    string
+        Text indicating the reason why the metric may have failed
 
-#     passed = True
-#     offsets = []
-#     details = []
-#     for stream in list_of_streams:
-#         stats = getstats(stream)
-#         offsets.append(stats.average)
-#     print("check_clock_offset>offsets", offsets)
-#     for index, clockPhaseError in enumerate(offsets):
-#         testdate = startdate + timedelta(index)
-#         if clockPhaseError > threshold:
-#             passed = False
-#             details.append(f'Average clock phase error too high on \
-# {testdate}')
-#     return MetricResults(passed=passed, details=details, results=offsets)
+    list
+        List of the results for the metric
+    '''
+
+    passed = True
+    offsets = []
+    details = []
+    for stream in list_of_streams:
+        stats = getstats(stream)
+        offsets.append(stats.average)
+    for index, clockPhaseError in enumerate(offsets):
+        testdate = startdate + timedelta(index)
+        if clockPhaseError > threshold:
+            passed = False
+            details.append(f'Average clock phase error too high on \
+{testdate}')
+    return MetricResults(passed=passed, details=details, results=offsets)
 
 
 def check_number_of_satellites(
