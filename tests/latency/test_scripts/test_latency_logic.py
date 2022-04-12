@@ -5,7 +5,7 @@
 from datetime import date
 from stationverification.utilities.latency import getfiles, getlatencies, latency_log_plot, latency_line_plot, generate_CSV_from_failed_latencies, timely_availability_plot, populate_json_with_latency_info
 from tests.latency.test_scripts.isolated_components.test_latency_from_CSV import test_latency_from_CSV
-from tests.latency.test_scripts.isolated_components.test_latency_from_JSON import test_latency_from_json
+from tests.latency.test_scripts.isolated_components.test_get_latencies_from_JSON import test_latency_from_json
 import os
 import json
 # Apollo Parameters
