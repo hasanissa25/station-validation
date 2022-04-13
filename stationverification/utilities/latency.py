@@ -31,6 +31,8 @@ from tests.latency.test_scripts.isolated_components.\
 import warnings
 warnings.filterwarnings("ignore")
 
+logging.basicConfig(level=logging.INFO)
+
 
 class StationNotInFileException(Exception):
     '''
@@ -89,9 +91,12 @@ def latencyreport(
         dict: The dictionary object containing the results of the report
     '''
     # Collect the list of files to collect latency information from
+    logging.info("Fetching latency files..")
+
     files = getfiles(typeofinstrument=typeofinstrument, network=network,
                      station=station, path=path, startdate=startdate,
                      enddate=enddate)
+    logging.info("Populating latency data..")
 
     # Gather the latency information for the station
     combined_latency_dataframe_for_all_days_dataframe, \
@@ -103,7 +108,10 @@ def latencyreport(
             startdate=startdate,
             enddate=enddate)
     # Produce latency plots
+    logging.info("Calculating total availability..")
+
     total_availability = calculate_total_availability(files)
+    logging.info("Generating timely availability plot..")
 
     timely_availability_plot(latencies=array_of_daily_latency_dataframes,
                              station=station,
@@ -112,6 +120,8 @@ def latencyreport(
                              network=network,
                              timely_threshold=timely_threshold,
                              )
+    logging.info("Generating latency log plots..")
+
     latency_log_plot(latencies=combined_latency_dataframe_for_all_days_dataframe,  # noqa
                      station=station,
                      startdate=startdate,
@@ -121,6 +131,7 @@ def latencyreport(
                      timely_threshold=timely_threshold,
                      total_availability=total_availability
                      )
+    logging.info("Generating latency line plots..")
 
     latency_line_plot(latencies=array_of_daily_latency_dataframes,
                       station=station,
@@ -130,6 +141,7 @@ def latencyreport(
                       network=network,
                       timely_threshold=timely_threshold
                       )
+    logging.info("Generating CSV of failed latencies..")
 
     generate_CSV_from_failed_latencies(
         latencies=combined_latency_dataframe_for_all_days_dataframe,
@@ -139,6 +151,7 @@ def latencyreport(
         enddate=enddate,
         timely_threshold=timely_threshold
     )
+    logging.info("Generating JSON report..")
 
     final_json_dict = populate_json_with_latency_info(
         json_dict=json_dict,

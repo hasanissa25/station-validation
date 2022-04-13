@@ -40,6 +40,7 @@ import argparse
 import json
 import os
 import subprocess
+import logging
 from dateutil import parser as dateparser
 from datetime import date, timedelta
 from stationverification import CONFIG
@@ -197,12 +198,14 @@ automatically uploaded to s3 bucket',
     elif startdate == enddate:
         raise TimeSeriesError('Enddate is not inclusive. To test for one day, set \
 the enddate to the day after the startdate')
+    logging.info("Fetching latency files..")
     files = getfiles(typeofinstrument=typeofinstrument,
                      network=network,
                      station=station,
                      path=latencyFiles,
                      startdate=startdate,
                      enddate=enddate)
+    logging.info("Populating latency data..")
     combined_latency_dataframe_for_all_days_dataframe, \
         array_of_daily_latency_dataframes = getlatencies(
             typeofinstrument=typeofinstrument,
@@ -211,8 +214,9 @@ the enddate to the day after the startdate')
             station=station,
             startdate=startdate,
             enddate=enddate)
+    logging.info("Calculating total availability..")
     total_availability = calculate_total_availability(files)
-
+    logging.info("Generating CSV of failed latencies..")
     generate_CSV_from_failed_latencies(
         latencies=combined_latency_dataframe_for_all_days_dataframe,
         station=station,
@@ -221,7 +225,7 @@ the enddate to the day after the startdate')
         enddate=enddate,
         timely_threshold=thresholds.getfloat(
             'thresholds', 'data_timeliness', fallback=3),)
-
+    logging.info("Generating timely availability plot..")
     timely_availability_plot(latencies=array_of_daily_latency_dataframes,
                              station=station,
                              startdate=startdate,
@@ -229,6 +233,7 @@ the enddate to the day after the startdate')
                              network=network,
                              timely_threshold=thresholds.getfloat(
                                  'thresholds', 'data_timeliness', fallback=3),)
+    logging.info("Generating latency log plots..")
 
     latency_log_plot(latencies=combined_latency_dataframe_for_all_days_dataframe,  # noqa
                      station=station,
@@ -239,7 +244,7 @@ the enddate to the day after the startdate')
                      timely_threshold=thresholds.getfloat(
                          'thresholds', 'data_timeliness', fallback=3),
                      total_availability=total_availability)
-
+    logging.info("Generating latency line plots..")
     latency_line_plot(latencies=array_of_daily_latency_dataframes,
                       station=station,
                       startdate=startdate,
@@ -248,6 +253,7 @@ the enddate to the day after the startdate')
                       network=network,
                       timely_threshold=thresholds.getfloat(
                           'thresholds', 'data_timeliness', fallback=3),)
+    logging.info("Generating JSON report..")
 
     populate_json_with_latency_info(
         json_dict=json_dict,
@@ -264,6 +270,7 @@ the enddate to the day after the startdate')
                      network=network,
                      station=station,
                      json_dict=json_dict)
+    logging.info("Cleaning up directory..")
 
     cleanup_directory(startdate=startdate,
                       enddate=enddate,
@@ -271,6 +278,7 @@ the enddate to the day after the startdate')
                       station=station,
                       outputdir=outputdir)
     if uploadresultstos3 is True:
+        logging.info("Uploading to S3 bucket..")
         upload_results_to_s3(path_of_folder_to_upload=outputdir,
                              bucketName=bucketName,
                              s3directory=s3directory)
