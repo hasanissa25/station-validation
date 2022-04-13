@@ -776,7 +776,6 @@ def get_timely_availability_arrays(
     HNZ_timely_availability_percentage_array = []
 
     for latency_dataframe in latencies:
-        print("latencies passed to timely_availability", latencies)
         HNN_latencies = latency_dataframe[latency_dataframe['channel'] ==
                                           "HNN"]
         total_number_of_HNN_latencies = HNN_latencies["data_latency"].size
