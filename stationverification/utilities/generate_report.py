@@ -478,7 +478,10 @@ def add_soh_results_to_report(network: str,
             list_of_streams=clock_offset_merged_streams,
             threshold=thresholds.getfloat(
                 'thresholds', 'clock_offset', fallback=0.100),
-            startdate=startdate
+            startdate=startdate,
+            enddate=enddate,
+            network=network,
+            station=station
         )
 
         if results is not None:

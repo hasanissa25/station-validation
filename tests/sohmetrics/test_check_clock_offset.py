@@ -8,7 +8,8 @@ import obspy
 def test_check_clock_offset(list_of_streams: List[obspy.Stream],
                             passing_threshold: float = 90.0,
                             failing_threshold: float = 1,
-                            startdate: date = date(2021, 1, 1)):
+                            startdate: date = date(2021, 1, 1),
+                            enddate: date = date(2021, 1, 2)):
     '''
     Check the average clock offset for each day.
 
@@ -33,8 +34,12 @@ def test_check_clock_offset(list_of_streams: List[obspy.Stream],
     # Clock phase error is too high
     # logging.info('Check clock offset for the second list of streams')
     results = sohmetrics.check_clock_offset(
-        list_of_streams, threshold=failing_threshold,
-        startdate=startdate)
+        list_of_streams,
+        threshold=failing_threshold,
+        startdate=startdate,
+        enddate=enddate,
+        network="QW",
+        station="QCC02")
     logging.info(f'results {results}')
     # assert not results.passed
     # assert results.results == [20.0, 70.0]

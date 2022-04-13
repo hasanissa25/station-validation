@@ -227,6 +227,16 @@ def check_timing_quality(list_of_streams: List[obspy.Stream],
             List of SOH stream data to read (A stream is a set of traces /
              one merged trace)
             Channel='LCQ'
+        threshold:
+            Lowest allowed timing quality
+        startdate:
+            Start date of the validation period
+        enddate:
+            Start date of the validation period
+        network:
+            Network code for the station being validated
+        station:
+            Station code for the station being validated
 
     Returns
     -------
@@ -317,9 +327,12 @@ def check_clock_locked(
     return MetricResults(passed=passed, details=details, results=results)
 
 
-def check_clock_offset(
-    list_of_streams: List[obspy.Stream],
-        threshold: float, startdate=date) -> MetricResults:
+def check_clock_offset(list_of_streams: List[obspy.Stream],
+                       threshold: float,
+                       startdate: date,
+                       enddate: date,
+                       network: str,
+                       station: str) -> MetricResults:
     '''
     Check the average clock offset for each day.
 
@@ -329,6 +342,17 @@ def check_clock_offset(
             List of SOH stream data to read (A stream is a set of traces /
              one merged trace)
             Channel='LCE'
+        threshold:
+            Maximum average sample clock offset from timesource
+        startdate:
+            Start date of the validation period
+        enddate:
+            Start date of the validation period
+        network:
+            Network code for the station being validated
+        station:
+            Station code for the station being validated
+
     Returns
     -------
     bool
@@ -347,6 +371,13 @@ def check_clock_offset(
     for stream in list_of_streams:
         stats = getstats(stream)
         offsets.append(stats.average)
+        plot_clock_offset(network=network,
+                          station=station,
+                          startdate=startdate,
+                          enddate=enddate,
+                          results=offsets,
+                          threshold=threshold
+                          )
     for index, clockPhaseError in enumerate(offsets):
         testdate = startdate + timedelta(index)
         if clockPhaseError > threshold:
@@ -459,5 +490,66 @@ def plot_timing_quality(network: str,
             os.mkdir('./stationvalidation_output')
         # plt.savefig(f'stationvalidation_output/{plot_filename}')
         plt.savefig(f'stationvalidation_output/{filename}-timing_quality.png',
+                    dpi=300, bbox_extra_artists=(legend,), bbox_inches='tight')
+    plt.close()
+
+
+def plot_clock_offset(network: str,
+                      station: str,
+                      startdate: date,
+                      enddate: date,
+                      results: np.array,
+                      threshold: float):
+    # Generatre x-axis values as days since startdate
+    difference = enddate - startdate
+    x_axis = np.arange(0, difference.days, 1)
+
+    # Create plot
+    fig = plt.figure()
+    fig.set_size_inches(18.5, 10.5)
+    ax = fig.add_subplot(111)
+    # this locator puts ticks at regular intervals in setps of "base"
+    # loc = plticker.MultipleLocator(base=10.0)
+    # ax.yaxis.set_major_locator(loc)
+    size_of_x_axis = x_axis.size
+    size_of_metric_data = len(results)
+    if size_of_metric_data == size_of_x_axis:
+        ax.scatter(
+            x_axis, results)
+
+        def timeTicks(x, pos):
+            date = startdate + timedelta(days=x)
+            return str(date.isoformat())
+
+        # Format the x axis values to be dates and rotate them 90 degrees
+        formatter = matplotlib.ticker.FuncFormatter(timeTicks)
+        ax.xaxis.set_major_formatter(formatter)
+        plt.xticks(rotation=90)
+        filename = ""
+        if startdate == enddate - timedelta(days=1):
+            filename = f'{network}.{station}.{startdate}'
+        else:
+            filename = f'{network}.{station}-{startdate}_to_\
+{enddate - timedelta(days=1)}'
+        ax.set_title(
+            f'Timing Error (+/-500 nano seconds)\n{filename}')
+        plt.ylabel('Timing Error (micro seconds)')
+        # Add a grid to the plot to make the symmetry more obvious
+        ax.set_axisbelow(True)
+        plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
+
+        # Adding the threshold line
+        ax.axhline(threshold, color='r', linewidth="1", linestyle='--',
+                   label=f'Timing Error Threshold: {threshold} micro seconds')
+        # Adding the legend
+        legend = ax.legend(bbox_to_anchor=(1, 1),
+                           loc='upper right', fontsize="9")
+        # Save the plot to file and then close it so the next channel's metrics
+        # aren't plotted on the same plot
+        # Write the plot to the output directory
+        if not os.path.isdir("./stationvalidation_output"):
+            os.mkdir('./stationvalidation_output')
+        # plt.savefig(f'stationvalidation_output/{plot_filename}')
+        plt.savefig(f'stationvalidation_output/{filename}-timing_error.png',
                     dpi=300, bbox_extra_artists=(legend,), bbox_inches='tight')
     plt.close()
