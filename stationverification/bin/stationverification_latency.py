@@ -211,7 +211,6 @@ the enddate to the day after the startdate')
             station=station,
             startdate=startdate,
             enddate=enddate)
-    # Produce latency plots
     total_availability = calculate_total_availability(files)
 
     generate_CSV_from_failed_latencies(
