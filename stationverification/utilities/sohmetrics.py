@@ -532,15 +532,15 @@ def plot_clock_offset(network: str,
             filename = f'{network}.{station}-{startdate}_to_\
 {enddate - timedelta(days=1)}'
         ax.set_title(
-            f'Timing Error (+/-500 nano seconds)\n{filename}')
-        plt.ylabel('Timing Error (micro seconds)')
+            f'Timing Error (+/- 0.5 microseconds rounded to 0)\n{filename}')
+        plt.ylabel('Timing Error (microseconds)')
         # Add a grid to the plot to make the symmetry more obvious
         ax.set_axisbelow(True)
         plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
 
         # Adding the threshold line
         ax.axhline(threshold, color='r', linewidth="1", linestyle='--',
-                   label=f'Timing Error Threshold: {threshold} micro seconds')
+                   label=f'Timing Error Threshold: {threshold} microseconds')
         # Adding the legend
         legend = ax.legend(bbox_to_anchor=(1, 1),
                            loc='upper right', fontsize="9")
