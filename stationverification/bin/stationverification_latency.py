@@ -279,7 +279,13 @@ the enddate to the day after the startdate')
                       outputdir=outputdir)
     if uploadresultstos3 is True:
         logging.info("Uploading to S3 bucket..")
-        upload_results_to_s3(path_of_folder_to_upload=outputdir,
+        if startdate == enddate - timedelta(days=1):
+            validation_output_directory = f'{outputdir}/{network}/{station}/\
+{startdate}'
+        else:
+            validation_output_directory = f'{outputdir}/{network}/{station}/\
+{startdate}-{enddate}'
+        upload_results_to_s3(path_of_folder_to_upload=validation_output_directory,  # noqa
                              bucketName=bucketName,
                              s3directory=s3directory)
 
