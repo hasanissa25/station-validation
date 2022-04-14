@@ -8,16 +8,16 @@ import numpy as np
 register_matplotlib_converters()
 
 # Getting the Data
-cn_csv = "tests/generate_ratio_plot/data/CN.A64..HNZ.D.2016-10-21_2016-10-30_PDF.csv"
-cn_dataframe = pd.read_csv(cn_csv)
-cn_dataframe.sort_values(by='power', ascending=True, inplace=True)
-cn_dataframe.drop_duplicates(subset=['frequency'], inplace=True)
-cn_dataframe.sort_values(by='frequency', ascending=True, inplace=True)
-qw_csv = "tests/generate_ratio_plot/data/QW.QCC02..HNZ.D.2022-03-08_2022-03-17_PDF.csv"
-qw_dataframe = pd.read_csv(qw_csv)
-qw_dataframe.sort_values(by='power', ascending=True, inplace=True)
-qw_dataframe.drop_duplicates(subset=['frequency'], inplace=True)
-qw_dataframe.sort_values(by='frequency', ascending=True, inplace=True)
+first_csv = "ispaq_outputs/PDFs/XX/TOTT/XX.TOTT..HNZ.D.2022-04-01_2022-04-10_PDF.csv"
+first_dataframe = pd.read_csv(first_csv)
+first_dataframe.sort_values(by='power', ascending=True, inplace=True)
+first_dataframe.drop_duplicates(subset=['frequency'], inplace=True)
+first_dataframe.sort_values(by='frequency', ascending=True, inplace=True)
+second_csv = "ispaq_outputs/PDFs/QW/QCC02/QW.QCC02..HNE.D.2022-03-28_PDF.csv"
+second_dataframe = pd.read_csv(second_csv)
+second_dataframe.sort_values(by='power', ascending=True, inplace=True)
+second_dataframe.drop_duplicates(subset=['frequency'], inplace=True)
+second_dataframe.sort_values(by='frequency', ascending=True, inplace=True)
 
 
 # Setting up the plot
@@ -26,13 +26,13 @@ fig.set_size_inches(18.5, 10.5)
 ax1 = fig.add_subplot(111)
 ax1 = plt.gca()
 # Add a title to the axes.
-ax1.set_title("Ratio Plot:\n QW.QCC02 vs CN.A64 (HNZ)")
+ax1.set_title("Ratio Plot:\n TOTT vs QCC02 (HNZ)")
 ax1.set_xlabel('Frequency (Hz)')
 ax1.set_ylabel('Ratio of power')  # Add a y-label to the axes.
 # Setting up our data
-x_axis = qw_dataframe.frequency
-y_axis_cn = cn_dataframe["power"].array
-y_axis_qw = qw_dataframe["power"].array
+x_axis = second_dataframe.frequency
+y_axis_cn = first_dataframe["power"].array
+y_axis_qw = second_dataframe["power"].array
 
 y_axis = []
 for index, i in enumerate(y_axis_cn):
@@ -49,5 +49,5 @@ ax1.plot(
 fig.tight_layout()  # Important for the plot labels to not overlap
 
 plt.savefig(
-    './tests/generate_ratio_plot/QCC02vsA64')
+    './tests/generate_ratio_plot/TOTTvsQCC02')
 plt.close()
