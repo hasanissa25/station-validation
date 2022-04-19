@@ -114,6 +114,8 @@ def ADC_plot(
     size_of_x_axis = x_axis.size
     size_of_metric_data = len(stationMetricData.get_values(
         'sample_max', network, station, channel))
+    print("ADC>size_of_x_axis", size_of_x_axis,
+          "size_of_metric_data", size_of_metric_data)
     if size_of_metric_data == size_of_x_axis:
         ax.scatter(
             x_axis, np.subtract(
@@ -154,7 +156,9 @@ def ADC_plot(
         formatter = matplotlib.ticker.FuncFormatter(timeTicks)
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
-        plt.title(f'{channel} - ADC Count (range: [0, +/- 8,388,608])')
+        plt.title(
+            f'{network}.{station}.{channel} - \
+ADC Count (range: [0, +/- 8,388,608])')
         plt.ylabel('Amplitude value')
         ax.set_axisbelow(True)
         plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
@@ -216,7 +220,7 @@ def num_overlaps_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{channel} - Number of overlaps')
+        ax.set_title(f'{network}.{station}.{channel} - Number of overlaps')
         plt.ylabel('Overlaps')
 
         # Add a grid to the plot to make the symmetry more obvious
@@ -282,7 +286,7 @@ def num_gaps_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{channel} - Number of Gaps')
+        ax.set_title(f'{network}.{station}.{channel} - Number of Gaps')
         plt.ylabel('Gaps')
 
         # Add a grid to the plot to make the symmetry more obvious
@@ -345,7 +349,7 @@ def max_gap_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{channel} - Max Gaps')
+        ax.set_title(f'{network}.{station}.{channel} - Max Gaps')
         plt.ylabel('Gap size')
 
         # Add a grid to the plot to make the symmetry more obvious
@@ -411,7 +415,7 @@ def spikes_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{channel} - Spikes')
+        ax.set_title(f'{network}.{station}.{channel} - Spikes')
         plt.ylabel('Spikes')
 
         # Add a grid to the plot to make the symmetry more obvious
@@ -456,6 +460,8 @@ def percent_availability_plot(
     size_of_x_axis = x_axis.size
     size_of_metric_data = len(stationMetricData.get_values(
         'percent_availability', network, station, channel))
+    print("Availability>size_of_x_axis", size_of_x_axis,
+          "size_of_metric_data", size_of_metric_data)
     if size_of_metric_data == size_of_x_axis:
         ax.bar(x_axis, [100], color="red")
         ax.bar(
@@ -473,7 +479,7 @@ def percent_availability_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{channel} - Percent Availability')
+        ax.set_title(f'{network}.{station}.{channel} - Percent Availability')
         plt.ylabel('Availability')
         ax.yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
         ax.set_ylim(ymin=90, ymax=100)
@@ -499,7 +505,7 @@ def percent_availability_plot(
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
-    plt.close()
+        plt.close()
 
 
 def pct_above_nhnm_plot(
@@ -544,7 +550,9 @@ def pct_above_nhnm_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{channel} - Percent above New High Noise Model')
+        ax.set_title(
+            f'{network}.{station}.{channel} - \
+Percent above New High Noise Model')
         plt.ylabel('Percentage')
         ax.yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
         # Add a grid to the plot to make the symmetry more obvious
@@ -609,7 +617,9 @@ def pct_below_nlnm_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{channel} - Percent below New Low Noise Model')
+        ax.set_title(
+            f'{network}.{station}.{channel} - \
+Percent below New Low Noise Model')
         plt.ylabel('Percentage')
         ax.yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
         # Add a grid to the plot to make the symmetry more obvious
@@ -674,7 +684,7 @@ def dead_channel_lin_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{channel} - Dead Channel Lin')
+        ax.set_title(f'{network}.{station}.{channel} - Dead Channel Lin')
 
         # Add a grid to the plot to make the symmetry more obvious
         ax.set_axisbelow(True)
@@ -738,7 +748,7 @@ def dead_channel_gsn_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{channel} Dead Channel GSN')
+        ax.set_title(f'{network}.{station}.{channel} - Dead Channel GSN')
 
         # Add a grid to the plot to make the symmetry more obvious
         ax.set_axisbelow(True)

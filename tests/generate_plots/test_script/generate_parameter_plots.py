@@ -9,8 +9,8 @@ from obspy.io.xseed import Parser
 
 network = "QW"
 station = "QCC02"
-startdate = date(2022, 3, 8)
-enddate = date(2022, 3, 9)
+startdate = date(2022, 4, 1)
+enddate = date(2022, 4, 6)
 metrics = "eew_test"
 pfile = 'stationverification/data/eew_preferences.txt'
 miniseedarchive = "tests/data/apollo/archive/miniseed"
