@@ -4,7 +4,7 @@
 import copy
 from typing import Optional, Union, Dict
 
-import requests
+import requests  # type: ignore
 
 # Constants
 STATE_OK = 0
@@ -92,6 +92,7 @@ class NagiosHost(dict):
     """
     Host definition object
     """
+
     def to_query_dict(self) -> dict:
         """
         Return data as dictionary (used by requests)
@@ -126,6 +127,7 @@ class NagiosService(dict):
     '''
     Service definition object
     '''
+
     def to_query_dict(self) -> dict:
         '''
         Return data as dictionary (used by requests)
@@ -262,6 +264,7 @@ class NagiosAPI(object):
     """
     The following is an wrapper to the API documented under Nagios XI
     """
+
     def __init__(
         self,
         apikey: str,

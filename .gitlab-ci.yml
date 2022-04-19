@@ -48,7 +48,7 @@ mypy:
   script:
     - *build
     - python -m pip install mypy
-    - mypy --ignore-missing-imports stationverification/
+    - mypy --install-type --non-interactive --ignore-missing-imports stationverification/
     
 
 # pytest:

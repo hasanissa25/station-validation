@@ -41,8 +41,8 @@ import json
 import os
 import subprocess
 import logging
-from dateutil import parser as dateparser
-from datetime import date, timedelta
+from dateutil import parser as dateparser  # type: ignore
+from datetime import date, timedelta  # type: ignore
 from stationverification import CONFIG
 from configparser import ConfigParser
 

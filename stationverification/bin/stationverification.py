@@ -55,7 +55,7 @@ main()
 '''
 import argparse
 from datetime import timedelta
-from dateutil import parser as dateparser
+from dateutil import parser as dateparser  # type: ignore
 from configparser import ConfigParser
 
 from stationverification import ISPAQ_PREF, CONFIG

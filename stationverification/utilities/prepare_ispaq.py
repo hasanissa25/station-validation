@@ -44,7 +44,7 @@ from obspy.core.inventory import Inventory, Network, Station
 from obspy.core.inventory import Channel, Equipment
 from configparser import ConfigParser
 import subprocess
-import requests
+import requests  # type: ignore
 import os
 import logging
 import json

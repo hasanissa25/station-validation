@@ -249,7 +249,7 @@ def check_timing_quality(list_of_streams: List[obspy.Stream],
         list
             List of the results for the metric
     '''
-    results = np.array([])
+    results: Any = np.array([])
     details = []
     passed = True
     # Loop though the streams
@@ -305,7 +305,7 @@ def check_clock_locked(
         list
             List of the results for the metric
     '''
-    results = np.array([])
+    results: Any = np.array([])
     # Loop through the streams
     for stream in list_of_streams:
         # Count how many times the clock is locked for a day
