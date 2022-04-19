@@ -1,9 +1,13 @@
 from setuptools import setup
 from setuptools import find_packages
+import versioneer
+
 
 setup(
     name='stationverification',
-    version='3.1.2',
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
+
     description='This package is used to check data quality from EEW Stations',
     author='Jonathan Gosset, Hasan Issa',
     author_email='jonathan.gosset@canada.ca, Hasan.issa@nrcan-rncan.gc.ca',
