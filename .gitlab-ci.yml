@@ -51,18 +51,15 @@ mypy:
     - mypy --install-type --non-interactive --ignore-missing-imports stationverification/
     
 
-# pytest:
-#   stage: test
-#   variables:
-#     SHAKEMAP_DYFI_MONGODB: mongodb://apache:apache@mongo-e1:27017,mongo-e2:27017,mongo-e3:27017/eqcan?replicaSet=chis-east
-#     SHAKEMAP_FDSNWS: https://www.earthquakescanada.nrcan.gc.ca/
-#   script:
-#     - *build
-#     - python -m pip install pytest pytest-cov pytest-socket
-#     - pytest tests/* --log-level=DEBUG -k 'not test_shake'
-#   coverage: '/TOTAL.*\s+(\d+%)$/'
-#   artifacts:
-#     reports:
-#       cobertura: coverage.xml
-#     paths:
-#       - coverage.xml
+pytest:
+  stage: test
+  script:
+    - *build
+    - python -m pip install pytest pytest-cov pytest-socket
+    - pytest tests/* --log-level=DEBUG -k 'not test_shake'
+  coverage: '/TOTAL.*\s+(\d+%)$/'
+  artifacts:
+    reports:
+      cobertura: coverage.xml
+    paths:
+      - coverage.xml
