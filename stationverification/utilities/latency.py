@@ -7,7 +7,7 @@ import subprocess
 import json
 import os
 import numpy as np
-from typing import List, Tuple
+from typing import List, Tuple, Any
 from datetime import date, timedelta
 
 import matplotlib
@@ -348,7 +348,7 @@ def getlatencies(
 
 def percentbelowthreshold(
     station: str,
-    latencies: np.array,
+    latencies: Any,
     threshold: float
 ) -> float:
     '''

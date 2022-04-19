@@ -5,7 +5,7 @@ import subprocess
 import numpy as np
 import numpy.ma as ma
 from datetime import date, timedelta
-from typing import List
+from typing import List, Any
 
 from stationverification.utilities import exceptions
 import matplotlib
@@ -433,7 +433,7 @@ def plot_timing_quality(network: str,
                         station: str,
                         startdate: date,
                         enddate: date,
-                        results: np.array,
+                        results: Any,
                         threshold: float):
 
     # Generatre x-axis values as days since startdate
@@ -498,7 +498,7 @@ def plot_clock_offset(network: str,
                       station: str,
                       startdate: date,
                       enddate: date,
-                      results: np.array,
+                      results: Any,
                       threshold: float):
     # Generatre x-axis values as days since startdate
     difference = enddate - startdate
