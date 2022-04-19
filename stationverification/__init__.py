@@ -1,4 +1,5 @@
 from pathlib import Path
+from . import _version
 
 ISPAQ_PREF = str(Path(__file__).parent.joinpath(
     'data', 'eew_preferences.txt'))
@@ -9,5 +10,5 @@ XML_CONVERTER = str(Path(__file__).parent.joinpath(
 STATION_XML = str(Path(__file__).parent.joinpath(
     'data', 'stationxml.xml'))
 
-from . import _version
+
 __version__ = _version.get_versions()['version']
