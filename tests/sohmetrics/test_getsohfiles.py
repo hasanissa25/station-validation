@@ -22,6 +22,5 @@ def test_getsohfiles(sohcriteria: dict):
         startdate=sohcriteria["startdate"],
         enddate=sohcriteria["enddate"],
         directory=sohcriteria["directory"])
-    logging.info(f'test_results: {testresults}')
-    assert testresults == ['tests/data/apollo/archive/miniseed/2022/01/10/QW.QCC01..LCQ.2022.010',
-                           'tests/data/apollo/archive/miniseed/2022/01/11/QW.QCC01..LCQ.2022.011']
+    assert testresults == [
+        'tests/data/apollo/archive/soh/2022/04/01/QW.QCC02..LCQ.2022.091']

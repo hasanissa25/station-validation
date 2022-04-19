@@ -114,8 +114,6 @@ def ADC_plot(
     size_of_x_axis = x_axis.size
     size_of_metric_data = len(stationMetricData.get_values(
         'sample_max', network, station, channel))
-    print("ADC>size_of_x_axis", size_of_x_axis,
-          "size_of_metric_data", size_of_metric_data)
     if size_of_metric_data == size_of_x_axis:
         ax.scatter(
             x_axis, np.subtract(
@@ -460,8 +458,6 @@ def percent_availability_plot(
     size_of_x_axis = x_axis.size
     size_of_metric_data = len(stationMetricData.get_values(
         'percent_availability', network, station, channel))
-    print("Availability>size_of_x_axis", size_of_x_axis,
-          "size_of_metric_data", size_of_metric_data)
     if size_of_metric_data == size_of_x_axis:
         ax.bar(x_axis, [100], color="red")
         ax.bar(

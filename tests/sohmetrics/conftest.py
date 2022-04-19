@@ -29,9 +29,9 @@ def example_files() -> List[str]:
 
 @pytest.fixture(scope="session")
 def sohcriteria() -> dict:
-    return {"network": "QW", "station": "QCC01", "channel": "LCQ",
-            "startdate": date(2022, 1, 10), "enddate": date(2022, 1, 12),
-            "directory": "tests/data/apollo/archive/miniseed", "threshold": 5.05}
+    return {"network": "QW", "station": "QCC02", "channel": "LCQ",
+            "startdate": date(2022, 4, 1), "enddate": date(2022, 4, 2),
+            "directory": "tests/data/apollo/archive/soh", "threshold": 5.05}
 
 
 @pytest.fixture(scope="session")
