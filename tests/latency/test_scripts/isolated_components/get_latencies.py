@@ -3,7 +3,7 @@ from typing import Tuple
 from datetime import date
 from pandas.core.frame import DataFrame
 
-from tests.latency.test_scripts.isolated_components.test_get_latencies_from_JSON import calculate_apollo_latencies
+from tests.latency.test_scripts.isolated_components.get_latencies_from_JSON import calculate_apollo_latencies
 
 
 def getlatencies(

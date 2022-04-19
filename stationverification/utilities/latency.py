@@ -19,14 +19,14 @@ import matplotlib.dates as mdates
 import pandas as pd
 from pandas.core.frame import DataFrame
 from pandas.plotting import register_matplotlib_converters
+from stationverification.utilities.calculate_total_availability_for_apollo\
+    import calculate_total_availability
 from stationverification.utilities.get_latencies_from_apollo \
     import get_latencies_from_apollo
 
 
 from stationverification.utilities.julian_day_converter import \
     datetime_to_year_and_julian_day
-from tests.latency.test_scripts.isolated_components.\
-    test_calculate_total_availability import calculate_total_availability
 
 import warnings
 warnings.filterwarnings("ignore")

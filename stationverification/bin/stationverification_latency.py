@@ -45,6 +45,8 @@ from dateutil import parser as dateparser  # type: ignore
 from datetime import date, timedelta  # type: ignore
 from stationverification import CONFIG
 from configparser import ConfigParser
+from stationverification.utilities.calculate_total_availability_for_apollo\
+    import calculate_total_availability
 
 from stationverification.utilities.latency import (
     generate_CSV_from_failed_latencies, getfiles, getlatencies,
@@ -52,8 +54,6 @@ from stationverification.utilities.latency import (
     timely_availability_plot)
 from stationverification.utilities.upload_results_to_s3 import \
     upload_results_to_s3
-from tests.latency.test_scripts.isolated_components.\
-    test_calculate_total_availability import calculate_total_availability
 
 
 class TimeSeriesError(Exception):

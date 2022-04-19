@@ -56,7 +56,7 @@ pytest:
   script:
     - *build
     - python -m pip install pytest pytest-cov pytest-socket
-    - pytest tests/* --log-level=DEBUG -k 'not test_shake'
+    - pytest tests/* --log-level=DEBUG
   coverage: '/TOTAL.*\s+(\d+%)$/'
   artifacts:
     reports:
