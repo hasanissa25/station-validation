@@ -1,6 +1,7 @@
 # Station Verification of Data Quality with Ispaq
 This program is designed to run IRIS's System for Portable Assessment of Quality (ISPAQ) to gather statistics about data quality new Stations for the Earthquake Early Warning system.
 
+
 Note: ispaq can be very resource intensive. During testing with a 6 channel station over a 10 day period, it was observed to use almost 2 GB of RAM. If ispaq seems to end abruptly without any visible error, it may have been stopped by oom_killer.
 
 # Install Instructions for Centos 7/8
