@@ -74,6 +74,7 @@ def run_ispaq_command_with_stationXML(
             --station_url {station_url} \
             --dataselect_url {miniseedarchive}\
             --resp_dir {resp_dir}'
+    print("ISPAQ:", cmd)
     proc = subprocess.Popen(
         cmd,
         shell=True
@@ -113,7 +114,7 @@ def run_ispaq_command_with_configfile(
 
     cmd = f'{ispaqloc} -M {metrics} -S {station} --starttime={startdate} \
 --endtime={enddate} -P {preffile} --pdf_interval {pdfinterval}'
-    print("ISPAQ command for config", cmd)
+    print("ISPAQ:", cmd)
     proc = subprocess.Popen(
         cmd,
         shell=True
