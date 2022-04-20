@@ -6,7 +6,7 @@ from configparser import ConfigParser
 @pytest.fixture(scope="session")
 def testdata() -> dict:
     config = ConfigParser()
-    config.read("tests/data/config.ini")
+    config.read("stationverification/data/config.ini")
     return {"data": [[0, 0, 0, 0], [11, 0, 11, 0, 12], [1, 1, 1, 1],
                      [1, 1, 0, 1], [100, 100, 100, 100], [30,
                                                           100, 30, 100]],
