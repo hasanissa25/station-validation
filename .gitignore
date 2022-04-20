@@ -45,17 +45,17 @@ hasan/*
 distribution/*
 
 tests/data/* 
-!tests/data/apollo
-tests/data/apollo/* 
-!tests/data/apollo/archive
-tests/data/apollo/archive/* 
-!tests/data/apollo/archive/soh
-tests/data/apollo/archive/soh/* 
-!tests/data/apollo/archive/soh/2022
-tests/data/apollo/archive/soh/2022/* 
-!tests/data/apollo/archive/soh/2022/04
-tests/data/apollo/archive/soh/2022/04/* 
-!tests/data/apollo/archive/soh/2022/04/01
+# !tests/data/apollo
+# tests/data/apollo/* 
+# !tests/data/apollo/archive
+# tests/data/apollo/archive/* 
+# !tests/data/apollo/archive/soh
+# tests/data/apollo/archive/soh/* 
+# !tests/data/apollo/archive/soh/2022
+# tests/data/apollo/archive/soh/2022/* 
+# !tests/data/apollo/archive/soh/2022/04
+# tests/data/apollo/archive/soh/2022/04/* 
+# !tests/data/apollo/archive/soh/2022/04/01
 
 tests/generate_ratio_plot/data/*
 tests/run_ispaq/preffile
