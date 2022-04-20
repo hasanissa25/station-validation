@@ -11,3 +11,5 @@ omit =
         *stationverification/utilities/__init__.py*
         *stationverification/utilities/nagiosinterface.py*
         *stationverification/utilities/upload_results_to_s3.py*
+        *stationverification/utilities/plot_clock_offset.py*
+        *stationverification/utilities/plot_timing_quality.py*
