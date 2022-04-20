@@ -27,7 +27,8 @@ setup(
         'obspy==1.2.2',
         'rpy2==3.1.0',
         'rdflib',
-        'boto3'
+        'boto3',
+        'numpy==1.19.5'
     ],
     extras_require={
         'dev': [
