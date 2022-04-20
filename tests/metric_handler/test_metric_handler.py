@@ -2,8 +2,13 @@
 
 import pytest
 
-from stationverification.utilities.metric_handler import metric_handler
+from stationverification.utilities.metric_handler import metric_handler, check_metric_exists
 from stationverification.utilities import exceptions
+
+
+def test_check_metric_exists():
+    assert check_metric_exists("num_gaps") is True
+    assert check_metric_exists("does not exist") is False
 
 
 def test_metric_handler(testdata: dict):
