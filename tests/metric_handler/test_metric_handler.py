@@ -1,7 +1,6 @@
 # flake8: noqa
 
 import pytest
-
 from stationverification.utilities.metric_handler import metric_handler
 from stationverification.utilities import exceptions
 
