@@ -1,2 +1,13 @@
 [run]
-omit = stationverification/_version.py
+omit =
+        *stationverification/_version.py*
+        *stationverification/nagios/**
+        *stationverification/__init__.py*
+
+        *stationverification/bin/pushtonagios.py*
+        *stationverification/bin/dailyverification.py*
+        *stationverification/bin/__init__.py*
+
+        *stationverification/utilities/__init__.py*
+        *stationverification/utilities/nagiosinterface.py*
+        *stationverification/utilities/upload_results_to_s3.py*

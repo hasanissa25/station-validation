@@ -1,10 +1,13 @@
 # flake8: noqa
 
 import obspy
-
+import pytest
+import logging
+import numpy as np
+import numpy.ma as ma
 from typing import List
 
-from stationverification.utilities import sohmetrics
+from stationverification.utilities import exceptions, sohmetrics
 
 
 def test_getsohfiles(sohcriteria: dict):
@@ -52,3 +55,50 @@ def test_getstats(stream_with_gaps: obspy.Stream):
     assert stats.average == 4
     assert stats.minimum == 1
     assert stats.maximum == 7
+
+
+def test_get_merged_stream(stream_with_gaps: obspy.Stream,
+                           stream_without_gaps: obspy.Stream,
+                           empty_stream: obspy.Stream):
+    # Stream with gaps
+    mergedstream = sohmetrics.get_merged_stream(stream_with_gaps)
+    merged_stream_data = sohmetrics.get_stream_data_of_merged_streams(
+        mergedstream)
+    expected_masked_trace = ma.array(
+        [1, 2, 3, 4, 5, 6, 7], mask=[0, 0, 0, 1, 0, 0, 0])
+    assert (merged_stream_data == expected_masked_trace).all()
+
+    # Stream without gaps
+    mergedstream = sohmetrics.get_merged_stream(
+        stream_without_gaps)
+    merged_stream_data = sohmetrics.get_stream_data_of_merged_streams(
+        mergedstream)
+
+    expected_trace = np.array([1, 2, 3])
+
+    assert (merged_stream_data == expected_trace).all()
+
+    # Empty stream
+    with pytest.raises(exceptions.StreamError):
+        sohmetrics.get_merged_stream(
+            empty_stream)
+
+
+def test_get_stream_data_of_merged_streams(stream_with_gaps: obspy.Stream,
+                                           stream_without_gaps: obspy.Stream,
+                                           empty_stream: obspy.Stream):
+    # Stream with gaps
+    logging.info("Stream with gaps before merge", stream_with_gaps)
+    stream_with_gaps_merged = sohmetrics.get_merged_stream(stream_with_gaps)
+    logging.info("Stream with gaps after merge", stream_with_gaps_merged)
+
+    # Stream without gaps
+    logging.info("Stream without gaps before merge", stream_without_gaps)
+    stream_without_gaps_merged = sohmetrics.get_merged_stream(
+        stream_without_gaps)
+    logging.info("Stream without gaps after merge", stream_without_gaps_merged)
+
+    # Empty stream
+    # with pytest.raises(exceptions.StreamError):
+    #     sohmetrics.get_merged_stream(
+    #         empty_stream)
