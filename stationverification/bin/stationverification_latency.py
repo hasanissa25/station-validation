@@ -48,13 +48,19 @@ from configparser import ConfigParser
 from stationverification.utilities.\
     calculate_total_availability_for_nanometrics\
     import calculate_total_availability_for_nanometrics
+from stationverification.utilities.generate_CSV_from_failed_latencies import\
+    generate_CSV_from_failed_latencies
 
 from stationverification.utilities.latency import (
-    generate_CSV_from_failed_latencies, getfiles, getlatencies,
-    latency_line_plot, latency_log_plot, populate_json_with_latency_info,
-    timely_availability_plot)
+    populate_json_with_latency_info)
+from stationverification.utilities.get_latencies import get_latencies
+from stationverification.utilities.latency_line_plot import latency_line_plot
+from stationverification.utilities.latency_log_plot import latency_log_plot
+from stationverification.utilities.timely_availability_plot import \
+    timely_availability_plot
 from stationverification.utilities.upload_results_to_s3 import \
     upload_results_to_s3
+from stationverification.utilities.get_latency_files import get_latency_files
 
 
 class TimeSeriesError(Exception):
@@ -200,15 +206,15 @@ automatically uploaded to s3 bucket',
         raise TimeSeriesError('Enddate is not inclusive. To test for one day, set \
 the enddate to the day after the startdate')
     logging.info("Fetching latency files..")
-    files = getfiles(typeofinstrument=typeofinstrument,
-                     network=network,
-                     station=station,
-                     path=latencyFiles,
-                     startdate=startdate,
-                     enddate=enddate)
+    files = get_latency_files(typeofinstrument=typeofinstrument,
+                              network=network,
+                              station=station,
+                              path=latencyFiles,
+                              startdate=startdate,
+                              enddate=enddate)
     logging.info("Populating latency data..")
     combined_latency_dataframe_for_all_days_dataframe, \
-        array_of_daily_latency_dataframes = getlatencies(
+        array_of_daily_latency_dataframes = get_latencies(
             typeofinstrument=typeofinstrument,
             files=files,
             network=network,
@@ -249,8 +255,6 @@ the enddate to the day after the startdate')
     latency_line_plot(latencies=array_of_daily_latency_dataframes,
                       station=station,
                       startdate=startdate,
-                      enddate=enddate,
-                      typeofinstrument=typeofinstrument,
                       network=network,
                       timely_threshold=thresholds.getfloat(
                           'thresholds', 'data_timeliness', fallback=3),)

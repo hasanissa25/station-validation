@@ -41,6 +41,8 @@ latency/*
 # ignore results and data
 stationvalidation_output/*
 station_validation_results/*
+station_validation_latency_results/*
+
 hasan/*
 distribution/*
 
@@ -61,4 +63,3 @@ tests/generate_ratio_plot/data/*
 tests/run_ispaq/preffile
 stationverification/data/resp_files/*
 stationverification/data/stationXML.dataless
-station_validation_latency_results/*

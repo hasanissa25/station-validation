@@ -4,10 +4,12 @@
 # This script is to test our latency generating logic, from fetching the files, to producing the plots
 from datetime import date
 from stationverification.utilities.calculate_total_availability_for_nanometrics import calculate_total_availability_for_nanometrics
-from stationverification.utilities.latency import getfiles, getlatencies, latency_log_plot, latency_line_plot, generate_CSV_from_failed_latencies, timely_availability_plot, populate_json_with_latency_info
+from stationverification.utilities.latency import getfiles, getlatencies, latency_log_plot, latency_line_plot, generate_CSV_from_failed_latencies, populate_json_with_latency_info
 
 import os
 import json
+
+from stationverification.utilities.timely_availability_plot import timely_availability_plot
 
 # Apollo Parameters
 required_network = "QW"
