@@ -47,6 +47,7 @@ default ispaq config file.
     -c STATIONCONFIG, --stationconfig STATIONCONFIG
                         Path to the file that contains station information.
  True or False
+
 Functions:
 ----------
 main()

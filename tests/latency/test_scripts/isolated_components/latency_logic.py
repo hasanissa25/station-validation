@@ -3,7 +3,7 @@
 
 # This script is to test our latency generating logic, from fetching the files, to producing the plots
 from datetime import date
-from stationverification.utilities.calculate_total_availability_for_apollo import calculate_total_availability
+from stationverification.utilities.calculate_total_availability_for_nanometrics import calculate_total_availability_for_nanometrics
 from stationverification.utilities.latency import getfiles, getlatencies, latency_log_plot, latency_line_plot, generate_CSV_from_failed_latencies, timely_availability_plot, populate_json_with_latency_info
 
 import os
@@ -47,7 +47,7 @@ combined_latency_dataframe_for_all_days_dataframe, array_of_daily_latency_datafr
     station=required_station,
     startdate=startdate,
     enddate=enddate)
-total_availability = calculate_total_availability(files)
+total_availability = calculate_total_availability_for_nanometrics(files)
 generate_CSV_from_failed_latencies(latencies=combined_latency_dataframe_for_all_days_dataframe,
                                    station=required_station,
                                    network=required_network,

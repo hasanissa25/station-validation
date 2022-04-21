@@ -501,7 +501,7 @@ def percent_availability_plot(
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
-        plt.close()
+    plt.close()
 
 
 def pct_above_nhnm_plot(

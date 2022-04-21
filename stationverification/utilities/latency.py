@@ -6,6 +6,8 @@ import logging
 import subprocess
 import json
 import os
+import warnings
+
 import numpy as np
 from typing import List, Tuple, Any
 from datetime import date, timedelta
@@ -19,18 +21,16 @@ import matplotlib.dates as mdates
 import pandas as pd
 from pandas.core.frame import DataFrame
 from pandas.plotting import register_matplotlib_converters
-from stationverification.utilities.calculate_total_availability_for_apollo\
-    import calculate_total_availability
+
+from stationverification.utilities.\
+    calculate_total_availability_for_nanometrics\
+    import calculate_total_availability_for_nanometrics
 from stationverification.utilities.get_latencies_from_apollo \
     import get_latencies_from_apollo
-
-
 from stationverification.utilities.julian_day_converter import \
     datetime_to_year_and_julian_day
 
-import warnings
 warnings.filterwarnings("ignore")
-
 logging.basicConfig(level=logging.INFO)
 
 
@@ -110,7 +110,7 @@ def latencyreport(
     # Produce latency plots
     logging.info("Calculating total availability..")
 
-    total_availability = calculate_total_availability(files)
+    total_availability = calculate_total_availability_for_nanometrics(files)
     logging.info("Generating timely availability plot..")
 
     timely_availability_plot(latencies=array_of_daily_latency_dataframes,

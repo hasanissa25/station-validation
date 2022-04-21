@@ -45,8 +45,9 @@ from dateutil import parser as dateparser  # type: ignore
 from datetime import date, timedelta  # type: ignore
 from stationverification import CONFIG
 from configparser import ConfigParser
-from stationverification.utilities.calculate_total_availability_for_apollo\
-    import calculate_total_availability
+from stationverification.utilities.\
+    calculate_total_availability_for_nanometrics\
+    import calculate_total_availability_for_nanometrics
 
 from stationverification.utilities.latency import (
     generate_CSV_from_failed_latencies, getfiles, getlatencies,
@@ -215,7 +216,7 @@ the enddate to the day after the startdate')
             startdate=startdate,
             enddate=enddate)
     logging.info("Calculating total availability..")
-    total_availability = calculate_total_availability(files)
+    total_availability = calculate_total_availability_for_nanometrics(files)
     logging.info("Generating CSV of failed latencies..")
     generate_CSV_from_failed_latencies(
         latencies=combined_latency_dataframe_for_all_days_dataframe,
