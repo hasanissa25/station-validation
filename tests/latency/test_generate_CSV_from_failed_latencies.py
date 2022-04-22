@@ -1,8 +1,6 @@
 # flake8:noqa
 import os
 import subprocess
-
-from build import logging
 from stationverification.utilities.generate_CSV_from_failed_latencies import generate_CSV_from_failed_latencies
 from pathlib import Path
 
