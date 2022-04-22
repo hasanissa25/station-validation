@@ -1,19 +1,18 @@
 # flake8:noqa
-import os
 import subprocess
 from stationverification.utilities.generate_CSV_from_failed_latencies import generate_CSV_from_failed_latencies
 from pathlib import Path
 
 
 def test_generate_CSV_from_failed_latencies(latency_parameters_nanometrics, latency_dataframe):
-    combined_latency_dataframe_for_all_days, startdate, enddate = latency_dataframe
+    combined_latency_dataframe_for_all_days = latency_dataframe
     subprocess.getoutput(
-        "rmdir 'stationvalidation_output'")
+        "rm -rf 'stationvalidation_output'")
     generate_CSV_from_failed_latencies(latencies=combined_latency_dataframe_for_all_days,
                                        station=latency_parameters_nanometrics.station,
                                        network=latency_parameters_nanometrics.network,
-                                       startdate=startdate,
-                                       enddate=enddate,
+                                       startdate=latency_parameters_nanometrics.startdate,
+                                       enddate=latency_parameters_nanometrics.enddate,
                                        timely_threshold=latency_parameters_nanometrics.timely_threshold)
     file_name = Path(
         "stationvalidation_output/QW.QCC02-2022-04-01_to_2022-04-04-failed_latencies.csv")

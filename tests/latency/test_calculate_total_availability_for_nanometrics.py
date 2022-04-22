@@ -1,6 +1,4 @@
 # flake8:noqa
-import logging
-
 from stationverification.utilities.calculate_total_availability_for_nanometrics import calculate_total_availability_for_nanometrics
 
 

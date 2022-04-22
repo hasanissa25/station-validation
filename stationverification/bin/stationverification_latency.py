@@ -239,7 +239,7 @@ the enddate to the day after the startdate')
                              enddate=enddate,
                              network=network,
                              timely_threshold=thresholds.getfloat(
-                                 'thresholds', 'data_timeliness', fallback=3),)
+                                 'thresholds', 'data_timeliness', fallback=3))
     logging.info("Generating latency log plots..")
 
     latency_log_plot(latencies=combined_latency_dataframe_for_all_days_dataframe,  # noqa
@@ -257,7 +257,7 @@ the enddate to the day after the startdate')
                       startdate=startdate,
                       network=network,
                       timely_threshold=thresholds.getfloat(
-                          'thresholds', 'data_timeliness', fallback=3),)
+                          'thresholds', 'data_timeliness', fallback=3))
     logging.info("Generating JSON report..")
 
     populate_json_with_latency_info(
@@ -267,7 +267,7 @@ the enddate to the day after the startdate')
         timely_threshold=thresholds.getfloat(
                 'thresholds', 'data_timeliness', fallback=3),
         timely_percent=thresholds.getfloat(
-                'thresholds', 'timely_data_percentage', fallback=98.0),
+                'thresholds', 'timely_data_percentage', fallback=98.0)
     )
 
     dump_json_report(startdate=startdate,

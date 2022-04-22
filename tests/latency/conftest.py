@@ -50,7 +50,7 @@ def latency_parameters_nanometrics() -> dict:
                              network="QW",
                              station="QCC02",
                              startdate=date(2022, 4, 1),
-                             enddate=date(2022, 4, 2),
+                             enddate=date(2022, 4, 4),
                              path="tests/data/apollo/archive/latency",
                              json_dict={
                                  "channels": {
@@ -98,6 +98,4 @@ def latency_dataframe() -> Tuple[Any, date, date]:
                               'data_latency': 2.5}
     combined_latency_dataframe_for_all_days = pd.DataFrame(
         data=latency_data, index=columns).T
-    startdate = date(2022, 4, 1)
-    enddate = date(2022, 4, 4)
-    return combined_latency_dataframe_for_all_days, startdate, enddate
+    return combined_latency_dataframe_for_all_days
