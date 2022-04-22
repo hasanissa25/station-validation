@@ -16,9 +16,11 @@ def generate_CSV_from_failed_latencies(latencies: DataFrame,
 failed_latencies.csv'
     latencies_above_three = latencies.loc[latencies.data_latency
                                           > timely_threshold]
-    if 'date' in latencies.columns:
-        latencies.drop(
-            'date', axis=1, inplace=True)
+    # This part is specifically for Guralp Latencies.
+    # Need to look into if its neccessary
+    # if 'date' in latencies.columns:
+    #     latencies.drop(
+    #         'date', axis=1, inplace=True)
     latencies_above_three_rounded = latencies_above_three.loc[:,
                                                               ['network',
                                                                'station',

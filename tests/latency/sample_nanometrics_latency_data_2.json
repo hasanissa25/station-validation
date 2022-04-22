@@ -4,8 +4,8 @@
             "id": "QW.QCC02.HNE",
             "intervals": [
                 {
-                    "startTime": "2022-04-01T00:00:00.000000000Z",
-                    "endTime": "2022-04-01T00:00:00.999999989Z",
+                    "startTime": "2022-04-02T00:00:00.000000000Z",
+                    "endTime": "2022-04-02T00:00:00.999999989Z",
                     "actualNanosecondsAvailable": 359999989,
                     "expectedNanosecondsAvailable": 999999989,
                     "percentAvailability": 35,
@@ -27,8 +27,8 @@
             "id": "QW.QCC02.HNN",
             "intervals": [
                 {
-                    "startTime": "2022-04-01T00:00:00.000000000Z",
-                    "endTime": "2022-04-01T00:00:00.999999989Z",
+                    "startTime": "2022-04-02T00:00:00.000000000Z",
+                    "endTime": "2022-04-02T00:00:00.999999989Z",
                     "actualNanosecondsAvailable": 359999989,
                     "expectedNanosecondsAvailable": 999999989,
                     "percentAvailability": 60,
@@ -44,8 +44,8 @@
                     }
                 },
                 {
-                    "startTime": "2022-04-01T00:00:00.000000000Z",
-                    "endTime": "2022-04-01T00:00:00.999999989Z",
+                    "startTime": "2022-04-02T00:00:01.000000000Z",
+                    "endTime": "2022-04-02T00:00:00.999999989Z",
                     "actualNanosecondsAvailable": 359999989,
                     "expectedNanosecondsAvailable": 999999989,
                     "percentAvailability": 10,
@@ -67,8 +67,8 @@
             "id": "QW.QCC02.HNZ",
             "intervals": [
                 {
-                    "startTime": "2022-04-01T00:00:00.000000000Z",
-                    "endTime": "2022-04-01T00:00:00.999999989Z",
+                    "startTime": "2022-04-02T00:00:00.000000000Z",
+                    "endTime": "2022-04-02T00:00:00.999999989Z",
                     "actualNanosecondsAvailable": 359999989,
                     "expectedNanosecondsAvailable": 999999989,
                     "percentAvailability": 5,
@@ -84,8 +84,8 @@
                     }
                 },
                 {
-                    "startTime": "2022-04-01T00:00:00.000000000Z",
-                    "endTime": "2022-04-01T00:00:00.999999989Z",
+                    "startTime": "2022-04-02T00:00:01.000000000Z",
+                    "endTime": "2022-04-02T00:00:00.999999989Z",
                     "actualNanosecondsAvailable": 359999989,
                     "expectedNanosecondsAvailable": 999999989,
                     "percentAvailability": 35,
