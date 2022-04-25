@@ -68,6 +68,11 @@ def latency_test_files() -> list:
 
 
 @pytest.fixture(scope="session")
+def latency_test_file_over_3_packets() -> list:
+    return ['tests/latency/sample_nanometrics_latency_data_4.json']
+
+
+@pytest.fixture(scope="session")
 def latency_dataframe() -> Tuple[Any, date, date]:
     columns = ('network', 'station', 'channel',
                'startTime', 'data_latency')
