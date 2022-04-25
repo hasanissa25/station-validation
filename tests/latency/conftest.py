@@ -63,13 +63,37 @@ def latency_parameters_nanometrics() -> LatencyParameters:
 
 
 @pytest.fixture(scope="session")
+def latency_parameters_guralp() -> LatencyParameters:
+    return LatencyParameters(type_of_instrument="GURALP",
+                             network="QW",
+                             station="QCN08",
+                             startdate=date(2022, 3, 1),
+                             enddate=date(2022, 3, 3),
+                             path="tests/data/guralp/archive/latency",
+                             json_dict={
+                                 "channels": {
+                                     "HNN": {},
+                                     "HNE": {},
+                                     "HNZ": {}
+                                 }},
+                             timely_threshold=3,
+                             timely_percent=98)
+
+
+@pytest.fixture(scope="session")
 def latency_test_files_nanometrics() -> list:
-    return ['tests/latency/sample_nanometrics_latency_data_1.json', 'tests/latency/sample_nanometrics_latency_data_2.json', 'tests/latency/sample_nanometrics_latency_data_3.json']
+    return ['tests/latency/test_data/sample_nanometrics_latency_data_1.json', 'tests/latency/test_data/sample_nanometrics_latency_data_2.json', 'tests/latency/test_data/sample_nanometrics_latency_data_3.json']
 
 
 @pytest.fixture(scope="session")
 def latency_test_file_nanometrics_over_3_packets() -> list:
-    return ['tests/latency/sample_nanometrics_latency_data_4.json']
+    return ['tests/latency/test_data/sample_nanometrics_latency_data_4.json']
+
+
+@pytest.fixture(scope="session")
+def latency_test_files_guralp() -> list:
+    return ['tests/latency/test_data/sample_guralp_latency_data_HNE_1.csv', 'tests/latency/test_data/sample_guralp_latency_data_HNN_1.csv', 'tests/latency/test_data/sample_guralp_latency_data_HNZ_1.csv',
+            'tests/latency/test_data/sample_guralp_latency_data_HNE_2.csv', 'tests/latency/test_data/sample_guralp_latency_data_HNN_2.csv', 'tests/latency/test_data/sample_guralp_latency_data_HNZ_2.csv']
 
 
 @pytest.fixture(scope="session")
