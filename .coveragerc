@@ -1,14 +1,13 @@
 [run]
 omit =
         *stationverification/_version.py*
-        *stationverification/__init__.py*
         *stationverification/nagios/**
 
-        *stationverification/bin/__init__.py*
         *stationverification/bin/pushtonagios.py*
         *stationverification/bin/dailyverification.py*
+        *stationverification/bin/stationverification.py*
+        *stationverification/bin/stationverification_latency.py*
 
-        *stationverification/utilities/__init__.py*
         *stationverification/utilities/nagiosinterface.py*
         *stationverification/utilities/prepare_ispaq.py*
         *stationverification/utilities/handle_running_ispaq_command.py*

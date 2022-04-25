@@ -7,8 +7,8 @@ station = "QW.QCC02.*.H??"
 ispaqloc = "../ISPAQ/ispaq/run_ispaq.py"
 pfile = 'stationverification/data/eew_preferences.txt'
 
-startdate = date(2022, 3, 8)
-enddate = date(2022, 3, 9)
+startdate = date(2022, 4, 1)
+enddate = date(2022, 4, 4)
 metrics = "eew_test"
 
 station_url = "stationverification/data/QW.xml"

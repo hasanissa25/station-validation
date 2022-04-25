@@ -45,7 +45,7 @@ class LatencyParameters(dict):
 
 
 @pytest.fixture(scope="session")
-def latency_parameters_nanometrics() -> dict:
+def latency_parameters_nanometrics() -> LatencyParameters:
     return LatencyParameters(type_of_instrument="APOLLO",
                              network="QW",
                              station="QCC02",
