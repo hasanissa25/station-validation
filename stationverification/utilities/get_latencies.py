@@ -54,4 +54,4 @@ def get_latencies(
                 startdate=startdate,
                 enddate=enddate)
     return combined_latency_dataframe_for_all_days_dataframe,\
-        array_of_daily_latency_dataframes,
+        array_of_daily_latency_dataframes

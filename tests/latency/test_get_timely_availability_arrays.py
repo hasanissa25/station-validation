@@ -3,10 +3,10 @@ from stationverification.utilities.get_latencies_from_apollo import get_latencie
 from stationverification.utilities.timely_availability_plot import get_timely_availability_arrays
 
 
-def test_get_timely_availability_arrays(latency_parameters_nanometrics, latency_test_files):
+def test_get_timely_availability_arrays(latency_parameters_nanometrics, latency_test_files_nanometrics):
     combined_latency_dataframe_for_all_days_dataframe,\
         array_of_daily_latency_dataframes = get_latencies_from_apollo(
-            files=latency_test_files,
+            files=latency_test_files_nanometrics,
             network=latency_parameters_nanometrics.network,
             station=latency_parameters_nanometrics.station)
     HNN_timely_availability_percentage_array,\

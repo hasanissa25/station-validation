@@ -63,12 +63,12 @@ def latency_parameters_nanometrics() -> LatencyParameters:
 
 
 @pytest.fixture(scope="session")
-def latency_test_files() -> list:
+def latency_test_files_nanometrics() -> list:
     return ['tests/latency/sample_nanometrics_latency_data_1.json', 'tests/latency/sample_nanometrics_latency_data_2.json', 'tests/latency/sample_nanometrics_latency_data_3.json']
 
 
 @pytest.fixture(scope="session")
-def latency_test_file_over_3_packets() -> list:
+def latency_test_file_nanometrics_over_3_packets() -> list:
     return ['tests/latency/sample_nanometrics_latency_data_4.json']
 
 

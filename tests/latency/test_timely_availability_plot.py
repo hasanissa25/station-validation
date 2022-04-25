@@ -6,12 +6,12 @@ from stationverification.utilities.timely_availability_plot import timely_availa
 from stationverification.utilities.get_latencies_from_apollo import get_latencies_from_apollo
 
 
-def test_timely_availability_plot(latency_parameters_nanometrics, latency_test_files):
+def test_timely_availability_plot(latency_parameters_nanometrics, latency_test_files_nanometrics):
     subprocess.getoutput(
         "rm -rf 'stationvalidation_output'")
     combined_latency_dataframe_for_all_days_dataframe,\
         array_of_daily_latency_dataframes = get_latencies_from_apollo(
-            files=latency_test_files,
+            files=latency_test_files_nanometrics,
             network=latency_parameters_nanometrics.network,
             station=latency_parameters_nanometrics.station)
     timely_availability_plot(
