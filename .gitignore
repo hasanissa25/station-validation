@@ -21,7 +21,7 @@ csv/*
 PDFs/*
 PSDs/*
 *ISPAQ_TRANSCRIPT.log
-*.json
+# *.json
 *.png
 
 # Ignore experimental files
