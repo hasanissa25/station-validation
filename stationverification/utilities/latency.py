@@ -29,15 +29,6 @@ warnings.filterwarnings("ignore")
 logging.basicConfig(level=logging.INFO)
 
 
-class StationNotInFileException(Exception):
-    '''
-    Exception to be raised if station in missing from file
-    '''
-
-    def __init__(self, msg):
-        super().__init__(msg)
-
-
 def latencyreport(
         typeofinstrument: str,
         network: str,
@@ -47,7 +38,7 @@ def latencyreport(
         path: str,
         json_dict: dict,
         timely_threshold: float,
-        timely_percent: float,
+        timely_percent: float
 ) -> dict:
     '''
     Function to report on latency information about a station

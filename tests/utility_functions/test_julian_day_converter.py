@@ -1,4 +1,3 @@
-import logging
 from datetime import date, datetime
 
 from stationverification.utilities.julian_day_converter import \

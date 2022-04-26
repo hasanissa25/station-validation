@@ -2,6 +2,8 @@ import logging
 import os
 import warnings
 
+from typing import Optional
+
 import numpy as np
 from datetime import date, timedelta
 
@@ -22,7 +24,7 @@ def latency_log_plot(
     typeofinstrument: str,
     network: str,
     timely_threshold: float,
-    total_availability: float
+    total_availability: Optional[float] = None
 ):
     '''
     Generates a log plot of latency values for a station

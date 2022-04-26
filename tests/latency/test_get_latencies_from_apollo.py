@@ -1,7 +1,5 @@
 # flake8=noqa
 import subprocess
-
-from build import logging
 from stationverification.utilities.get_latencies_from_apollo import get_latencies_from_apollo
 
 
@@ -13,5 +11,3 @@ def test_get_latencies_from_apollo(latency_parameters_nanometrics, latency_test_
             files=latency_test_file_nanometrics_over_3_packets,
             network=latency_parameters_nanometrics.network,
             station=latency_parameters_nanometrics.station)
-    logging.info(
-        f'array_of_daily_latency_dataframes f{array_of_daily_latency_dataframes}')

@@ -2,8 +2,6 @@
 
 import obspy
 import pytest
-import logging
-
 import numpy as np
 import numpy.ma as ma
 
