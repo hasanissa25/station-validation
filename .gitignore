@@ -47,7 +47,7 @@ hasan/*
 distribution/*
 
 tests/data/* 
-!tests/data/ispaq_outputs
+# !tests/data/ispaq_outputs
 # tests/data/apollo/* 
 # !tests/data/apollo/archive
 # tests/data/apollo/archive/* 

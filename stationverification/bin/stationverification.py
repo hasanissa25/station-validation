@@ -40,13 +40,14 @@ default ispaq config file.
                         type of instrument used, APOLLO or GURALP
     -U UPLOADTOS3, --uploadresultstos3 UPLOADTOS3
                         Whether or not to upload results to the S3 bucket.\
+                            True or False
     -b NAMEOFS3BUCKET, --s3bucketname NAMEOFS3BUCKET
                         To which bucket to upload in S3
     -B S3PATHTOSAVETO, --s3bucketpathtosaveto S3PATHTOSAVETO
                         Which 'directory' in S3 to save to
     -c STATIONCONFIG, --stationconfig STATIONCONFIG
                         Path to the file that contains station information.
- True or False
+
 
 Functions:
 ----------
