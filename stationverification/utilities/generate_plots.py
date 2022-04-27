@@ -73,6 +73,8 @@ class PlotParameters(dict):
 
 
 def plot_metrics(plotParameters: PlotParameters):
+    if not os.path.isdir("./stationvalidation_output"):
+        os.mkdir('./stationvalidation_output')
     ADC_plot(plotParameters)
     max_gap_plot(plotParameters)
     num_gaps_plot(plotParameters)
@@ -83,8 +85,8 @@ def plot_metrics(plotParameters: PlotParameters):
     pct_above_nhnm_plot(plotParameters)
     pct_below_nlnm_plot(plotParameters)
 
-    dead_channel_lin_plot(plotParameters)
-    dead_channel_gsn_plot(plotParameters)
+    # dead_channel_lin_plot(plotParameters)
+    # dead_channel_gsn_plot(plotParameters)
 
 # Function to graph the ADC plot for visual representation
 # Since what values are normal for these metrics seems to differ from one
@@ -169,9 +171,6 @@ ADC Count (range: [0, +/- 8,388,608])')
             plot_filename = f'{network}.{station}.{channel}.{start}_\
 {(stop + timedelta(days=-1))}.ADC_Count'
         # Write the plot to the output directory
-        if not os.path.isdir("./stationvalidation_output"):
-            os.mkdir('./stationvalidation_output')
-        # plt.savefig(f'stationvalidation_output/{plot_filename}')
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300,
                     bbox_extra_artists=(legend,),
@@ -235,9 +234,6 @@ def num_overlaps_plot(
 {(stop + timedelta(days=-1))}.num_overlaps'
 
         # Write the plot to the output directory
-        if not os.path.isdir("./stationvalidation_output"):
-            os.mkdir('./stationvalidation_output')
-        # plt.savefig(f'stationvalidation_output/{plot_filename}')
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
@@ -299,9 +295,6 @@ def num_gaps_plot(
             plot_filename = f'{network}.{station}.{channel}.{start}_\
 {(stop + timedelta(days=-1))}.num_gaps'
         # Write the plot to the output directory
-        if not os.path.isdir("./stationvalidation_output"):
-            os.mkdir('./stationvalidation_output')
-        # plt.savefig(f'stationvalidation_output/{plot_filename}')
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
@@ -362,9 +355,6 @@ def max_gap_plot(
             plot_filename = f'{network}.{station}.{channel}.{start}_\
 {(stop + timedelta(days=-1))}.max_gap'
         # Write the plot to the output directory
-        if not os.path.isdir("./stationvalidation_output"):
-            os.mkdir('./stationvalidation_output')
-        # plt.savefig(f'stationvalidation_output/{plot_filename}')
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
@@ -428,9 +418,6 @@ def spikes_plot(
             plot_filename = f'{network}.{station}.{channel}.{start}_\
 {(stop + timedelta(days=-1))}.spikes'
         # Write the plot to the output directory
-        if not os.path.isdir("./stationvalidation_output"):
-            os.mkdir('./stationvalidation_output')
-        # plt.savefig(f'stationvalidation_output/{plot_filename}')
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
@@ -495,9 +482,6 @@ def percent_availability_plot(
             plot_filename = f'{network}.{station}.{channel}.{start}_\
 {(stop + timedelta(days=-1))}.percent_availability'
         # Write the plot to the output directory
-        if not os.path.isdir("./stationvalidation_output"):
-            os.mkdir('./stationvalidation_output')
-        # plt.savefig(f'stationvalidation_output/{plot_filename}')
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
@@ -564,9 +548,6 @@ Percent above New High Noise Model')
             plot_filename = f'{network}.{station}.{channel}.{start}_\
 {(stop + timedelta(days=-1))}.pct_above_nhnm'
         # Write the plot to the output directory
-        if not os.path.isdir("./stationvalidation_output"):
-            os.mkdir('./stationvalidation_output')
-        # plt.savefig(f'stationvalidation_output/{plot_filename}')
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
@@ -631,138 +612,131 @@ Percent below New Low Noise Model')
             plot_filename = f'{network}.{station}.{channel}.{start}_\
 {(stop + timedelta(days=-1))}.pct_below_nlnm'
         # Write the plot to the output directory
-        if not os.path.isdir("./stationvalidation_output"):
-            os.mkdir('./stationvalidation_output')
-        # plt.savefig(f'stationvalidation_output/{plot_filename}')
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
     plt.close()
 
 
-def dead_channel_lin_plot(
-    plotParameters: PlotParameters
-):
-    network = plotParameters.network
-    station = plotParameters.station
-    channel = plotParameters.channel
-    stationMetricData = plotParameters.stationMetricData
-    start = plotParameters.start
-    stop = plotParameters.stop
+# def dead_channel_lin_plot(
+#     plotParameters: PlotParameters
+# ):
+#     network = plotParameters.network
+#     station = plotParameters.station
+#     channel = plotParameters.channel
+#     stationMetricData = plotParameters.stationMetricData
+#     start = plotParameters.start
+#     stop = plotParameters.stop
 
-    # Generatre x-axis values as days since startdate
-    difference = stop - start
-    x_axis = np.arange(0, difference.days, 1)
+#     # Generatre x-axis values as days since startdate
+#     difference = stop - start
+#     x_axis = np.arange(0, difference.days, 1)
 
-    # Create plot
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    # this locator puts ticks at regular intervals in setps of "base"
-    # loc = plticker.MultipleLocator(base=1.0)
-    # ax.yaxis.set_major_locator(loc)
+#     # Create plot
+#     fig = plt.figure()
+#     ax = fig.add_subplot(111)
+#     # this locator puts ticks at regular intervals in setps of "base"
+#     # loc = plticker.MultipleLocator(base=1.0)
+#     # ax.yaxis.set_major_locator(loc)
 
-    size_of_x_axis = x_axis.size
-    size_of_metric_data = len(stationMetricData.get_values(
-        'dead_channel_lin', network, station, channel))
-    if size_of_metric_data == size_of_x_axis:
-        ax.bar(
-            x_axis, stationMetricData.get_values(
-                'dead_channel_lin', network, station, channel))
+#     size_of_x_axis = x_axis.size
+#     size_of_metric_data = len(stationMetricData.get_values(
+#         'dead_channel_lin', network, station, channel))
+#     if size_of_metric_data == size_of_x_axis:
+#         ax.bar(
+#             x_axis, stationMetricData.get_values(
+#                 'dead_channel_lin', network, station, channel))
 
-        # Function for formatting the x values to actually be dates
+#         # Function for formatting the x values to actually be dates
 
-        def timeTicks(x, pos):
-            date = start + timedelta(days=x)
-            return str(date.isoformat())
+#         def timeTicks(x, pos):
+#             date = start + timedelta(days=x)
+#             return str(date.isoformat())
 
-        # Format the x axis values to be dates and rotate them 90 degrees
-        formatter = matplotlib.ticker.FuncFormatter(timeTicks)
-        ax.xaxis.set_major_formatter(formatter)
-        plt.xticks(rotation=90)
+#         # Format the x axis values to be dates and rotate them 90 degrees
+#         formatter = matplotlib.ticker.FuncFormatter(timeTicks)
+#         ax.xaxis.set_major_formatter(formatter)
+#         plt.xticks(rotation=90)
 
-        ax.set_title(f'{network}.{station}.{channel} - Dead Channel Lin')
+#         ax.set_title(f'{network}.{station}.{channel} - Dead Channel Lin')
 
-        # Add a grid to the plot to make the symmetry more obvious
-        ax.set_axisbelow(True)
-        plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
+#         # Add a grid to the plot to make the symmetry more obvious
+#         ax.set_axisbelow(True)
+#         plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
 
-        # Save the plot to file and then close it so the next channel's metrics
-        # aren't plotted on the same plot
-        if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}.{channel}.{start}\
-.dead_channel_lin'
-        else:
-            plot_filename = f'{network}.{station}.{channel}.{start}_\
-{(stop + timedelta(days=-1))}.dead_channel_lin'
-        # Write the plot to the output directory
-        if not os.path.isdir("./stationvalidation_output"):
-            os.mkdir('./stationvalidation_output')
-        # plt.savefig(f'stationvalidation_output/{plot_filename}')
-        plt.savefig(f'stationvalidation_output/{plot_filename}.png',
-                    dpi=300, bbox_inches='tight')
-        logging.info(f'{plot_filename} created.')
-    plt.close()
+#         # Save the plot to file and then close it so the next channel's\
+#  metrics
+#         # aren't plotted on the same plot
+#         if start == stop - timedelta(days=1):
+#             plot_filename = f'{network}.{station}.{channel}.{start}\
+# .dead_channel_lin'
+#         else:
+#             plot_filename = f'{network}.{station}.{channel}.{start}_\
+# {(stop + timedelta(days=-1))}.dead_channel_lin'
+#         # Write the plot to the output directory
+#         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
+#                     dpi=300, bbox_inches='tight')
+#         logging.info(f'{plot_filename} created.')
+#     plt.close()
 
 
-def dead_channel_gsn_plot(
-    plotParameters: PlotParameters
-):
-    network = plotParameters.network
-    station = plotParameters.station
-    channel = plotParameters.channel
-    stationMetricData = plotParameters.stationMetricData
-    start = plotParameters.start
-    stop = plotParameters.stop
+# def dead_channel_gsn_plot(
+#     plotParameters: PlotParameters
+# ):
+#     network = plotParameters.network
+#     station = plotParameters.station
+#     channel = plotParameters.channel
+#     stationMetricData = plotParameters.stationMetricData
+#     start = plotParameters.start
+#     stop = plotParameters.stop
 
-    # Generatre x-axis values as days since startdate
-    difference = stop - start
-    x_axis = np.arange(0, difference.days, 1)
+#     # Generatre x-axis values as days since startdate
+#     difference = stop - start
+#     x_axis = np.arange(0, difference.days, 1)
 
-    # Create plot
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    # this locator puts ticks at regular intervals in setps of "base"
-    # loc = plticker.MultipleLocator(base=1.0)
-    # ax.yaxis.set_major_locator(loc)
+#     # Create plot
+#     fig = plt.figure()
+#     ax = fig.add_subplot(111)
+#     # this locator puts ticks at regular intervals in setps of "base"
+#     # loc = plticker.MultipleLocator(base=1.0)
+#     # ax.yaxis.set_major_locator(loc)
 
-    size_of_x_axis = x_axis.size
-    size_of_metric_data = len(stationMetricData.get_values(
-        'dead_channel_gsn', network, station, channel))
-    if size_of_metric_data == size_of_x_axis:
-        ax.bar(
-            x_axis, stationMetricData.get_values(
-                'dead_channel_gsn', network, station, channel))
+#     size_of_x_axis = x_axis.size
+#     size_of_metric_data = len(stationMetricData.get_values(
+#         'dead_channel_gsn', network, station, channel))
+#     if size_of_metric_data == size_of_x_axis:
+#         ax.bar(
+#             x_axis, stationMetricData.get_values(
+#                 'dead_channel_gsn', network, station, channel))
 
-        # Function for formatting the x values to actually be dates
+#         # Function for formatting the x values to actually be dates
 
-        def timeTicks(x, pos):
-            date = start + timedelta(days=x)
-            return str(date.isoformat())
+#         def timeTicks(x, pos):
+#             date = start + timedelta(days=x)
+#             return str(date.isoformat())
 
-        # Format the x axis values to be dates and rotate them 90 degrees
-        formatter = matplotlib.ticker.FuncFormatter(timeTicks)
-        ax.xaxis.set_major_formatter(formatter)
-        plt.xticks(rotation=90)
+#         # Format the x axis values to be dates and rotate them 90 degrees
+#         formatter = matplotlib.ticker.FuncFormatter(timeTicks)
+#         ax.xaxis.set_major_formatter(formatter)
+#         plt.xticks(rotation=90)
 
-        ax.set_title(f'{network}.{station}.{channel} - Dead Channel GSN')
+#         ax.set_title(f'{network}.{station}.{channel} - Dead Channel GSN')
 
-        # Add a grid to the plot to make the symmetry more obvious
-        ax.set_axisbelow(True)
-        plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
+#         # Add a grid to the plot to make the symmetry more obvious
+#         ax.set_axisbelow(True)
+#         plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
 
-        # Save the plot to file and then close it so the next channel's metrics
-        # aren't plotted on the same plot
-        if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}.{channel}.{start}\
-.dead_channel_gsn'
-        else:
-            plot_filename = f'{network}.{station}.{channel}.{start}_\
-{(stop + timedelta(days=-1))}.dead_channel_gsn'
-        # Write the plot to the output directory
-        if not os.path.isdir("./stationvalidation_output"):
-            os.mkdir('./stationvalidation_output')
-        # plt.savefig(f'stationvalidation_output/{plot_filename}')
-        plt.savefig(f'stationvalidation_output/{plot_filename}.png',
-                    dpi=300, bbox_inches='tight')
-        logging.info(f'{plot_filename} created.')
-    plt.close()
+#         # Save the plot to file and then close it so the next channel's\
+#  metrics
+#         # aren't plotted on the same plot
+#         if start == stop - timedelta(days=1):
+#             plot_filename = f'{network}.{station}.{channel}.{start}\
+# .dead_channel_gsn'
+#         else:
+#             plot_filename = f'{network}.{station}.{channel}.{start}_\
+# {(stop + timedelta(days=-1))}.dead_channel_gsn'
+#         # Write the plot to the output directory
+#         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
+#                     dpi=300, bbox_inches='tight')
+#         logging.info(f'{plot_filename} created.')
+#     plt.close()
