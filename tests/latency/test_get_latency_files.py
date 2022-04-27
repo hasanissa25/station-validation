@@ -10,21 +10,21 @@ def test_get_latency_files(latency_parameters_nanometrics, latency_parameters_gu
                                           station=latency_parameters_nanometrics.station,
                                           startdate=latency_parameters_nanometrics.startdate,
                                           enddate=latency_parameters_nanometrics.enddate)
-    assert nanometrics_files == ['tests/data/apollo/archive/latency/2022/04/01/QW.QCC02.2022.091.json',
-                                 'tests/data/apollo/archive/latency/2022/04/02/QW.QCC02.2022.092.json',
-                                 'tests/data/apollo/archive/latency/2022/04/03/QW.QCC02.2022.093.json']
+    assert nanometrics_files == ['tests/latency/test_data/apollo/archive/latency/2022/04/01/QW.QCC02.2022.091.json',
+                                 'tests/latency/test_data/apollo/archive/latency/2022/04/02/QW.QCC02.2022.092.json',
+                                 'tests/latency/test_data/apollo/archive/latency/2022/04/03/QW.QCC02.2022.093.json']
     guralp_files = get_latency_files(typeofinstrument=latency_parameters_guralp.type_of_instrument,
                                      network=latency_parameters_guralp.network,
                                      path=latency_parameters_guralp.path,
                                      station=latency_parameters_guralp.station,
                                      startdate=latency_parameters_guralp.startdate,
                                      enddate=latency_parameters_guralp.enddate)
-    assert guralp_files == ['tests/data/guralp/archive/latency/2022/03/01/QW_QCN08_0N_HNE_2022_060.csv',
-                            'tests/data/guralp/archive/latency/2022/03/01/QW_QCN08_0N_HNN_2022_060.csv',
-                            'tests/data/guralp/archive/latency/2022/03/01/QW_QCN08_0N_HNZ_2022_060.csv',
-                            'tests/data/guralp/archive/latency/2022/03/02/QW_QCN08_0N_HNE_2022_061.csv',
-                            'tests/data/guralp/archive/latency/2022/03/02/QW_QCN08_0N_HNN_2022_061.csv',
-                            'tests/data/guralp/archive/latency/2022/03/02/QW_QCN08_0N_HNZ_2022_061.csv']
+    assert guralp_files == ['tests/latency/test_data/guralp/archive/latency/2022/03/01/QW_QCN08_0N_HNE_2022_060.csv',
+                            'tests/latency/test_data/guralp/archive/latency/2022/03/01/QW_QCN08_0N_HNN_2022_060.csv',
+                            'tests/latency/test_data/guralp/archive/latency/2022/03/01/QW_QCN08_0N_HNZ_2022_060.csv',
+                            'tests/latency/test_data/guralp/archive/latency/2022/03/02/QW_QCN08_0N_HNE_2022_061.csv',
+                            'tests/latency/test_data/guralp/archive/latency/2022/03/02/QW_QCN08_0N_HNN_2022_061.csv',
+                            'tests/latency/test_data/guralp/archive/latency/2022/03/02/QW_QCN08_0N_HNZ_2022_061.csv']
     with pytest.raises(FileNotFoundError):
         get_latency_files(typeofinstrument="non_existent",
                           network="non_existent",

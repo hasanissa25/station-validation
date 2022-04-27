@@ -51,7 +51,7 @@ def latency_parameters_nanometrics() -> LatencyParameters:
                              station="QCC02",
                              startdate=date(2022, 4, 1),
                              enddate=date(2022, 4, 4),
-                             path="tests/data/apollo/archive/latency",
+                             path="tests/latency/test_data/apollo/archive/latency",
                              json_dict={
                                  "channels": {
                                      "HNN": {},
@@ -69,7 +69,7 @@ def latency_parameters_guralp() -> LatencyParameters:
                              station="QCN08",
                              startdate=date(2022, 3, 1),
                              enddate=date(2022, 3, 3),
-                             path="tests/data/guralp/archive/latency",
+                             path="tests/latency/test_data/guralp/archive/latency",
                              json_dict={
                                  "channels": {
                                      "HNN": {},
