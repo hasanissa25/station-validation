@@ -31,5 +31,5 @@ def gather_stats_parameters() -> GatherStatsParameters:
                                  start=date(2022, 4, 1),
                                  stop=date(2022, 4, 4),
                                  metrics="eew_test",
-                                 ispaq_output_directory="tests/generate_report/ispaq_outputs"
+                                 ispaq_output_directory="tests/data/ispaq_outputs"
                                  )
