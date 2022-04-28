@@ -22,7 +22,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S')
 
 
-def latency_line_plot(
+def latency_line_plot_test(
     latencies: list,
     network: str,
     station: str,
@@ -85,24 +85,25 @@ def latency_line_plot(
 
         # Setting up our data
         x_axis = HNN_latencies.startTime
+        logging.info("Converting X axis to dates for plot 0")
         x_axis_as_dates = [pd.to_datetime(
             x, infer_datetime_format=True).to_pydatetime() for x in x_axis]
         y_axis = HNN_latencies.data_latency
-
         # Format the dates on the x-axis
         formatter = mdates.DateFormatter("%Y-%m-%d:%H:%M")
         axes[0].xaxis.set_major_formatter(formatter)
         locator = mdates.HourLocator()
         axes[0].xaxis.set_major_locator(locator)
         axes[0].tick_params(axis='x', labelrotation=90)
-
         # Plotting the data
+        logging.info("Ploting axes 0")
         axes[0].plot(
             x_axis_as_dates, y_axis,
             marker='o', label='HNN Latency values', linewidth=1,
             markeredgewidth=1,
             markersize=1, markevery=100000, c="green")
         # Show the grid
+        logging.info("Axes 0 is plotted")
         axes[0].set_axisbelow(True)
         axes[0].grid(visible=True, which='both', axis='both', linewidth=0.5)
         # Adding the threshold line
@@ -120,6 +121,7 @@ def latency_line_plot(
 
         # Setting up our data
         x_axis = HNE_latencies.startTime
+        logging.info("Converting X axis to dates for plot 1")
         x_axis_as_dates = [pd.to_datetime(
             x, infer_datetime_format=True).to_pydatetime() for x in x_axis]
         y_axis = HNE_latencies.data_latency
@@ -132,11 +134,13 @@ def latency_line_plot(
         axes[1].tick_params(axis='x', labelrotation=90)
 
         # Plotting the data
+        logging.info("Ploting axes 1")
         axes[1].plot(
             x_axis_as_dates, y_axis,
             marker='o', label='HNE Latency values', linewidth=1,
             markeredgewidth=1,
             markersize=1, markevery=100000, c="green")
+        logging.info("Axes 1 is plotted")
         # Show the grid
         axes[1].set_axisbelow(True)
         axes[1].grid(visible=True, which='both', axis='both', linewidth=0.5)
@@ -154,6 +158,7 @@ def latency_line_plot(
 
         # Setting up our data
         x_axis = HNZ_latencies.startTime
+        logging.info("Converting X axis to dates for plot 2")
         x_axis_as_dates = [pd.to_datetime(
             x, infer_datetime_format=True).to_pydatetime() for x in x_axis]
         y_axis = HNZ_latencies.data_latency
@@ -166,12 +171,14 @@ def latency_line_plot(
         axes[2].tick_params(axis='x', labelrotation=90)
 
         # Plotting the data
+        logging.info("Ploting axes 2")
         axes[2].plot(
             x_axis_as_dates, y_axis,
             marker='o', label='HNZ Latency values', linewidth=1,
             markeredgewidth=1,
             markersize=1, markevery=100000, c="green")
         # Show the grid
+        logging.info("Axes 2 is plotted")
         axes[2].set_axisbelow(True)
         axes[2].grid(visible=True, which='both', axis='both', linewidth=0.5)
         # Adding the threshold line
