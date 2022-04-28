@@ -13,7 +13,10 @@ from pandas.core.frame import DataFrame
 
 
 warnings.filterwarnings("ignore")
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 
 def latency_log_plot(

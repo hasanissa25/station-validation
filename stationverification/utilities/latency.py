@@ -26,7 +26,10 @@ from stationverification.utilities.timely_availability_plot import \
     timely_availability_plot
 
 warnings.filterwarnings("ignore")
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 
 def latencyreport(

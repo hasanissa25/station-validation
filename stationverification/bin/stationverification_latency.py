@@ -61,6 +61,10 @@ from stationverification.utilities.timely_availability_plot import \
 from stationverification.utilities.upload_results_to_s3 import \
     upload_results_to_s3
 from stationverification.utilities.get_latency_files import get_latency_files
+logging.basicConfig(
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 
 class TimeSeriesError(Exception):
