@@ -332,8 +332,8 @@ def cleanup_directory(startdate: date,
     # Create the directory if it doesn't already exist
     if not os.path.isdir(validation_output_directory):
         subprocess.getoutput(
-            f'sudo su makedir {validation_output_directory}')
+            f'sudo makedir {validation_output_directory}')
     subprocess.getoutput(
-        f'sudo su mv ./stationvalidation_output/* {validation_output_directory}')  # noqa
+        f'sudo mv ./stationvalidation_output/* {validation_output_directory}')  # noqa
     subprocess.getoutput(
         "rmdir './stationvalidation_output'")

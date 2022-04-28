@@ -404,19 +404,19 @@ def cleanup(
     # Create the directory if it doesn't already exist
     if not os.path.isdir(validation_output_directory):
         subprocess.getoutput(
-            f'sudo su makedir {validation_output_directory}')
+            f'sudo makedir {validation_output_directory}')
     pdffiles = f'ispaq_outputs/PDFs/{network}/{station}/*'
     # Move current outputs to the directory specified
     subprocess.getoutput(
-        f'sudo su mv {pdffiles} {validation_output_directory}/')
+        f'sudo mv {pdffiles} {validation_output_directory}/')
     subprocess.getoutput(
-        f"sudo su mv ./stationvalidation_output/* {validation_output_directory}")  # noqa
+        f"sudo mv ./stationvalidation_output/* {validation_output_directory}")  # noqa
     subprocess.getoutput(
         "rmdir 'stationvalidation_output'")
     subprocess.getoutput(
-        f"sudo su mv ISPAQ_TRANSCRIPT.log {validation_output_directory}")
+        f"sudo mv ISPAQ_TRANSCRIPT.log {validation_output_directory}")
     subprocess.getoutput(
-        "sudo su rm -rf ispaq_outputs")
+        "sudo rm -rf ispaq_outputs")
 
 
 def update_station_xml(
