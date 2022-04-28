@@ -12,6 +12,12 @@ from stationverification.utilities.calculate_total_availability_for_nanometrics 
 from stationverification.utilities.latency import get_latency_files, latency_log_plot, latency_line_plot, generate_CSV_from_failed_latencies, populate_json_with_latency_info
 from stationverification.utilities.timely_availability_plot import timely_availability_plot
 from stationverification.utilities.get_latencies import get_latencies
+logging.basicConfig(
+    filename="std.log",
+    format='%(asctime)s %(levelname)-8s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
+
 # from tests.latency.test_scripts.isolated_components.latency_line_plot_test import latency_line_plot_test
 # Apollo Parameters
 required_network = "QW"
@@ -82,14 +88,14 @@ combined_latency_dataframe_for_all_days_dataframe, array_of_daily_latency_datafr
 #                  total_availability=total_availability
 #                  )
 
-logging.info("Producing Latency Line Plot")
-latency_line_plot(latencies=array_of_daily_latency_dataframes,
-                  network=required_network,
-                  station=required_station,
-                  startdate=startdate,
-                  timely_threshold=timely_threshold
-                  )
-logging.info("Latency Line Plot produced")
+# logging.info("Producing Latency Line Plot")
+# latency_line_plot(latencies=array_of_daily_latency_dataframes,
+#                   network=required_network,
+#                   station=required_station,
+#                   startdate=startdate,
+#                   timely_threshold=timely_threshold
+#                   )
+# logging.info("Latency Line Plot produced")
 
 # json_of_latency = populate_json_with_latency_info(
 #     json_dict=json_dict,

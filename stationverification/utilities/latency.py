@@ -27,6 +27,7 @@ from stationverification.utilities.timely_availability_plot import \
 
 warnings.filterwarnings("ignore")
 logging.basicConfig(
+    filename="std.log",
     format='%(asctime)s %(levelname)-8s %(message)s',
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S')
