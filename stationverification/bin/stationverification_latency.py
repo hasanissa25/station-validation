@@ -333,6 +333,6 @@ def cleanup_directory(startdate: date,
     if not os.path.isdir(validation_output_directory):
         os.makedirs(f'{validation_output_directory}')
     subprocess.getoutput(
-        f'mv ./stationvalidation_output/* {validation_output_directory}')
+        f'sudo su mv ./stationvalidation_output/* {validation_output_directory}')  # noqa
     subprocess.getoutput(
         "rmdir './stationvalidation_output'")
