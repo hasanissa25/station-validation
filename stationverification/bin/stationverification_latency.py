@@ -150,6 +150,7 @@ YYYY-MM-DD format.",
     argsparser.add_argument(
         '-o',
         '--outputdir',
+        required=True,
         help='Output directory to store results in. If none is specified, the \
 current directory is used.',
         default='./station_validation_latency_results'
