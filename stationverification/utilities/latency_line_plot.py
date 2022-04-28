@@ -4,18 +4,14 @@ files and report on them
 '''
 import logging
 import os
-import warnings
+import arrow
 
 from datetime import date, timedelta
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
-import pandas as pd
-from pandas.plotting import register_matplotlib_converters
 
-
-warnings.filterwarnings("ignore")
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
     level=logging.INFO,
@@ -54,10 +50,6 @@ def latency_line_plot(
 
     '''
 
-    # Future versions of pandas will require you to explicitly register
-    # matplotlib converters
-    register_matplotlib_converters()
-
     for index, latency_dataframe in enumerate(latencies):
         filename = f'{network}.{station}-{startdate + timedelta(days=index)}\
 -latency_line_plot.png'
@@ -86,8 +78,7 @@ def latency_line_plot(
         # Setting up our data
         x_axis = HNN_latencies.startTime
         logging.info("Remove: x_axis_as_dates for plot 1")
-        x_axis_as_dates = [pd.to_datetime(
-            x, infer_datetime_format=True).to_pydatetime() for x in x_axis]
+        x_axis_as_dates = [arrow.get(x).datetime for x in x_axis]
         y_axis = HNN_latencies.data_latency
         logging.info("Remove: Formatting plot 1")
 
@@ -125,9 +116,7 @@ def latency_line_plot(
         # Setting up our data
         x_axis = HNE_latencies.startTime
         logging.info("Remove: x_axis_as_dates for plot 2")
-
-        x_axis_as_dates = [pd.to_datetime(
-            x, infer_datetime_format=True).to_pydatetime() for x in x_axis]
+        x_axis_as_dates = [arrow.get(x).datetime for x in x_axis]
         y_axis = HNE_latencies.data_latency
         logging.info("Remove: Formatting plot 2")
 
@@ -163,9 +152,7 @@ def latency_line_plot(
         # Setting up our data
         x_axis = HNZ_latencies.startTime
         logging.info("Remove: x_axis_as_dates for plot 3")
-
-        x_axis_as_dates = [pd.to_datetime(
-            x, infer_datetime_format=True).to_pydatetime() for x in x_axis]
+        x_axis_as_dates = [arrow.get(x).datetime for x in x_axis]
         y_axis = HNZ_latencies.data_latency
         logging.info("Remove: Formatting plot 3")
 

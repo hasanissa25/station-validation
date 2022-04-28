@@ -12,7 +12,7 @@ from stationverification.utilities.calculate_total_availability_for_nanometrics 
 from stationverification.utilities.latency import get_latency_files, latency_log_plot, latency_line_plot, generate_CSV_from_failed_latencies, populate_json_with_latency_info
 from stationverification.utilities.timely_availability_plot import timely_availability_plot
 from stationverification.utilities.get_latencies import get_latencies
-from tests.latency.test_scripts.isolated_components.latency_line_plot_test import latency_line_plot_test
+# from tests.latency.test_scripts.isolated_components.latency_line_plot_test import latency_line_plot_test
 # Apollo Parameters
 required_network = "QW"
 required_station = "QCC02"
@@ -42,8 +42,8 @@ files = get_latency_files(typeofinstrument=typeofinstrument,
                           path=path,
                           startdate=startdate,
                           enddate=enddate)
-# files = ["tests/latency/smallTest.json"]
-logging.info(f"files {files}")
+# files = ["tests/latency/test_data/sample_nanometrics_latency_data_5.json"]
+# logging.info(f"files {files}")
 # Returns the latency handling both Guralp and Apollo
 logging.info(f"Getting latencies")
 combined_latency_dataframe_for_all_days_dataframe, array_of_daily_latency_dataframes = get_latencies(
@@ -54,8 +54,8 @@ combined_latency_dataframe_for_all_days_dataframe, array_of_daily_latency_datafr
     startdate=startdate,
     enddate=enddate)
 
-logging.info(
-    f"array_of_daily_latency_dataframes \n {array_of_daily_latency_dataframes}")
+# logging.info(
+#     f"array_of_daily_latency_dataframes \n {array_of_daily_latency_dataframes}")
 # total_availability = calculate_total_availability_for_nanometrics(files)
 # generate_CSV_from_failed_latencies(latencies=combined_latency_dataframe_for_all_days_dataframe,
 #                                    station=required_station,
@@ -83,12 +83,12 @@ logging.info(
 #                  )
 
 logging.info("Producing Latency Line Plot")
-latency_line_plot_test(latencies=array_of_daily_latency_dataframes,
-                       network=required_network,
-                       station=required_station,
-                       startdate=startdate,
-                       timely_threshold=timely_threshold
-                       )
+latency_line_plot(latencies=array_of_daily_latency_dataframes,
+                  network=required_network,
+                  station=required_station,
+                  startdate=startdate,
+                  timely_threshold=timely_threshold
+                  )
 logging.info("Latency Line Plot produced")
 
 # json_of_latency = populate_json_with_latency_info(
@@ -100,7 +100,7 @@ logging.info("Latency Line Plot produced")
 #     timely_percent=97
 # )
 
-if not os.path.isdir('./station_validation_results/'):
-    os.mkdir('./station_validation_results/')
-with open('./station_validation_results/json_report.json', 'w+') as file:
-    json.dump(json_dict, file, indent=2)
+# if not os.path.isdir('./station_validation_results/'):
+#     os.mkdir('./station_validation_results/')
+# with open('./station_validation_results/json_report.json', 'w+') as file:
+#     json.dump(json_dict, file, indent=2)
