@@ -2,13 +2,13 @@ Make sure to first activate the venv:
     source venv/bin/activate
 
 stationverification script with stationXML:
-    nohup stationverification -T APOLLO -N QW -S QCC02 -d 2022-3-08 -e 2022-3-9 -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -s /home/ec2-user/station-validation/stationverification/data/QW.xml -U True -o /validation &
+    time nohup stationverification -T APOLLO -N QW -S ONE01 -d 2022-4-19 -e 2022-4-28 -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -s /home/ec2-user/station-validation/stationverification/data/QW.xml -o /validation &
 
 stationverification script with station config file:
-    nohup stationverification -T APOLLO -N QW -S QCC02 -d 2022-3-28 -e 2022-3-29 -c /home/ec2-user/station-validation/tests/data/stationQCC02.conf -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -U True -o /validation &
+    nohup stationverification -T APOLLO -N QW -S QCC02 -d 2022-3-28 -e 2022-3-29 -c /home/ec2-user/station-validation/tests/data/stationQCC02.conf -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -o /validation &
 
 latency script:
-    nohup stationverificationlatency -T APOLLO -N QW -S QCC07 -d 2022-4-1 -e 2022-4-11 -l /apollo/archive/latency -U True -o /validation &
+    nohup stationverificationlatency -T APOLLO -N QW -S QCC07 -d 2022-4-1 -e 2022-4-11 -l /apollo/archive/latency -o /validation &
 
 
 -T: Type of instrument, Example: APOLLO or GURALP
