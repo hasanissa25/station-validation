@@ -404,7 +404,7 @@ def cleanup(
     # Create the directory if it doesn't already exist
     if not os.path.isdir(validation_output_directory):
         output1 = subprocess.getoutput(
-            f"sudo mkdir '{validation_output_directory}'")
+            f"sudo mkdir -p '{validation_output_directory}'")
         logging.info(output1)
     pdffiles = f'ispaq_outputs/PDFs/{network}/{station}/*'
     # Move current outputs to the directory specified
