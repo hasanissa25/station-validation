@@ -1,7 +1,5 @@
 # flake8=noqa
 import subprocess
-
-from build import logging
 from stationverification.utilities.get_latencies_from_apollo import get_latencies_from_apollo
 
 
