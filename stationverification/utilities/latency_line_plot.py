@@ -10,7 +10,7 @@ from datetime import date, timedelta
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
-
+from pandas.plotting import register_matplotlib_converters
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
@@ -49,6 +49,10 @@ def latency_line_plot(
     validation period
 
     '''
+    # The converter was registered by pandas on import. \
+    # Future versions of pandas will require you to explicitly register \
+    # matplotlib converters.
+    register_matplotlib_converters()
 
     for index, latency_dataframe in enumerate(latencies):
         filename = f'{network}.{station}-{startdate + timedelta(days=index)}\
