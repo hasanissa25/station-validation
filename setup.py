@@ -28,7 +28,7 @@ setup(
         'rpy2==3.1.0',
         'rdflib',
         'boto3',
-        'numpy==1.19.5'
+        'numpy==1.19.5',
         'arrow'
     ],
     extras_require={
