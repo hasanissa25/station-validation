@@ -2,7 +2,6 @@
 A module that contains utilities to extract latency values from HDF5 format
 files and report on them
 '''
-import logging
 import os
 import arrow
 
@@ -11,11 +10,6 @@ from datetime import date, timedelta
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from pandas.plotting import register_matplotlib_converters
-
-logging.basicConfig(
-    format='%(asctime)s %(levelname)-8s %(message)s',
-    level=logging.INFO,
-    datefmt='%Y-%m-%d %H:%M:%S')
 
 
 def latency_line_plot(
@@ -81,10 +75,8 @@ def latency_line_plot(
 
         # Setting up our data
         x_axis = HNN_latencies.startTime
-        logging.info("Remove: x_axis_as_dates for plot 1")
         x_axis_as_dates = [arrow.get(x).datetime for x in x_axis]
         y_axis = HNN_latencies.data_latency
-        logging.info("Remove: Formatting plot 1")
 
         # Format the dates on the x-axis
         formatter = mdates.DateFormatter("%Y-%m-%d:%H:%M")
@@ -94,7 +86,6 @@ def latency_line_plot(
         axes[0].tick_params(axis='x', labelrotation=90)
 
         # Plotting the data
-        logging.info("Remove: Plotting plot 1")
 
         axes[0].plot(
             x_axis_as_dates, y_axis,
@@ -119,10 +110,8 @@ def latency_line_plot(
 
         # Setting up our data
         x_axis = HNE_latencies.startTime
-        logging.info("Remove: x_axis_as_dates for plot 2")
         x_axis_as_dates = [arrow.get(x).datetime for x in x_axis]
         y_axis = HNE_latencies.data_latency
-        logging.info("Remove: Formatting plot 2")
 
         # Format the dates on the x-axis
         formatter = mdates.DateFormatter("%Y-%m-%d:%H:%M")
@@ -130,7 +119,6 @@ def latency_line_plot(
         locator = mdates.HourLocator()
         axes[1].xaxis.set_major_locator(locator)
         axes[1].tick_params(axis='x', labelrotation=90)
-        logging.info("Remove: Plotting plot 2")
 
         # Plotting the data
         axes[1].plot(
@@ -155,10 +143,8 @@ def latency_line_plot(
 
         # Setting up our data
         x_axis = HNZ_latencies.startTime
-        logging.info("Remove: x_axis_as_dates for plot 3")
         x_axis_as_dates = [arrow.get(x).datetime for x in x_axis]
         y_axis = HNZ_latencies.data_latency
-        logging.info("Remove: Formatting plot 3")
 
         # Format the dates on the x-axis
         formatter = mdates.DateFormatter("%Y-%m-%d:%H:%M")
@@ -166,7 +152,6 @@ def latency_line_plot(
         locator = mdates.HourLocator()
         axes[2].xaxis.set_major_locator(locator)
         axes[2].tick_params(axis='x', labelrotation=90)
-        logging.info("Remove: Plotting plot 3")
 
         # Plotting the data
         axes[2].plot(

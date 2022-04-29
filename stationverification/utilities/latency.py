@@ -9,7 +9,6 @@ import numpy as np
 from typing import Any
 from datetime import date
 
-import pandas as pd
 from pandas.core.frame import DataFrame
 
 from stationverification.utilities.\
@@ -249,31 +248,3 @@ def percentbelowthreshold(
     logging.info(f'Percent of latencies for {station} below {threshold} \
 seconds: {round(float(percent),2)}%')
     return float(percent)
-
-
-def get_gaps(
-    files: list,
-    network: str,
-    station: str
-) -> pd.DataFrame:
-    # Loop through all the files in the list
-    df = pd.DataFrame()
-    for file in files:
-        logging.debug(f'Parsing file {file}')
-        # Read the HDF5 file
-        hdf = pd.HDFStore(
-            file,
-            mode='r'
-        )
-
-        if '/errors' in hdf.keys():
-            hdfdf = hdf.select(key='errors')
-
-            hdfdf = hdfdf[hdfdf.network == network]
-            hdfdf = hdfdf[hdfdf.station == station]
-            hdfdf = hdfdf[hdfdf.error == 'gap']
-            df = df.append(hdfdf, sort=False)
-
-        hdf.close()
-
-    return df

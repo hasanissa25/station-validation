@@ -1,4 +1,3 @@
-import logging
 import json
 from typing import Tuple
 
@@ -16,13 +15,10 @@ def get_latencies_from_apollo(files: list,
     combined_latency_data_for_all_days: dict = {}
     # Storing the data of all the latency files seperated into days
     array_of_daily_latency_dataframes = []
-    for index, file in enumerate(files):
-        logging.info(f"File {index}: {file}")
+    for file in files:
         # Opening JSON file
-        logging.info("Opening file")
         json_latency_file = open(file)
         # returns JSON object as a dictionary
-        logging.info("Loading the data from file")
         latency_data = json.load(json_latency_file)
         # Storing the data of the current days JSON latency file
         current_day_latency_data: dict = {}
@@ -45,10 +41,7 @@ def get_latencies_from_apollo(files: list,
                         '.')
                 # looping over the intervals array, which contains all the
                 # latency objects a specific NSC
-                logging.info("Going over NSC")
-                for index, current_latency in enumerate(current_NSC['intervals']):
-                    logging.info(
-                        f"About to get latency object for current time stamp")
+                for current_latency in current_NSC['intervals']:
                     combined_latency_data_for_all_days, \
                         current_day_latency_data = \
                         get_latency_value_for_current_timestamp(
@@ -58,21 +51,11 @@ def get_latencies_from_apollo(files: list,
                             current_network=current_network,
                             current_station=current_station,
                             current_channel=current_channel)
-                    logging.info(
-                        "Appending proccessed latency result to Combined latency for all days, and daily latencies.")
         json_latency_file.close()
-        logging.info("Closed JSON latency file")
-        logging.info(
-            "Taking current day latency data, and putting it into the daily latency data frame")
         daily_latency_dataframe = pd.DataFrame(
             data=current_day_latency_data, index=columns).T
-        logging.info(
-            "Appending the daily latency data frame, into the array of daily latencies")
         array_of_daily_latency_dataframes.append(
             daily_latency_dataframe)
-        logging.info("Finished appending")
-    logging.info(
-        "About to generate the combined latency dataframe for all days and finish Get latencies")
     combined_latency_dataframe_for_all_days_dataframe = pd.DataFrame(
         data=combined_latency_data_for_all_days, index=columns).T
     return combined_latency_dataframe_for_all_days_dataframe, \

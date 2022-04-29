@@ -48,8 +48,6 @@ files = get_latency_files(typeofinstrument=typeofinstrument,
                           path=path,
                           startdate=startdate,
                           enddate=enddate)
-# files = ["tests/latency/test_data/sample_nanometrics_latency_data_5.json"]
-# logging.info(f"files {files}")
 # Returns the latency handling both Guralp and Apollo
 logging.info(f"Getting latencies")
 combined_latency_dataframe_for_all_days_dataframe, array_of_daily_latency_dataframes = get_latencies(
