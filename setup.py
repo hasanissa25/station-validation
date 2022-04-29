@@ -29,6 +29,7 @@ setup(
         'rdflib',
         'boto3',
         'numpy==1.19.5'
+        'arrow'
     ],
     extras_require={
         'dev': [
