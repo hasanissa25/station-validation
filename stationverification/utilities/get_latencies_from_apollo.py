@@ -1,6 +1,6 @@
+import logging
 import json
 from typing import Tuple
-from build import logging
 
 import pandas as pd
 from pandas.core.frame import DataFrame

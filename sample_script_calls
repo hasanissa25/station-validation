@@ -8,7 +8,7 @@ stationverification script with station config file:
     nohup stationverification -T APOLLO -N QW -S QCC02 -d 2022-3-28 -e 2022-3-29 -c /home/ec2-user/station-validation/tests/data/stationQCC02.conf -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -o /validation &
 
 latency script:
-    nohup stationverificationlatency -T APOLLO -N QW -S QCC07 -d 2022-4-1 -e 2022-4-11 -l /apollo/archive/latency -o /validation &
+    nohup stationverificationlatency -T APOLLO -N QW -S QCC09 -d 2022-4-19 -e 2022-4-20 -l /apollo/archive/latency -o /validation &
 
 
 -T: Type of instrument, Example: APOLLO or GURALP
