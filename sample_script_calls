@@ -1,15 +1,7 @@
-Make sure to first activate the venv: 
+Activate the virtual environment: 
     source venv/bin/activate
 
-stationverification script with stationXML:
-    time nohup stationverification -T APOLLO -N QW -S QCC08 -d 2022-4-19 -e 2022-4-28 -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -s /home/ec2-user/station-validation/stationverification/data/QW.xml -o /validation &
-
-stationverification script with station config file:
-    nohup stationverification -T APOLLO -N QW -S QCC02 -d 2022-3-28 -e 2022-3-29 -c /home/ec2-user/station-validation/tests/data/stationQCC02.conf -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -o /validation &
-
-latency script:
-    nohup stationverificationlatency -T APOLLO -N QW -S QCC09 -d 2022-4-19 -e 2022-4-20 -l /apollo/archive/latency -o /validation &
-
+Parameters:
 
 -T: Type of instrument, Example: APOLLO or GURALP
 -N: The network code, Example: QW
@@ -23,4 +15,16 @@ latency script:
 -H: State of health files arhcive location, Example: '/apollo/archive/soh/'
 -U: Whether or not to upload results to S3 bucket, Example: True or False
 -c: Station configuration file, if no stationXML is available, Example: /home/ec2-user/station-validation/tests/data
+
+Sample Calls:
+
+stationverification script with stationXML:
+    nohup stationverification -T APOLLO -N QW -S QCC08 -d 2022-4-19 -e 2022-4-28 -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -s /home/ec2-user/station-validation/stationverification/data/QW.xml -o /validation >> QCC08_log.out &
+
+stationverification script with station config file:
+    nohup stationverification -T APOLLO -N QW -S QCC02 -d 2022-3-28 -e 2022-3-29 -c /home/ec2-user/station-validation/tests/data/stationQCC02.conf -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -o /validation >> QCC02_log.out &
+
+latency script:
+    nohup stationverificationlatency -T APOLLO -N QW -S QCC09 -d 2022-4-19 -e 2022-4-20 -l /apollo/archive/latency -o /validation >> QCC09_log.out &
+
 

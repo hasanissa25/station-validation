@@ -24,6 +24,7 @@ PSDs/*
 *.json
 *.png
 *.csv
+*.out
 
 # Ignore experimental files
 depricated/*

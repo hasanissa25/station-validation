@@ -70,26 +70,7 @@ from stationverification.utilities.generate_plots import plot_metrics,\
     PlotParameters
 from stationverification.utilities.upload_results_to_s3 import \
     upload_results_to_s3
-
-
-class TimeSeriesError(Exception):
-    '''
-    Error to be raised if the enddate specified is before or the same as the
-    startdate
-    '''
-
-    def __init__(self, msg):
-        super().__init__(msg)
-
-
-class MissingConfigOrStationxml(Exception):
-    '''
-    Exception to be raised if either the stationXML or stationconfig file
-    are not included
-    '''
-
-    def __init__(self, msg):
-        super().__init__(msg)
+from stationverification.utilities import exceptions
 
 
 def main():
@@ -284,12 +265,12 @@ span',
     s3directory = args.s3bucketpathtosaveto
     stationconf = args.stationconfig
     if startdate > enddate:
-        raise TimeSeriesError('Enddate must be after startdate.')
+        raise exceptions.TimeSeriesError('Enddate must be after startdate.')
     elif startdate == enddate:
-        raise TimeSeriesError('Enddate is not inclusive. To test for one day, set \
+        raise exceptions.TimeSeriesError('Enddate is not inclusive. To test for one day, set \
 the enddate to the day after the startdate')
     if stationconf is None and station_url is None:
-        raise MissingConfigOrStationxml(
+        raise exceptions.MissingConfigOrStationxml(
             'Please include either the StationXML file or the Station Config \
 file')
 

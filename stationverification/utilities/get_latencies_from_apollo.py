@@ -1,8 +1,11 @@
 import json
+
 from typing import Tuple
 
 import pandas as pd
 from pandas.core.frame import DataFrame
+
+from stationverification.utilities import exceptions
 
 
 def get_latencies_from_apollo(files: list,
@@ -19,7 +22,12 @@ def get_latencies_from_apollo(files: list,
         # Opening JSON file
         json_latency_file = open(file)
         # returns JSON object as a dictionary
-        latency_data = json.load(json_latency_file)
+        # latency_data = json.load(json_latency_file)
+        try:
+            latency_data = json.load(json_latency_file)
+        except json.decoder.JSONDecodeError:
+            raise exceptions.LatencyFileError(
+                f'Problem detected in latency file: {file}')
         # Storing the data of the current days JSON latency file
         current_day_latency_data: dict = {}
         # Iterating through the json availability array which a string "id",

@@ -91,6 +91,11 @@ def latency_test_file_nanometrics_over_3_packets() -> list:
 
 
 @pytest.fixture(scope="session")
+def latency_test_file_nanometrics_bad_file() -> list:
+    return ['tests/latency/test_data/sample_nanometrics_latency_data_5.json']
+
+
+@pytest.fixture(scope="session")
 def latency_test_files_guralp() -> list:
     return ['tests/latency/test_data/sample_guralp_latency_data_HNE_1.csv', 'tests/latency/test_data/sample_guralp_latency_data_HNN_1.csv', 'tests/latency/test_data/sample_guralp_latency_data_HNZ_1.csv',
             'tests/latency/test_data/sample_guralp_latency_data_HNE_2.csv', 'tests/latency/test_data/sample_guralp_latency_data_HNN_2.csv', 'tests/latency/test_data/sample_guralp_latency_data_HNZ_2.csv']
