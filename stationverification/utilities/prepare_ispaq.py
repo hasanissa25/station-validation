@@ -30,24 +30,23 @@ update_station_xml:
     file with any new networks or stations it can find in the results
 
 '''
-# from os import path
+import subprocess
+import requests  # type: ignore
+import logging
+import json
+
+from datetime import date
+
 from obspy.core.inventory.inventory import read_inventory
-from stationverification import XML_CONVERTER
-from datetime import date, timedelta
-# import tempfile
 from obspy.io.xseed import Parser
 from obspy.clients.fdsn import Client
-# from obspy.clients.fdsn.header import FDSNException
 from obspy.core import UTCDateTime
 from obspy.clients.nrl import NRL
 from obspy.core.inventory import Inventory, Network, Station
 from obspy.core.inventory import Channel, Equipment
 from configparser import ConfigParser
-import subprocess
-import requests  # type: ignore
-import os
-import logging
-import json
+
+from stationverification import XML_CONVERTER
 
 
 class InvalidConfigFile(Exception):
@@ -364,68 +363,6 @@ PSD-derived metrics and PDF plots will be skipped.')
     if len(respfiles) > 0:
         for key in respfiles.keys():
             subprocess.getoutput(f'cp {key} {respfiles[key]}')
-
-
-def cleanup(
-    network: str,
-    station: str,
-    startdate: date,
-    enddate: date,
-    outputdir: str,
-):
-    '''
-    Function to clean up after the program runs.
-
-    Parameters
-    ----------
-    network: string
-        Network code used for naming the tarball of output files
-
-    station: string
-        The station code, used for naming the tarball of output files
-
-    startdate: date
-        The start date to use in the name of the tarball of output files
-
-    enddate: date
-        The end date to use in the name of the tarball output
-
-    outputdir: string
-        Path to the directory to deposit output tarball in. Default = None
-
-    '''
-    # Create the final directory that the data will be placed in
-    if startdate == enddate - timedelta(days=1):
-        validation_output_directory = f'{outputdir}/{network}/{station}/\
-{startdate}_validation'
-    else:
-        validation_output_directory = f'{outputdir}/{network}/{station}/\
-{startdate}-{enddate}_validation'
-    # Create the directory if it doesn't already exist
-    if not os.path.isdir(validation_output_directory):
-        output1 = subprocess.getoutput(
-            f"mkdir -p '{validation_output_directory}'")
-        logging.info(output1)
-    pdffiles = f'ispaq_outputs/PDFs/{network}/{station}/*'
-    # Move current outputs to the directory specified
-    output2 = subprocess.getoutput(
-        f"mv {pdffiles} {validation_output_directory}/")
-    logging.info(output2)
-    output3 = subprocess.getoutput(
-        f"mv ./stationvalidation_output/* {validation_output_directory}")  # noqa
-    logging.info(output3)
-
-    output4 = subprocess.getoutput(
-        "rm -rf stationvalidation_output")
-    logging.info(output4)
-
-    output5 = subprocess.getoutput(
-        f"mv ISPAQ_TRANSCRIPT.log {validation_output_directory}")
-    logging.info(output5)
-
-    output6 = subprocess.getoutput(
-        "rm -rf ispaq_outputs")
-    logging.info(output6)
 
 
 def update_station_xml(

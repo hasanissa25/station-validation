@@ -47,7 +47,7 @@ def plot_timing_quality(network: str,
         if startdate == enddate - timedelta(days=1):
             filename = f'{network}.{station}.{startdate}'
         else:
-            filename = f'{network}.{station}-{startdate}_to_\
+            filename = f'{network}.{station}-{startdate}_\
 {enddate - timedelta(days=1)}'
         ax.set_title(
             f'Timing Quality [%]\n{filename}')

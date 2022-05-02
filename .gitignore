@@ -21,8 +21,9 @@ csv/*
 PDFs/*
 PSDs/*
 *ISPAQ_TRANSCRIPT.log
-# *.json
+*.json
 *.png
+*.csv
 
 # Ignore experimental files
 depricated/*

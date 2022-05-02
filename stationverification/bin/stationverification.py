@@ -61,10 +61,10 @@ from dateutil import parser as dateparser  # type: ignore
 from configparser import ConfigParser
 
 from stationverification import ISPAQ_PREF, CONFIG
+from stationverification.utilities.cleanup_directory import cleanup_directory
 from stationverification.utilities.handle_running_ispaq_command import\
     handle_running_ispaq_command
 
-from stationverification.utilities.prepare_ispaq import cleanup
 from stationverification.utilities.generate_report import gather_stats, report
 from stationverification.utilities.generate_plots import plot_metrics,\
     PlotParameters
@@ -271,7 +271,7 @@ span',
     pfile = args.preference_file
     thresholds = ConfigParser()
     thresholds.read(args.thresholds)
-    fdsnws = args.fdsnws
+    # fdsnws = args.fdsnws
     latencyFiles = args.latency
     pdfinterval = args.pdfinterval
     station_url = args.station_url
@@ -345,27 +345,19 @@ file')
            )
 
     # Delete temporary files and links and package the output in a tarball
-    if 'temppref' in locals():
-        cleanup(
-            network=network,
-            station=station,
-            startdate=startdate,
-            enddate=enddate,
-            outputdir=outputdir)
-    else:
-        cleanup(
-            network=network,
-            station=station,
-            startdate=startdate,
-            enddate=enddate,
-            outputdir=outputdir)
+    cleanup_directory(
+        network=network,
+        station=station,
+        startdate=startdate,
+        enddate=enddate,
+        outputdir=outputdir)
     if uploadresultstos3 is True:
         if startdate == enddate - timedelta(days=1):
             validation_output_directory = f'{outputdir}/{network}/{station}/\
-    {startdate}_validation'
+    {startdate}'
         else:
             validation_output_directory = f'{outputdir}/{network}/{station}/\
-    {startdate}-{enddate}_validation'
+    {startdate}-{enddate}'
         upload_results_to_s3(path_of_folder_to_upload=validation_output_directory,  # noqa
                              bucketName=bucketName,
                              s3directory=s3directory)

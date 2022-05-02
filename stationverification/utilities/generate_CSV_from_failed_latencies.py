@@ -1,6 +1,6 @@
 import os
 
-from datetime import date
+from datetime import date, timedelta
 
 from pandas.core.frame import DataFrame
 
@@ -12,8 +12,11 @@ def generate_CSV_from_failed_latencies(latencies: DataFrame,
                                        enddate: date,
                                        timely_threshold: float
                                        ):
-    filename = f'{network}.{station}-{startdate}_to_{enddate}-\
-failed_latencies.csv'
+    if startdate == enddate - timedelta(days=1):
+        filename = f'{network}.{station}.{startdate}'
+    else:
+        filename = f'{network}.{station}-{startdate}_\
+{enddate - timedelta(days=1)}'
     latencies_above_three = latencies.loc[latencies.data_latency
                                           > timely_threshold]
     # This part is specifically for Guralp Latencies.
@@ -34,4 +37,5 @@ failed_latencies.csv'
     if not os.path.isdir('./stationvalidation_output/'):
         os.mkdir('./stationvalidation_output/')
     latencies_above_three_rounded.to_csv(
-        f'./stationvalidation_output/{filename}', index=False)
+        f'./stationvalidation_output/{filename}-failed_latencies.csv',
+        index=False)

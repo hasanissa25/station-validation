@@ -282,11 +282,11 @@ the enddate to the day after the startdate')
                      json_dict=json_dict)
     logging.info("Cleaning up directory..")
 
-    cleanup_directory(startdate=startdate,
-                      enddate=enddate,
-                      network=network,
-                      station=station,
-                      outputdir=outputdir)
+    cleanup_directory_after_latency_call(startdate=startdate,
+                                         enddate=enddate,
+                                         network=network,
+                                         station=station,
+                                         outputdir=outputdir)
     if uploadresultstos3 is True:
         logging.info("Uploading to S3 bucket..")
         if startdate == enddate - timedelta(days=1):
@@ -318,12 +318,12 @@ def dump_json_report(startdate: date,
         json.dump(json_dict, file, indent=2)
 
 
-def cleanup_directory(startdate: date,
-                      enddate: date,
-                      outputdir: str,
-                      network: str,
-                      station: str,
-                      ):
+def cleanup_directory_after_latency_call(startdate: date,
+                                         enddate: date,
+                                         outputdir: str,
+                                         network: str,
+                                         station: str,
+                                         ):
     if startdate == enddate - timedelta(days=1):
         validation_output_directory = f'{outputdir}/{network}/{station}/\
 {startdate}'
@@ -332,12 +332,9 @@ def cleanup_directory(startdate: date,
 {startdate}-{enddate}'
     # Create the directory if it doesn't already exist
     if not os.path.isdir(validation_output_directory):
-        output1 = subprocess.getoutput(
+        subprocess.getoutput(
             f"mkdir -p {validation_output_directory}")
-        logging.info(output1)
-    output2 = subprocess.getoutput(
+    subprocess.getoutput(
         f"mv ./stationvalidation_output/* {validation_output_directory}")  # noqa
-    logging.info(output2)
-    output3 = subprocess.getoutput(
+    subprocess.getoutput(
         "rm -rf ./stationvalidation_output")
-    logging.info(output3)

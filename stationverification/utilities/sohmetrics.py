@@ -303,7 +303,6 @@ def check_clock_locked(
         count = np.count_nonzero(values < 2)
         results = np.append(results, count)
     results = results.tolist()
-    logging.info(f"results of stream {results}")
     # Check each day to see if the clock is locked enough times
     passed = True
     details = []

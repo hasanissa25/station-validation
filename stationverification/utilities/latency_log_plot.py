@@ -65,7 +65,7 @@ def latency_log_plot(
         filename = f'{network}.{station}-{startdate}-latency_log_plot.png'
         plottitle = f'Latencies for {network}.{station} \n {startdate}'
     else:
-        filename = f'{network}.{station}-{startdate}_to_\
+        filename = f'{network}.{station}-{startdate}_\
 {enddate - timedelta(days=1)}-latency_log_plot.png'
         plottitle = f'Latencies for {network}.{station} \n {startdate} to\
  {enddate - timedelta(days=1)}'
