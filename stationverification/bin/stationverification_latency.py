@@ -306,10 +306,10 @@ def dump_json_report(startdate: date,
                      station: str,
                      json_dict: dict):
     if startdate == enddate - timedelta(days=1):
-        json_file_name = f'{network}.{station}.{startdate}_report'
+        json_file_name = f'{network}.{station}-{startdate}-validation_results'
     else:
-        json_file_name = f'{network}.{station}.{startdate}_\
-{(enddate + timedelta(days=-1))}_report'
+        json_file_name = f'{network}.{station}-{startdate}_\
+{(enddate + timedelta(days=-1))}-validation_results'
     if not os.path.isdir('./stationvalidation_output'):
         os.mkdir('./stationvalidation_output')
 

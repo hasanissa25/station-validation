@@ -39,7 +39,7 @@ def plot_clock_offset(network: str,
         plt.xticks(rotation=90)
         filename = ""
         if startdate == enddate - timedelta(days=1):
-            filename = f'{network}.{station}.{startdate}'
+            filename = f'{network}.{station}-{startdate}'
         else:
             filename = f'{network}.{station}-{startdate}_\
 {enddate - timedelta(days=1)}'

@@ -73,7 +73,7 @@ def test_latency_log_plot(latency_parameters_nanometrics,
                      timely_threshold=latency_parameters_guralp.timely_threshold,
                      )
     test_latency_log_plot_Nanometrics_1 = Path(
-        "stationvalidation_output/QW.QCC02-2022-04-01_to_2022-04-03-latency_log_plot.png")
+        "stationvalidation_output/QW.QCC02-2022-04-01_2022-04-03-latency_log_plot.png")
     if test_latency_log_plot_Nanometrics_1.exists():
         assert True
     else:
@@ -85,7 +85,7 @@ def test_latency_log_plot(latency_parameters_nanometrics,
     else:
         assert False
     test_latency_log_plot_Guralp = Path(
-        "stationvalidation_output/QW.QCN08-2022-03-01_to_2022-03-02-latency_log_plot.png")
+        "stationvalidation_output/QW.QCN08-2022-03-01_2022-03-02-latency_log_plot.png")
     if test_latency_log_plot_Guralp.exists():
         assert True
     else:

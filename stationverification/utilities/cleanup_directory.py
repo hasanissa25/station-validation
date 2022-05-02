@@ -3,6 +3,9 @@ import os
 
 from datetime import date, timedelta
 
+from stationverification.utilities.change_name_of_ISPAQ_PDFs_files \
+    import change_name_of_ISPAQ_PDFs_files
+
 
 def cleanup_directory(
     network: str,
@@ -43,8 +46,10 @@ def cleanup_directory(
     if not os.path.isdir(validation_output_directory):
         subprocess.getoutput(
             f"mkdir -p '{validation_output_directory}'")
+
+    change_name_of_ISPAQ_PDFs_files(network=network,
+                                    station=station)
     pdffiles = f'ispaq_outputs/PDFs/{network}/{station}/*.png'
-    # Move current outputs to the directory specified
     subprocess.getoutput(
         f"mv {pdffiles} {validation_output_directory}/")
     subprocess.getoutput(

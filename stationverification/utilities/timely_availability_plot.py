@@ -35,7 +35,7 @@ def timely_availability_plot(
             latencies=latencies, threshold=timely_threshold)
     filename = ""
     if startdate == enddate - timedelta(days=1):
-        filename = f'{network}.{station}.{startdate}\
+        filename = f'{network}.{station}-{startdate}\
 .timely_availability_plot.png'
     else:
         filename = f'{network}.{station}-{startdate}_to_\
