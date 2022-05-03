@@ -4,12 +4,16 @@ files and report on them
 '''
 import os
 import arrow
+import logging
 
 from datetime import date, timedelta
 
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+
+import pandas as pd
 from pandas.plotting import register_matplotlib_converters
+from pandas.core.frame import DataFrame
 
 
 def latency_line_plot(
@@ -47,16 +51,27 @@ def latency_line_plot(
     # Future versions of pandas will require you to explicitly register \
     # matplotlib converters.
     register_matplotlib_converters()
-
+    logging.info(f'Latencies passed to line plot {latencies}')
+    columns = ('network', 'station', 'channel',
+               'startTime', 'data_latency')
     for index, latency_dataframe in enumerate(latencies):
         filename = f'{network}.{station}-{startdate + timedelta(days=index)}\
 -latency_line_plot.png'
-        HNN_latencies = latency_dataframe[latency_dataframe['channel'] ==
-                                          "HNN"]
-        HNE_latencies = latency_dataframe[latency_dataframe['channel'] ==
-                                          "HNE"]
-        HNZ_latencies = latency_dataframe[latency_dataframe['channel'] ==
-                                          "HNZ"]
+        logging.info(f'Turning that current day latency object to a dataframe')
+        current_day_latency_dataframe = pd.DataFrame(
+            data=latency_dataframe, index=columns).T
+        logging.info(
+            f' finished Turning that current day latency object to a dataframe {current_day_latency_dataframe}')
+
+        HNN_latencies = \
+            current_day_latency_dataframe[current_day_latency_dataframe
+                                          ['channel'] == "HNN"]
+        HNE_latencies = \
+            current_day_latency_dataframe[current_day_latency_dataframe
+                                          ['channel'] == "HNE"]
+        HNZ_latencies = \
+            current_day_latency_dataframe[current_day_latency_dataframe
+                                          ['channel'] == "HNZ"]
         # Setting up the figure
         fig, axes = plt.subplots(
             3, 1, sharex=True, sharey=True, figsize=(18.5, 10.5))

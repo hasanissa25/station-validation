@@ -5,7 +5,10 @@ from stationverification.utilities.get_latencies_from_apollo import get_latencie
 from stationverification.utilities import exceptions
 
 
-def test_get_latencies_from_apollo(latency_parameters_nanometrics, latency_test_file_nanometrics_over_3_packets, latency_test_file_nanometrics_bad_file):
+def test_get_latencies_from_apollo(latency_parameters_nanometrics,
+                                   latency_test_file_nanometrics_over_3_packets,
+                                   latency_test_files_nanometrics,
+                                   latency_test_file_nanometrics_bad_file):
     subprocess.getoutput(
         "rm -rf 'stationvalidation_output'")
     combined_latency_dataframe_for_all_days_dataframe,\

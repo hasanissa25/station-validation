@@ -1,4 +1,5 @@
 import json
+import logging
 
 from typing import Tuple
 
@@ -19,15 +20,16 @@ def get_latencies_from_apollo(files: list,
     # Storing the data of all the latency files seperated into days
     array_of_daily_latency_dataframes = []
     for file in files:
+        logging.info(f"file: {file}")
         # Opening JSON file
         json_latency_file = open(file)
-        # returns JSON object as a dictionary
-        # latency_data = json.load(json_latency_file)
+        logging.info(f'About to load the data from the JSON for {file}')
         try:
             latency_data = json.load(json_latency_file)
         except json.decoder.JSONDecodeError:
             raise exceptions.LatencyFileError(
                 f'Problem detected in latency file: {file}')
+        logging.info(f'Finished loading JSON data for {file}')
         # Storing the data of the current days JSON latency file
         current_day_latency_data: dict = {}
         # Iterating through the json availability array which a string "id",
@@ -49,7 +51,10 @@ def get_latencies_from_apollo(files: list,
                         '.')
                 # looping over the intervals array, which contains all the
                 # latency objects a specific NSC
+                logging.info(
+                    f'Iterating over Current Network Station Channel {current_NSC}')
                 for current_latency in current_NSC['intervals']:
+                    logging.info(f'Current Latency {current_latency}')
                     combined_latency_data_for_all_days, \
                         current_day_latency_data = \
                         get_latency_value_for_current_timestamp(
@@ -59,18 +64,172 @@ def get_latencies_from_apollo(files: list,
                             current_network=current_network,
                             current_station=current_station,
                             current_channel=current_channel)
+                    logging.info(
+                        'Finished get_latency_value_for_current_timestamp')
         json_latency_file.close()
-        daily_latency_dataframe = pd.DataFrame(
-            data=current_day_latency_data, index=columns).T
+        # logging.info(
+        #     'About to make a dataframe from the current_day_latency_data object')
+        # daily_latency_dataframe = pd.DataFrame(
+        #     data=current_day_latency_data, index=columns).T
+        # logging.info(
+        #     'Finished making a dataframe from the current_day_latency_data object')
+        # logging.info(
+        #     'About to append the current days daily_latency_dataframe to the array of daily latency dataframes')
+        # array_of_daily_latency_dataframes.append(
+        #     daily_latency_dataframe)
+        # logging.info(
+        #     "finished appending current days daily_latency_dataframe to the array of daily latency dataframes")
+        logging.info("About to append to the array_of_daily_latency")
         array_of_daily_latency_dataframes.append(
-            daily_latency_dataframe)
+            current_day_latency_data)
+        logging.info("Finished append to the array_of_daily_latency")
+    logging.info(
+        "Making a dataframe from the combined_latency_data_for_all_days")
     combined_latency_dataframe_for_all_days_dataframe = pd.DataFrame(
         data=combined_latency_data_for_all_days, index=columns).T
+    logging.info(
+        "finished Making a dataframe from the combined_latency_data_for_all_days")
+
     return combined_latency_dataframe_for_all_days_dataframe, \
         array_of_daily_latency_dataframes
 
 
+def get_latency_value_for_current_timestamp(current_latency: dict,
+                                            combined_latency_data_for_all_days:
+                                            dict,
+                                            current_day_latency_data: dict,
+                                            current_network: str,
+                                            current_station: str,
+                                            current_channel: str) -> \
+        Tuple[dict, dict]:
+    logging.info('get_latency_value_for_current_timestamp')
+    if current_latency["retx"]["allPackets"] == 1:
+        if current_latency["latency"]["maximum"] != -1:
+            append_to_latency_objects(
+                appendToDailyLatency=True,
+                current_latency=current_latency["latency"]["maximum"],
+                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
+                current_day_latency_data=current_day_latency_data,
+                current_network=current_network,
+                current_station=current_station,
+                current_channel=current_channel,
+                start_time=current_latency[
+                    'startTime'],
+                packet_id="max")
+    elif current_latency["retx"]["allPackets"] == 2:
+        if current_latency["latency"]["maximum"] != -1:
+            append_to_latency_objects(
+                appendToDailyLatency=True,
+                current_latency=current_latency["latency"]["maximum"],
+                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
+                current_day_latency_data=current_day_latency_data,
+                current_network=current_network,
+                current_station=current_station,
+                current_channel=current_channel,
+                start_time=current_latency[
+                    'startTime'],
+                packet_id="max")
+
+        if current_latency["latency"]["minimum"] != -1:
+            append_to_latency_objects(
+                appendToDailyLatency=False,
+                current_latency=current_latency["latency"]["minimum"],
+                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
+                current_day_latency_data=current_day_latency_data,
+                current_network=current_network,
+                current_station=current_station,
+                current_channel=current_channel,
+                start_time=current_latency[
+                    'startTime'],
+                packet_id="min")
+    elif current_latency["retx"]["allPackets"] == 3:
+        if current_latency["latency"]["maximum"] != -1:
+            append_to_latency_objects(
+                appendToDailyLatency=True,
+                current_latency=current_latency["latency"]["maximum"],
+                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
+                current_day_latency_data=current_day_latency_data,
+                current_network=current_network,
+                current_station=current_station,
+                current_channel=current_channel,
+                start_time=current_latency[
+                    'startTime'],
+                packet_id="max")
+
+        if current_latency["latency"]["minimum"] != -1:
+            append_to_latency_objects(
+                appendToDailyLatency=False,
+                current_latency=current_latency["latency"]["minimum"],
+                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
+                current_day_latency_data=current_day_latency_data,
+                current_network=current_network,
+                current_station=current_station,
+                current_channel=current_channel,
+                start_time=current_latency[
+                    'startTime'],
+                packet_id="min")
+        if current_latency["latency"]["average"] != -1:
+            calculated_unkown_latency_value_prep = 3 * \
+                current_latency["latency"]["average"]
+            calculated_unkown_latency_value = calculated_unkown_latency_value_prep - current_latency["latency"]["minimum"] - current_latency["latency"]["maximum"]  # noqa
+            append_to_latency_objects(
+                appendToDailyLatency=False,
+                current_latency=calculated_unkown_latency_value,
+                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
+                current_day_latency_data=current_day_latency_data,
+                current_network=current_network,
+                current_station=current_station,
+                current_channel=current_channel,
+                start_time=current_latency[
+                       'startTime'],
+                packet_id="average")
+    elif current_latency["retx"]["allPackets"] > 3:
+        if current_latency["latency"]["maximum"] != -1:
+            append_to_latency_objects(
+                appendToDailyLatency=True,
+                current_latency=current_latency["latency"]["maximum"],
+                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
+                current_day_latency_data=current_day_latency_data,
+                current_network=current_network,
+                current_station=current_station,
+                current_channel=current_channel,
+                start_time=current_latency[
+                    'startTime'],
+                packet_id="max")
+
+        if current_latency["latency"]["minimum"] != -1:
+            append_to_latency_objects(
+                appendToDailyLatency=False,
+                current_latency=current_latency["latency"]["minimum"],
+                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
+                current_day_latency_data=current_day_latency_data,
+                current_network=current_network,
+                current_station=current_station,
+                current_channel=current_channel,
+                start_time=current_latency[
+                    'startTime'],
+                packet_id="min")
+        if current_latency["latency"]["average"] != -1:
+            number_of_times_to_append_to_latencies = \
+                current_latency["retx"]["allPackets"] - 2
+            for iteration in range(number_of_times_to_append_to_latencies):
+                append_to_latency_objects(
+                    appendToDailyLatency=False,
+                    current_latency=current_latency["latency"]["average"],
+                    combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
+                    current_day_latency_data=current_day_latency_data,
+                    current_network=current_network,
+                    current_station=current_station,
+                    current_channel=current_channel,
+                    start_time=current_latency[
+                        'startTime'],
+                    packet_id=f"average{iteration+1}")
+    logging.info('finished get_latency_value_for_current_timestamp')
+    return combined_latency_data_for_all_days, current_day_latency_data
+
+
 def append_to_latency_objects(
+        appendToDailyLatency: bool,
         current_latency: float,
         combined_latency_data_for_all_days: dict,
         current_day_latency_data: dict,
@@ -97,140 +256,18 @@ def append_to_latency_objects(
                                                            'data_latency':
                                                                current_latency
                                                            }
-    current_day_latency_data[current_network +
-                             "."+current_station +
-                             "."+current_channel +
-                             "." +
-                             start_time +
-                             "." + packet_id] = {'network': current_network,
-                                                 'station': current_station,
-                                                 'channel': current_channel,
-                                                 'startTime': start_time,
-                                                 'data_latency':
-                                                 current_latency
-                                                 }
-    return combined_latency_data_for_all_days, current_day_latency_data
-
-
-def get_latency_value_for_current_timestamp(current_latency: dict,
-                                            combined_latency_data_for_all_days:
-                                            dict,
-                                            current_day_latency_data: dict,
-                                            current_network: str,
-                                            current_station: str,
-                                            current_channel: str) -> \
-        Tuple[dict, dict]:
-    if current_latency["retx"]["allPackets"] == 1:
-        if current_latency["latency"]["maximum"] != -1:
-            append_to_latency_objects(
-                current_latency=current_latency["latency"]["maximum"],
-                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
-                current_day_latency_data=current_day_latency_data,
-                current_network=current_network,
-                current_station=current_station,
-                current_channel=current_channel,
-                start_time=current_latency[
-                    'startTime'],
-                packet_id="max")
-    elif current_latency["retx"]["allPackets"] == 2:
-        if current_latency["latency"]["maximum"] != -1:
-            append_to_latency_objects(
-                current_latency=current_latency["latency"]["maximum"],
-                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
-                current_day_latency_data=current_day_latency_data,
-                current_network=current_network,
-                current_station=current_station,
-                current_channel=current_channel,
-                start_time=current_latency[
-                    'startTime'],
-                packet_id="max")
-
-        if current_latency["latency"]["minimum"] != -1:
-            append_to_latency_objects(
-                current_latency=current_latency["latency"]["minimum"],
-                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
-                current_day_latency_data=current_day_latency_data,
-                current_network=current_network,
-                current_station=current_station,
-                current_channel=current_channel,
-                start_time=current_latency[
-                    'startTime'],
-                packet_id="min")
-    elif current_latency["retx"]["allPackets"] == 3:
-        if current_latency["latency"]["maximum"] != -1:
-            append_to_latency_objects(
-                current_latency=current_latency["latency"]["maximum"],
-                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
-                current_day_latency_data=current_day_latency_data,
-                current_network=current_network,
-                current_station=current_station,
-                current_channel=current_channel,
-                start_time=current_latency[
-                    'startTime'],
-                packet_id="max")
-
-        if current_latency["latency"]["minimum"] != -1:
-            append_to_latency_objects(
-                current_latency=current_latency["latency"]["minimum"],
-                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
-                current_day_latency_data=current_day_latency_data,
-                current_network=current_network,
-                current_station=current_station,
-                current_channel=current_channel,
-                start_time=current_latency[
-                    'startTime'],
-                packet_id="min")
-        if current_latency["latency"]["average"] != -1:
-            calculated_unkown_latency_value_prep = 3 * \
-                current_latency["latency"]["average"]
-            calculated_unkown_latency_value = calculated_unkown_latency_value_prep - current_latency["latency"]["minimum"] - current_latency["latency"]["maximum"]  # noqa
-            append_to_latency_objects(
-                   current_latency=calculated_unkown_latency_value,
-                   combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
-                   current_day_latency_data=current_day_latency_data,
-                   current_network=current_network,
-                   current_station=current_station,
-                   current_channel=current_channel,
-                   start_time=current_latency[
-                       'startTime'],
-                   packet_id="average")
-    elif current_latency["retx"]["allPackets"] > 3:
-        if current_latency["latency"]["maximum"] != -1:
-            append_to_latency_objects(
-                current_latency=current_latency["latency"]["maximum"],
-                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
-                current_day_latency_data=current_day_latency_data,
-                current_network=current_network,
-                current_station=current_station,
-                current_channel=current_channel,
-                start_time=current_latency[
-                    'startTime'],
-                packet_id="max")
-
-        if current_latency["latency"]["minimum"] != -1:
-            append_to_latency_objects(
-                current_latency=current_latency["latency"]["minimum"],
-                combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
-                current_day_latency_data=current_day_latency_data,
-                current_network=current_network,
-                current_station=current_station,
-                current_channel=current_channel,
-                start_time=current_latency[
-                    'startTime'],
-                packet_id="min")
-        if current_latency["latency"]["average"] != -1:
-            number_of_times_to_append_to_latencies = \
-                current_latency["retx"]["allPackets"] - 2
-            for iteration in range(number_of_times_to_append_to_latencies):
-                append_to_latency_objects(
-                    current_latency=current_latency["latency"]["average"],
-                    combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
-                    current_day_latency_data=current_day_latency_data,
-                    current_network=current_network,
-                    current_station=current_station,
-                    current_channel=current_channel,
-                    start_time=current_latency[
-                        'startTime'],
-                    packet_id=f"average{iteration+1}")
-
+    if appendToDailyLatency is True:
+        current_day_latency_data[current_network +
+                                 "."+current_station +
+                                 "."+current_channel +
+                                 "." +
+                                 start_time +
+                                 "." + packet_id] = \
+            {'network': current_network,
+             'station': current_station,
+             'channel': current_channel,
+             'startTime': start_time,
+             'data_latency':
+             current_latency
+             }
     return combined_latency_data_for_all_days, current_day_latency_data
