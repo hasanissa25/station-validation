@@ -359,13 +359,13 @@ def check_clock_offset(list_of_streams: List[obspy.Stream],
     for stream in list_of_streams:
         stats = getstats(stream)
         offsets.append(stats.average)
-        plot_clock_offset(network=network,
-                          station=station,
-                          startdate=startdate,
-                          enddate=enddate,
-                          results=offsets,
-                          threshold=threshold
-                          )
+    plot_clock_offset(network=network,
+                      station=station,
+                      startdate=startdate,
+                      enddate=enddate,
+                      results=offsets,
+                      threshold=threshold
+                      )
     for index, clockPhaseError in enumerate(offsets):
         testdate = startdate + timedelta(index)
         if clockPhaseError > threshold:

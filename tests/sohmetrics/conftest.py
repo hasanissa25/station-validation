@@ -123,3 +123,30 @@ def list_of_streams_clock_locked_mix() -> List[obspy.Stream]:
     list_of_streams.append(stream1)
     list_of_streams.append(stream2)
     return list_of_streams
+
+
+@pytest.fixture(scope="session")
+def list_of_streams_clock_offset() -> List[obspy.Stream]:
+    trace1 = obspy.Trace(data=np.array([-1]),
+                         header={
+                         "starttime": UTCDateTime('2021-01-01T00:00:00')})
+    trace2 = obspy.Trace(data=np.array([0.1]),
+                         header={
+                         "starttime": UTCDateTime('2021-01-02T00:00:00')})
+    trace3 = obspy.Trace(data=np.array([1]),
+                         header={
+                         "starttime": UTCDateTime('2021-01-03T00:00:00')})
+    trace4 = obspy.Trace(data=np.array([0.5]),
+                         header={
+                         "starttime": UTCDateTime('2021-01-04T00:00:00')})
+    stream1 = obspy.Stream(traces=[trace1])
+    stream2 = obspy.Stream(traces=[trace2])
+    stream3 = obspy.Stream(traces=[trace3])
+    stream4 = obspy.Stream(traces=[trace4])
+    list_of_streams = []
+    list_of_streams.append(stream1)
+    list_of_streams.append(stream2)
+    list_of_streams.append(stream3)
+    list_of_streams.append(stream4)
+
+    return list_of_streams

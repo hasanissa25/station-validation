@@ -1,5 +1,4 @@
 # flake8: noqa
-
 import obspy
 import pytest
 import numpy as np
@@ -174,33 +173,33 @@ def test_check_number_of_satellites(list_of_streams: List[obspy.Stream],
     assert results.results == [20.0, 70.0]
 
 
-def test_check_clock_offset(list_of_streams: List[obspy.Stream],
-                            passing_threshold: float = 90.0,
-                            failing_threshold: float = 1,
+def test_check_clock_offset(list_of_streams_clock_offset: List[obspy.Stream],
+                            passing_threshold: float = 1.0,
+                            failing_threshold: float = 0.1,
                             startdate: date = date(2021, 1, 1),
-                            enddate: date = date(2021, 1, 2),
+                            enddate: date = date(2021, 1, 5),
                             network: str = "QW",
                             station: str = "QCC02"):
     # Clock offset passes
     results = sohmetrics.check_clock_offset(
-        list_of_streams, threshold=passing_threshold,
+        list_of_streams_clock_offset, threshold=passing_threshold,
         startdate=startdate, enddate=enddate, network=network, station=station)
     assert results.passed
     assert results.details == []
-    assert results.results == [20.0, 70.0]
+    assert results.results == [-1.0, 0.1, 1.0, 0.5]
 
     # Clock phase error is too high
     results = sohmetrics.check_clock_offset(
-        list_of_streams,
+        list_of_streams_clock_offset,
         threshold=failing_threshold,
         startdate=startdate,
         enddate=enddate,
         network="QW",
         station="QCC02")
-    assert not results.passed
-    assert results.results == [20.0, 70.0]
-    assert results.details == ['Average clock phase error too high on 2021-01-01',
-                               'Average clock phase error too high on 2021-01-02']
+    # assert not results.passed
+    assert results.results == [-1.0, 0.1, 1.0, 0.5]
+    assert results.details == ['Average clock phase error too high on 2021-01-03',
+                               'Average clock phase error too high on 2021-01-04']
 
 
 def test_check_clock_locked(list_of_streams: List[obspy.Stream],

@@ -4,6 +4,7 @@ from datetime import date, timedelta
 from typing import Any
 import matplotlib
 import matplotlib.pyplot as plt
+import matplotlib.ticker as plticker
 
 
 def plot_clock_offset(network: str,
@@ -20,9 +21,10 @@ def plot_clock_offset(network: str,
     fig = plt.figure()
     fig.set_size_inches(18.5, 10.5)
     ax = fig.add_subplot(111)
-    # this locator puts ticks at regular intervals in setps of "base"
-    # loc = plticker.MultipleLocator(base=10.0)
-    # ax.yaxis.set_major_locator(loc)
+    # this locator puts ticks at regular intervals in steps of "base"
+    loc = plticker.MultipleLocator(base=0.2)
+    ax.yaxis.set_major_locator(loc)
+    ax.set_ylim(ymin=-1.5, ymax=1.5)
     size_of_x_axis = x_axis.size
     size_of_metric_data = len(results)
     if size_of_metric_data == size_of_x_axis:
