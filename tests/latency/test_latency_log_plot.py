@@ -19,7 +19,8 @@ def test_latency_log_plot(latency_parameters_nanometrics,
     total_availability = calculate_total_availability_for_nanometrics(
         latency_test_files_nanometrics)
     combined_latency_dataframe_for_all_days_dataframe,\
-        array_of_daily_latency_dataframes_nanometrics = get_latencies(
+        array_of_daily_latency_objects_max_latency_only,\
+        array_of_daily_latency_objects_all_latencies = get_latencies(
             typeofinstrument=latency_parameters_nanometrics.type_of_instrument,
             files=latency_test_files_nanometrics,
             network=latency_parameters_nanometrics.network,
@@ -39,7 +40,8 @@ def test_latency_log_plot(latency_parameters_nanometrics,
     total_availability = calculate_total_availability_for_nanometrics(
         latency_test_file_nanometrics_over_3_packets)
     combined_latency_dataframe_for_all_days_dataframe,\
-        array_of_daily_latency_dataframes_nanometrics = get_latencies(
+        array_of_daily_latency_objects_max_latency_only,\
+        array_of_daily_latency_objects_all_latencies = get_latencies(
             typeofinstrument=latency_parameters_nanometrics.type_of_instrument,
             files=latency_test_file_nanometrics_over_3_packets,
             network=latency_parameters_nanometrics.network,
@@ -57,7 +59,8 @@ def test_latency_log_plot(latency_parameters_nanometrics,
                      )
     # Multiple days, Guralp data
     combined_latency_dataframe_for_all_days_dataframe,\
-        array_of_daily_latency_dataframes_nanometrics = get_latencies(
+        array_of_daily_latency_objects_max_latency_only,\
+        array_of_daily_latency_objects_all_latencies = get_latencies(
             typeofinstrument=latency_parameters_guralp.type_of_instrument,
             files=latency_test_files_guralp,
             network=latency_parameters_guralp.network,

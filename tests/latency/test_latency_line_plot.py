@@ -4,20 +4,27 @@ from pathlib import Path
 
 from stationverification.utilities.latency_line_plot import latency_line_plot
 from stationverification.utilities.get_latencies import get_latencies
+from stationverification.utilities.\
+    convert_array_of_latency_objects_into_array_of_dataframes \
+    import convert_array_of_latency_objects_into_array_of_dataframes
 
 
 def test_latency_line_plot(latency_parameters_nanometrics, latency_test_files_nanometrics):
     subprocess.getoutput(
         "rm -rf 'stationvalidation_output'")
     combined_latency_dataframe_for_all_days_dataframe,\
-        array_of_daily_latency_dataframes_nanometrics = get_latencies(
+        array_of_daily_latency_objects_max_latency_only,\
+        array_of_daily_latency_objects_all_latencies = get_latencies(
             typeofinstrument=latency_parameters_nanometrics.type_of_instrument,
             files=latency_test_files_nanometrics,
             network=latency_parameters_nanometrics.network,
             station=latency_parameters_nanometrics.station,
             startdate=latency_parameters_nanometrics.startdate,
             enddate=latency_parameters_nanometrics.enddate)
-    latency_line_plot(latencies=array_of_daily_latency_dataframes_nanometrics,
+    array_of_daily_latency_dataframes = \
+        convert_array_of_latency_objects_into_array_of_dataframes(
+            array_of_latencies=array_of_daily_latency_objects_max_latency_only)
+    latency_line_plot(latencies=array_of_daily_latency_dataframes,
                       station=latency_parameters_nanometrics.station,
                       startdate=latency_parameters_nanometrics.startdate,
                       network=latency_parameters_nanometrics.network,

@@ -37,30 +37,19 @@ main()
     The main fuction, which takes care of calling the other functions
 '''
 import argparse
-import json
+import logging
 import os
 import subprocess
-import logging
-from dateutil import parser as dateparser  # type: ignore
-from datetime import date, timedelta  # type: ignore
-from stationverification import CONFIG
 from configparser import ConfigParser
-from stationverification.utilities.\
-    calculate_total_availability_for_nanometrics\
-    import calculate_total_availability_for_nanometrics
-from stationverification.utilities.generate_CSV_from_failed_latencies import\
-    generate_CSV_from_failed_latencies
+from datetime import date, timedelta  # type: ignore
 
-from stationverification.utilities.latency import (
-    populate_json_with_latency_info)
-from stationverification.utilities.get_latencies import get_latencies
-from stationverification.utilities.latency_line_plot import latency_line_plot
-from stationverification.utilities.latency_log_plot import latency_log_plot
-from stationverification.utilities.timely_availability_plot import \
-    timely_availability_plot
+from dateutil import parser as dateparser  # type: ignore
+
+from stationverification import CONFIG
+from stationverification.utilities.latency import latencyreport
 from stationverification.utilities.upload_results_to_s3 import \
     upload_results_to_s3
-from stationverification.utilities.get_latency_files import get_latency_files
+
 logging.basicConfig(
     format='%(asctime)s %(levelname)-8s %(message)s',
     level=logging.INFO,
@@ -210,76 +199,18 @@ automatically uploaded to s3 bucket',
     elif startdate == enddate:
         raise TimeSeriesError('Enddate is not inclusive. To test for one day, set \
 the enddate to the day after the startdate')
-    logging.info("Fetching latency files..")
-    files = get_latency_files(typeofinstrument=typeofinstrument,
-                              network=network,
-                              station=station,
-                              path=latencyFiles,
-                              startdate=startdate,
-                              enddate=enddate)
-    logging.info("Populating latency data..")
-    combined_latency_dataframe_for_all_days_dataframe, \
-        array_of_daily_latency_dataframes = get_latencies(
-            typeofinstrument=typeofinstrument,
-            files=files,
-            network=network,
-            station=station,
-            startdate=startdate,
-            enddate=enddate)
-    logging.info("Calculating total availability..")
-    total_availability = calculate_total_availability_for_nanometrics(files)
-    logging.info("Generating CSV of failed latencies..")
-    generate_CSV_from_failed_latencies(
-        latencies=combined_latency_dataframe_for_all_days_dataframe,
-        station=station,
-        network=network,
-        startdate=startdate,
-        enddate=enddate,
-        timely_threshold=thresholds.getfloat(
-            'thresholds', 'data_timeliness', fallback=3),)
-    logging.info("Generating timely availability plot..")
-    timely_availability_plot(latencies=array_of_daily_latency_dataframes,
-                             station=station,
-                             startdate=startdate,
-                             enddate=enddate,
-                             network=network,
-                             timely_threshold=thresholds.getfloat(
-                                 'thresholds', 'data_timeliness', fallback=3))
-    logging.info("Generating latency log plots..")
 
-    latency_log_plot(latencies=combined_latency_dataframe_for_all_days_dataframe,  # noqa
-                     station=station,
-                     startdate=startdate,
-                     enddate=enddate,
-                     typeofinstrument=typeofinstrument,
-                     network=network,
-                     timely_threshold=thresholds.getfloat(
-                         'thresholds', 'data_timeliness', fallback=3),
-                     total_availability=total_availability)
-    logging.info("Generating latency line plots..")
-    latency_line_plot(latencies=array_of_daily_latency_dataframes,
-                      station=station,
-                      startdate=startdate,
-                      network=network,
-                      timely_threshold=thresholds.getfloat(
-                          'thresholds', 'data_timeliness', fallback=3))
-    logging.info("Generating JSON report..")
-
-    populate_json_with_latency_info(
-        json_dict=json_dict,
-        combined_latency_dataframe_for_all_days_dataframe=combined_latency_dataframe_for_all_days_dataframe,  # noqa
-        network=network, station=station,
-        timely_threshold=thresholds.getfloat(
-                'thresholds', 'data_timeliness', fallback=3),
-        timely_percent=thresholds.getfloat(
-                'thresholds', 'timely_data_percentage', fallback=98.0)
-    )
-
-    dump_json_report(startdate=startdate,
-                     enddate=enddate,
-                     network=network,
-                     station=station,
-                     json_dict=json_dict)
+    latencyreport(typeofinstrument=typeofinstrument,
+                  network=network,
+                  station=station,
+                  startdate=startdate,
+                  enddate=enddate,
+                  path=latencyFiles,
+                  json_dict=json_dict,
+                  timely_threshold=thresholds.getfloat(
+                      'thresholds', 'data_timeliness', fallback=3),
+                  timely_percent=thresholds.getfloat(
+                      'thresholds', 'timely_data_percentage', fallback=98.0))
     logging.info("Cleaning up directory..")
 
     cleanup_directory_after_latency_call(startdate=startdate,
@@ -298,24 +229,6 @@ the enddate to the day after the startdate')
         upload_results_to_s3(path_of_folder_to_upload=validation_output_directory,  # noqa
                              bucketName=bucketName,
                              s3directory=s3directory)
-
-
-def dump_json_report(startdate: date,
-                     enddate: date,
-                     network: str,
-                     station: str,
-                     json_dict: dict):
-    if startdate == enddate - timedelta(days=1):
-        json_file_name = f'{network}.{station}-{startdate}-validation_results'
-    else:
-        json_file_name = f'{network}.{station}-{startdate}_\
-{(enddate + timedelta(days=-1))}-validation_results'
-    if not os.path.isdir('./stationvalidation_output'):
-        os.mkdir('./stationvalidation_output')
-
-    with open(f'./stationvalidation_output/{json_file_name}.json', 'w+')\
-            as file:
-        json.dump(json_dict, file, indent=2)
 
 
 def cleanup_directory_after_latency_call(startdate: date,

@@ -12,7 +12,7 @@ def get_latencies_from_guralp(files: list,
     combined_latency_dataframe_for_all_days_dataframe = pd.DataFrame(
         {'network': [], 'station': [], 'channel': [], "startTime": [],
          'data_latency': []})
-    array_of_daily_latency_dataframes = []
+    array_of_daily_latency_objects = []
     for file in files:
         current_file_dataframe = pd.read_csv(file)
 
@@ -58,7 +58,7 @@ def get_latencies_from_guralp(files: list,
         infer_datetime_format=True).apply(lambda x: x.strftime('%Y-%m-%d'))
 
     while startdate < enddate:
-        array_of_daily_latency_dataframes.append(
+        array_of_daily_latency_objects.append(
             combined_latency_dataframe_for_all_days_dataframe_with_datetime[
                 combined_latency_dataframe_for_all_days_dataframe_with_datetime["date"]  # noqa
                 == str(startdate)])
@@ -69,4 +69,4 @@ def get_latencies_from_guralp(files: list,
         combined_latency_dataframe_for_all_days_dataframe_with_datetime.drop(
             'date', axis=1, inplace=True)
     return combined_latency_dataframe_for_all_days_dataframe, \
-        array_of_daily_latency_dataframes
+        array_of_daily_latency_objects

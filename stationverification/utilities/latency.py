@@ -14,6 +14,9 @@ from pandas.core.frame import DataFrame
 from stationverification.utilities.\
     calculate_total_availability_for_nanometrics\
     import calculate_total_availability_for_nanometrics
+from stationverification.utilities.\
+    convert_array_of_latency_objects_into_array_of_dataframes \
+    import convert_array_of_latency_objects_into_array_of_dataframes
 from stationverification.utilities.generate_CSV_from_failed_latencies import\
     generate_CSV_from_failed_latencies
 from stationverification.utilities.get_latencies import get_latencies
@@ -91,7 +94,8 @@ def latencyreport(
 
     # Gather the latency information for the station
     combined_latency_dataframe_for_all_days_dataframe, \
-        array_of_daily_latency_dataframes = get_latencies(
+        array_of_daily_latency_objects_max_latency_only, \
+        array_of_daily_latency_objects_all_latencies = get_latencies(
             typeofinstrument=typeofinstrument,
             files=files,
             network=network,
@@ -100,17 +104,35 @@ def latencyreport(
             enddate=enddate)
     # Produce latency plots
     logging.info("Calculating total availability..")
-
     total_availability = calculate_total_availability_for_nanometrics(files)
-    logging.info("Generating timely availability plot..")
+    logging.info(
+        "Calling convert_array_of_latency_objects_into_array_of_dataframes for\
+ array_of_daily_latency_objects_max_latency_only")
+    array_of_daily_latency_dataframes_max_latency_only = \
+        convert_array_of_latency_objects_into_array_of_dataframes(
+            array_of_latencies=array_of_daily_latency_objects_max_latency_only)
+    logging.info(
+        "Finished Calling convert_array_of_latency_objects_into_array_of_dataframes\
+for array_of_daily_latency_objects_max_latency_only")
+    logging.info(
+        "Calling convert_array_of_latency_objects_into_array_of_dataframes for\
+ array_of_daily_latency_objects_all_latencies")
+    array_of_daily_latency_dataframes_all_latencies = \
+        convert_array_of_latency_objects_into_array_of_dataframes(
+            array_of_latencies=array_of_daily_latency_objects_all_latencies)
+    logging.info(
+        "Finished Calling convert_array_of_latency_objects_into_array_of_dataframes\
+for array_of_daily_latency_objects_all_latencies")
 
-    timely_availability_plot(latencies=array_of_daily_latency_dataframes,
-                             station=station,
-                             startdate=startdate,
-                             enddate=enddate,
-                             network=network,
-                             timely_threshold=timely_threshold,
-                             )
+    logging.info("Generating timely availability plot..")
+    timely_availability_plot(
+        latencies=array_of_daily_latency_dataframes_all_latencies,
+        station=station,
+        startdate=startdate,
+        enddate=enddate,
+        network=network,
+        timely_threshold=timely_threshold,
+    )
     logging.info("Generating latency log plots..")
 
     latency_log_plot(latencies=combined_latency_dataframe_for_all_days_dataframe,  # noqa
@@ -124,12 +146,13 @@ def latencyreport(
                      )
     logging.info("Generating latency line plots..")
 
-    latency_line_plot(latencies=array_of_daily_latency_dataframes,
-                      station=station,
-                      startdate=startdate,
-                      network=network,
-                      timely_threshold=timely_threshold
-                      )
+    latency_line_plot(
+        latencies=array_of_daily_latency_dataframes_max_latency_only,
+        station=station,
+        startdate=startdate,
+        network=network,
+        timely_threshold=timely_threshold
+    )
     logging.info("Generating CSV of failed latencies..")
 
     generate_CSV_from_failed_latencies(

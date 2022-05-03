@@ -1,4 +1,5 @@
 import os
+from typing import List
 import warnings
 
 import numpy as np
@@ -9,7 +10,6 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.ticker as plticker
 
-from pandas.core.frame import DataFrame
 from pandas.plotting import register_matplotlib_converters
 
 from stationverification.utilities.get_timely_availability_arrays\
@@ -20,7 +20,7 @@ warnings.filterwarnings("ignore")
 
 
 def timely_availability_plot(
-    latencies: DataFrame,
+    latencies: List,
     station: str,
     startdate: date,
     enddate: date,

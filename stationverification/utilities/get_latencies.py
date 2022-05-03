@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Any, List, Tuple
 from datetime import date
 
 
@@ -17,7 +17,7 @@ def get_latencies(
     station: str,
     startdate=date,
     enddate=date
-) -> Tuple[DataFrame, list]:
+) -> Tuple[DataFrame, Any, Any]:
     '''
     A function that returns a dataframe that includes 'network', 'station', \
         'channel', 'data_latency' columns given CSV or  JSON files
@@ -40,18 +40,26 @@ def get_latencies(
     array_of_daily_latency_dataframes: list
         A list containing pandas latency dataframes for each day
     '''
+    combined_latency_dataframe_for_all_days_dataframe: List[Any] = []
+    array_of_daily_latency_objects_max_latency_only: List[Any] = []
+    array_of_daily_latency_objects_all_latencies: List[Any] = []
+
     if typeofinstrument == "APOLLO":
         combined_latency_dataframe_for_all_days_dataframe,\
-            array_of_daily_latency_dataframes = get_latencies_from_apollo(
+            array_of_daily_latency_objects_max_latency_only, \
+            array_of_daily_latency_objects_all_latencies =\
+            get_latencies_from_apollo(
                 files=files,
                 network=network,
                 station=station)
 
     elif typeofinstrument == "GURALP":
         combined_latency_dataframe_for_all_days_dataframe, \
-            array_of_daily_latency_dataframes = get_latencies_from_guralp(
+            array_of_daily_latency_objects_max_latency_only =\
+            get_latencies_from_guralp(
                 files=files,
                 startdate=startdate,
                 enddate=enddate)
     return combined_latency_dataframe_for_all_days_dataframe,\
-        array_of_daily_latency_dataframes
+        array_of_daily_latency_objects_max_latency_only,\
+        array_of_daily_latency_objects_all_latencies
