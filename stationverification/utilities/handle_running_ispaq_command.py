@@ -10,12 +10,6 @@ from configparser import ConfigParser
 from stationverification.utilities.prepare_ispaq import \
     InvalidConfigFile, prepare_ispaq_local
 
-logging.basicConfig(
-    format='%(asctime)s:%(levelname)s:%(message)s',
-    datefmt="%Y-%m-%d %H:%M:%S",
-    level=logging.INFO,
-    filename="ISPAQ.log", filemode='w')
-
 
 def handle_running_ispaq_command(
         ispaqloc: str,

@@ -17,12 +17,6 @@ from stationverification.utilities.latency_log_plot import latency_log_plot
 from stationverification.utilities.timely_availability_plot import \
     timely_availability_plot
 
-logging.basicConfig(
-    format='%(asctime)s:%(levelname)s:%(message)s',
-    datefmt="%Y-%m-%d %H:%M:%S",
-    level=logging.INFO,
-    filename="Latency.log", filemode='w')
-
 
 def generate_latency_results(typeofinstrument: str,
                              network: str,
