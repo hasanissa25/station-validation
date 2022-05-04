@@ -1,5 +1,6 @@
 import logging
 from datetime import date
+from typing import Any, Optional
 
 from pandas.core.frame import DataFrame
 from stationverification.utilities.\
@@ -17,6 +18,11 @@ from stationverification.utilities.latency_log_plot import latency_log_plot
 from stationverification.utilities.timely_availability_plot import \
     timely_availability_plot
 
+logging.basicConfig(
+    format='%(asctime)s Latency: %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
+
 
 def generate_latency_results(typeofinstrument: str,
                              network: str,
@@ -24,7 +30,8 @@ def generate_latency_results(typeofinstrument: str,
                              startdate: date,
                              enddate: date,
                              path: str,
-                             timely_threshold: float) -> DataFrame:
+                             timely_threshold: float,
+                             queue: Optional[Any] = False,) -> DataFrame:
     logging.info("Fetching latency files..")
 
     files = get_latency_files(typeofinstrument=typeofinstrument,
@@ -107,4 +114,6 @@ for array_of_daily_latency_objects_all_latencies")
         enddate=enddate,
         timely_threshold=timely_threshold
     )
+    if queue:
+        queue.put(combined_latency_dataframe_for_all_days_dataframe)
     return combined_latency_dataframe_for_all_days_dataframe

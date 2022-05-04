@@ -56,7 +56,7 @@ main()
     running ISPAQ
 '''
 import logging
-import multiprocessing as mp
+from multiprocessing import Process, Queue
 from datetime import timedelta
 from stationverification.utilities.cleanup_directory import cleanup_directory
 from stationverification.utilities.fetch_arguments import fetch_arguments
@@ -81,11 +81,13 @@ def main():
         A json file containing the results of the stationvalidation tests.
 
     '''
+    # Setting up a queue for processors to push their results to if needed
+    queue = Queue()
     user_inputs = fetch_arguments(ISPAQ_and_latency=True)
 
     # Run Latency
     logging.info("Process 1: Generating Latency results..")
-    process_one = mp.Process(
+    process_one = Process(
         target=generate_latency_results, args=(user_inputs.typeofinstrument,
                                                user_inputs.network,
                                                user_inputs.station,
@@ -96,11 +98,12 @@ def main():
                                                .getfloat('thresholds',
                                                          'data_timeliness',
                                                          fallback=3),
+                                               queue,
                                                ))
     process_one.start()
     # Run ISPAQ
     logging.info("Process 2: Generating ISPAQ results..")
-    process_two = mp.Process(
+    process_two = Process(
         target=handle_running_ispaq_command, args=(
             user_inputs.ispaqloc,
             user_inputs.metrics,
@@ -115,11 +118,11 @@ def main():
             user_inputs.stationconf,
         ))
     process_two.start()
-
+    combined_latency_dataframe_for_all_days_dataframe = queue.get()
     process_one.join()
-    logging.info("Finished Process 1: Generating Latency results..")
+    logging.info("Finished Process 1: Generating Latency results")
     process_two.join()
-    logging.info("Finished Process 2: Generating ISPAQ results..")
+    logging.info("Finished Process 2: Generating ISPAQ results")
 
     # Read the files generated from ISPAQ and populate the dictionary object
     if user_inputs.stationconf is None:
@@ -145,17 +148,6 @@ def main():
                            stop=user_inputs.enddate)
 
         )
-    combined_latency_dataframe_for_all_days_dataframe = \
-        generate_latency_results(typeofinstrument=user_inputs.typeofinstrument,
-                                 network=user_inputs.network,
-                                 station=user_inputs.station,
-                                 startdate=user_inputs.startdate,
-                                 enddate=user_inputs.enddate,
-                                 path=user_inputs.latencyFiles,
-                                 timely_threshold=user_inputs.thresholds
-                                 .getfloat(
-                                     'thresholds', 'data_timeliness',
-                                     fallback=3))
 
     report(
         combined_latency_dataframe_for_all_days_dataframe=combined_latency_dataframe_for_all_days_dataframe,  # noqa

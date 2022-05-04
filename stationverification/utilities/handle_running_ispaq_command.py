@@ -1,7 +1,6 @@
 import subprocess
 import os
 import tempfile
-import logging
 
 from datetime import date
 from obspy.io.xseed import Parser

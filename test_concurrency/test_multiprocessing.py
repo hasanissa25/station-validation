@@ -1,46 +1,22 @@
-import multiprocessing as mp
-import time
-import math
-
-result_a = []
-result_b = []
-result_c = []
+# flake8:noqa
+from multiprocessing import Process, Queue
 
 
-def make_calculation_one(numbers):
-    for number in numbers:
-        result_a.append(math.sqrt(number ** 3))
+def make_calculation_one(queue, numbers):
+    sample_result = f"Result from make calculation one {numbers}"
+    if queue:
+        queue.put({"Make_calculation_one": sample_result})
 
 
-def make_calculation_two(numbers):
-    for number in numbers:
-        result_b.append(math.sqrt(number ** 4))
-
-
-def make_calculation_three(numbers):
-    for number in numbers:
-        result_c.append(math.sqrt(number ** 5))
+def main():
+    queue = Queue()
+    process_one = Process(target=make_calculation_one,
+                          args=(queue, [1, 2, 3, 4],))
+    process_one.start()
+    process_one.join()
+    results = queue.get()
+    print(results["Make_calculation_one"])
 
 
 if __name__ == '__main__':
-    number_list = list(range(5000000))
-    process_one = mp.Process(target=make_calculation_one, args=(number_list,))
-    process_two = mp.Process(target=make_calculation_two, args=(number_list,))
-    process_three = mp.Process(
-        target=make_calculation_three, args=(number_list,))
-    start = time.time()
-    process_one.start()
-    process_one.join()
-    process_two.start()
-    process_two.join()
-    process_three.start()
-    process_three.join()
-    end = time.time()
-    print(f"With multie processing {end-start}")
-
-    start = time.time()
-    make_calculation_one(number_list)
-    make_calculation_two(number_list)
-    make_calculation_three(number_list)
-    end = time.time()
-    print(f"Without multie processing {end-start}")
+    main()
