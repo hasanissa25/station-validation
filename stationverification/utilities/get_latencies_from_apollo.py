@@ -21,16 +21,14 @@ def get_latencies_from_apollo(files: list,
     array_of_daily_latency_objects_max_latency_only: List[Any] = []
     array_of_daily_latency_objects_all_latencies: List[Any] = []
     for file in files:
-        logging.info(f"file: {file}")
+        logging.info(f"Fetching latency from: {file}")
         # Opening JSON file
         json_latency_file = open(file)
-        logging.info(f'About to load the data from the JSON for {file}')
         try:
             latency_data = json.load(json_latency_file)
         except json.decoder.JSONDecodeError:
             raise exceptions.LatencyFileError(
                 f'Problem detected in latency file: {file}')
-        logging.info(f'Finished loading JSON data for {file}')
         # Storing the data of the current days JSON latency file
         current_day_max_latencies: dict = {}
         current_day_all_latencies: dict = {}
@@ -53,9 +51,6 @@ def get_latencies_from_apollo(files: list,
                         '.')
                 # looping over the intervals array, which contains all the
                 # latency objects a specific NSC
-                logging.info(
-                    'Calling get_latency_value_for_current_timestamp on \
-all time stamps')
                 for current_latency in current_NSC['intervals']:
                     combined_latency_data_for_all_days, \
                         current_day_max_latencies, current_day_all_latencies \
@@ -67,23 +62,13 @@ all time stamps')
                             current_network=current_network,
                             current_station=current_station,
                             current_channel=current_channel)
-                logging.info(
-                    'Finished get_latency_value_for_current_timestamp on all\
-time stamps')
         json_latency_file.close()
-        logging.info("About to append to the array_of_daily_latency")
         array_of_daily_latency_objects_max_latency_only.append(
             current_day_max_latencies)
         array_of_daily_latency_objects_all_latencies.append(
             current_day_all_latencies)
-        logging.info("Finished append to the array_of_daily_latency")
-    logging.info(
-        "Making a dataframe from the combined_latency_data_for_all_days")
     combined_latency_dataframe_for_all_days_dataframe = pd.DataFrame(
         data=combined_latency_data_for_all_days, index=columns).T
-    logging.info(
-        "finished Making a dataframe from the\
- combined_latency_data_for_all_days")
 
     return combined_latency_dataframe_for_all_days_dataframe, \
         array_of_daily_latency_objects_max_latency_only,\

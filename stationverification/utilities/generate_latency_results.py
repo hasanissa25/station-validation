@@ -55,25 +55,13 @@ def generate_latency_results(typeofinstrument: str,
     logging.info("Calculating total availability..")
     total_availability = calculate_total_availability_for_nanometrics(files)
 
-    logging.info(
-        "Calling convert_array_of_latency_objects_into_array_of_dataframes for\
- array_of_daily_latency_objects_max_latency_only")
     array_of_daily_latency_dataframes_max_latency_only = \
         convert_array_of_latency_objects_into_array_of_dataframes(
             array_of_latencies=array_of_daily_latency_objects_max_latency_only)
-    logging.info(
-        "Finished Calling convert_array_of_latency_objects_into_array_of_dataframes\
-for array_of_daily_latency_objects_max_latency_only")
 
-    logging.info(
-        "Calling convert_array_of_latency_objects_into_array_of_dataframes for\
- array_of_daily_latency_objects_all_latencies")
     array_of_daily_latency_dataframes_all_latencies = \
         convert_array_of_latency_objects_into_array_of_dataframes(
             array_of_latencies=array_of_daily_latency_objects_all_latencies)
-    logging.info(
-        "Finished Calling convert_array_of_latency_objects_into_array_of_dataframes\
-for array_of_daily_latency_objects_all_latencies")
 
     logging.info("Generating timely availability plot..")
     timely_availability_plot(
