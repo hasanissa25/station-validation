@@ -38,7 +38,7 @@ def timely_availability_plot(
         filename = f'{network}.{station}-{startdate}\
 .timely_availability_plot.png'
     else:
-        filename = f'{network}.{station}-{startdate}_to_\
+        filename = f'{network}.{station}-{startdate}_\
 {enddate - timedelta(days=1)}-timely_availability_plot.png'
     # Setting up the figure
     fig, axes = plt.subplots(
