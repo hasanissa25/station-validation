@@ -320,13 +320,13 @@ metrics are specified in ispaq preference file under {metrics}')
 
 
 def report(
+    combined_latency_dataframe_for_all_days_dataframe: DataFrame,
     typeofinstrument: str,
     network: str,
     station: str,
     stationmetricdata: StationMetricData,
     start: date,
     end: date,
-    latencyFiles: str,
     thresholds: ConfigParser,
     soharchive: str,
 ) -> dict:
@@ -413,12 +413,9 @@ def report(
 
     try:
         json_dict = latencyreport(
-            typeofinstrument=typeofinstrument,
+            combined_latency_dataframe_for_all_days_dataframe=combined_latency_dataframe_for_all_days_dataframe,  # noqa
             network=network,
             station=station,
-            startdate=start,
-            enddate=end,
-            path=latencyFiles,
             json_dict=json_dict,
             timely_threshold=thresholds.getfloat(
                 'thresholds', 'data_timeliness', fallback=3),

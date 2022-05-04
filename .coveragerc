@@ -17,4 +17,5 @@ omit =
         *stationverification/utilities/plot_timing_quality.py*
         *stationverification/utilities/change_name_of_ISPAQ_PDFs_files.py*
         *stationverification/utilities/cleanup_directory.py*
+        *stationverification/utilities/fetch_arguments.py*
 

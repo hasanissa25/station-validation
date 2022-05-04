@@ -63,3 +63,25 @@ def cleanup_directory(
 
     subprocess.getoutput(
         "rm -rf ispaq_outputs")
+
+
+def cleanup_directory_after_latency_call(startdate: date,
+                                         enddate: date,
+                                         outputdir: str,
+                                         network: str,
+                                         station: str,
+                                         ):
+    if startdate == enddate - timedelta(days=1):
+        validation_output_directory = f'{outputdir}/{network}/{station}/\
+{startdate}'
+    else:
+        validation_output_directory = f'{outputdir}/{network}/{station}/\
+{startdate}-{enddate}'
+    # Create the directory if it doesn't already exist
+    if not os.path.isdir(validation_output_directory):
+        subprocess.getoutput(
+            f"mkdir -p {validation_output_directory}")
+    subprocess.getoutput(
+        f"mv ./stationvalidation_output/* {validation_output_directory}")  # noqa
+    subprocess.getoutput(
+        "rm -rf ./stationvalidation_output")

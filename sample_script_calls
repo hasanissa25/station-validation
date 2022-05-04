@@ -19,7 +19,7 @@ Parameters:
 Sample Calls:
 
 stationverification script with stationXML:
-    time nohup stationverification -T APOLLO -N QW -S ONE01 -d 2022-4-21 -e 2022-5-1 -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -s /home/ec2-user/station-validation/stationverification/data/QW.xml -o /validation >> ONE01_log.out &
+    time nohup stationverification -T APOLLO -N QW -S QCC09 -d 2022-4-21 -e 2022-5-1 -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -s /home/ec2-user/station-validation/stationverification/data/QW.xml -o /validation >> QCC09_log.out &
 
 stationverification script with station config file:
     time nohup stationverification -T APOLLO -N QW -S QCC02 -d 2022-3-28 -e 2022-3-29 -c /home/ec2-user/station-validation/tests/data/stationQCC02.conf -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -o /validation >> QCC02_log.out &
