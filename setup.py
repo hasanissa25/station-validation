@@ -42,6 +42,9 @@ setup(
                 stationverification.bin.stationverification:main',
             'stationverificationlatency = \
                 stationverification.bin.stationverification_latency:main',
+            # Hasan: Remove
+            'envtest = \
+                stationverification.bin.envtest:main',
             # These will not work with the current version of
             # stationverification, they will need refactoring
             # 'dailyverification = \
