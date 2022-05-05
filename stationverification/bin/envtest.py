@@ -2,6 +2,10 @@ import logging
 from stationverification.config import get_default_parameters
 from stationverification.utilities.fetch_arguments_envtest \
     import fetch_arguments_env_test
+logging.basicConfig(
+    format='%(asctime)s envTest: %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
 
 
 def main():
