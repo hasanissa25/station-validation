@@ -10,7 +10,8 @@ class UserInput(dict):
         return self["latency_directory"]
 
 
-def fetch_arguments_env_test(ISPAQ_and_latency: Optional[bool] = False) -> UserInput:
+def fetch_arguments_env_test(ISPAQ_and_latency: Optional[bool] = False) \
+        -> UserInput:
     # Create argparse object to handle user arguments
     argsparser = argparse.ArgumentParser()
     argsparser.add_argument(
@@ -21,5 +22,5 @@ def fetch_arguments_env_test(ISPAQ_and_latency: Optional[bool] = False) -> UserI
     )
     args = argsparser.parse_args()
 
-    latency_directory = args.latency
+    latency_directory = args.latency_directory
     return UserInput(latency_directory=latency_directory)
