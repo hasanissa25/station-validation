@@ -20,7 +20,6 @@ setup(
             'data/*.xml'
         ]
     },
-    # Requires python packages for using ispaq
     install_requires=[
         'tables',
         'pandas==0.25.3',
@@ -29,7 +28,8 @@ setup(
         'rdflib',
         'boto3',
         'numpy==1.19.5',
-        'arrow'
+        'arrow',
+        "pydantic"
     ],
     extras_require={
         'dev': [
