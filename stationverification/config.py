@@ -1,21 +1,29 @@
+# flake8:noqa
 from functools import lru_cache
-from enum import Enum
-
+from typing import Any
 from pydantic import BaseSettings
-
-
-class LogLevels(Enum):
-    DEBUG: str = 'DEBUG'
-    INFO: str = 'INFO'
-    WARNING: str = 'WARNING'
-    ERROR: str = 'ERROR'
+from stationverification import CONFIG, ISPAQ_PREF, STATION_URL
 
 
 class BaseAppSettings(BaseSettings):
+    # Default Archives
+    ISPAQ_LOCATION: str = "/home/ec2-user/ispaq/run_ispaq.py"
+    LATENCY_ARCHIVE: str = "/apollo/archive/latency/"
+    MINISEED_ARCHIVE: str = "/apollo/archive/miniseed/"
+    SOH_ARCHIVE: str = "/apollo/archive/soh/"
 
-    LATENCY_DIRECTORY: str = "from_the_config_file/latency"
-    MINISEED_DIRECTORY: str = "from_the_config_file/miniseed"
-    SOH_DIRECTORY: str = "from_the_config_file/soh"
+    # Default Parameters
+    STATION_CONFIG: Any = None
+    METRICS: str = "eew_test"
+    PDF_INTERVAL: str = "aggregated"
+    S3_BUCKET_NAME: str = "eew-validation-data"
+    S3_DIRECTORY: str = "validation_results"
+    OUTPUT_DIRECTORY: str = "/validation"
+
+    # Default Config Files
+    PREFERENCE_FILE: str = ISPAQ_PREF
+    THRESHOLDS: str = CONFIG
+    STATION_URL: str = STATION_URL
 
     class Config:
         env_prefix = 'VALIDATION_'

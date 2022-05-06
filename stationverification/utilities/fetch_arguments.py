@@ -4,8 +4,8 @@ from typing import Optional
 
 from dateutil import parser as dateparser  # type: ignore
 
-from stationverification import CONFIG, ISPAQ_PREF
 from stationverification.utilities import exceptions
+from stationverification.config import get_default_parameters
 
 
 class UserInput(dict):
@@ -94,21 +94,19 @@ def fetch_arguments(ISPAQ_and_latency: Optional[bool] = False) -> UserInput:
         "--s3bucketname",
         help="To which bucket to upload in S3",
         type=str,
-        default="eew-validation-data"
+
     )
     argsparser.add_argument(
         "-B",
         "--s3bucketpathtosaveto",
         help="Which 'directory' in S3 to save to",
         type=str,
-        default="validation_results"
     )
     argsparser.add_argument(
         '-c',
         '--stationconfig',
         help='Path to the file that contains station information.',
         type=str,
-        default=None
     )
     argsparser.add_argument(
         "-d",
@@ -139,41 +137,29 @@ YYYY-MM-DD format.",
         '-H',
         '--soh_archive',
         help='Path to the state of health files',
-        required=True if ISPAQ_and_latency else False,
         type=str,
     )
     argsparser.add_argument(
         '-i',
         '--ispaqlocation',
-        required=True if ISPAQ_and_latency else False,
         help='Specifies the path or alias for the ispaq cmdline tool. Default: \
 ispaq',
-        type=str
+        type=str,
     )
     argsparser.add_argument(
         '-l',
         '--latency',
-        required=True,
         help='The directory containing the latency data.',
         type=str,
     )
     argsparser.add_argument(
-        '-L',
-        '--logfile',
-        default=None,
-        help='To log to a file instead of stdout, specify the filename.',
-        type=str
-    )
-    argsparser.add_argument(
         '-m',
         '--miniseedarchive',
-        required=True if ISPAQ_and_latency else False,
-        help='The parent directory of the miniseed archive.'
+        help='The parent directory of the miniseed archive.',
     )
     argsparser.add_argument(
         '-M',
         '--metrics',
-        default='eew_test',
         help='Select the group of metrics from the ispaq preference file to run with. \
 Default: eew_test',
         type=str
@@ -188,10 +174,8 @@ Default: eew_test',
     argsparser.add_argument(
         '-o',
         '--outputdir',
-        required=True,
         help='Output directory to store results in. If none is specified, the \
 current directory is used.',
-        default='./station_validation_results'
     )
 
     argsparser.add_argument(
@@ -199,13 +183,11 @@ current directory is used.',
         '--pdfinterval',
         help='time span for PDFs: daily and/or aggregated over the entire \
 span',
-        default="aggregated",
         type=str
     )
     argsparser.add_argument(
         '-P',
         '--preference_file',
-        default=ISPAQ_PREF,
         help='The path to the preference file. Overrides the default ispaq\
  file.',
         type=str
@@ -226,7 +208,6 @@ span',
     argsparser.add_argument(
         '-t',
         '--thresholds',
-        default=CONFIG,
         help='Overrides the default config file.',
         type=str
     )
@@ -246,37 +227,63 @@ span',
     )
 
     args = argsparser.parse_args()
+    default_parameters = get_default_parameters()
 
+    # Parameters required on every script call, with no default values
+    typeofinstrument = args.typeofinstrument
     station = args.station
     network = args.network
     startdate = (dateparser.parse(args.startdate, yearfirst=True)).date()
     enddate = (dateparser.parse(args.enddate, yearfirst=True)).date()
-    ispaqloc = args.ispaqlocation
-    metrics = args.metrics
-    pfile = args.preference_file
+    # Only one of them is required, either station_url or stationconf
+    station_url = args.station_url if args.station_url is not None\
+        else default_parameters.STATION_URL
+    stationconf = args.stationconfig if args.stationconfig is not None\
+        else default_parameters.STATION_CONFIG
+
+    # Config files
+    pfile = args.preference_file if args.preference_file is not None\
+        else default_parameters.PREFERENCE_FILE
     thresholds = ConfigParser()
-    thresholds.read(args.thresholds)
-    # fdsnws = args.fdsnws
-    latencyFiles = args.latency
-    pdfinterval = args.pdfinterval
-    station_url = args.station_url
-    typeofinstrument = args.typeofinstrument
-    miniseedarchive = args.miniseedarchive
-    soharchive = args.soh_archive
-    outputdir = args.outputdir
+    if args.thresholds is not None:
+        thresholds.read(args.thresholds)
+    else:
+        thresholds.read(default_parameters.THRESHOLDS)
+
+    # Directories, with default paths
+    ispaqloc = args.ispaqlocation if args.ispaqlocation is not None\
+        else default_parameters.ISPAQ_LOCATION
+    latencyFiles = args.latency if args.latency is not None\
+        else default_parameters.LATENCY_ARCHIVE
+    miniseedarchive = args.miniseedarchive if args.miniseedarchive is not None\
+        else default_parameters.MINISEED_ARCHIVE
+    soharchive = args.soh_archive if args.soh_archive is not None\
+        else default_parameters.SOH_ARCHIVE
+    outputdir = args.outputdir if args.outputdir is not None\
+        else default_parameters.OUTPUT_DIRECTORY
+    s3directory = args.s3bucketpathtosaveto \
+        if args.s3bucketpathtosaveto is not None\
+        else default_parameters.S3_DIRECTORY
+
+    # Optional parameters, with default value
+    metrics = args.metrics if args.metrics is not None\
+        else default_parameters.METRICS
+    pdfinterval = args.pdfinterval if args.pdfinterval is not None\
+        else default_parameters.PDF_INTERVAL
+    bucketName = args.s3bucketname if args.s3bucketname is not None\
+        else default_parameters.S3_BUCKET_NAME
+
+    # Optional parameters, with no default value
     uploadresultstos3 = args.uploadresultstos3
-    bucketName = args.s3bucketname
-    s3directory = args.s3bucketpathtosaveto
-    stationconf = args.stationconfig
+
+    # fdsnws = args.fdsnws
+
     if startdate > enddate:
         raise exceptions.TimeSeriesError('Enddate must be after startdate.')
     elif startdate == enddate:
         raise exceptions.TimeSeriesError('Enddate is not inclusive. To test for one day, set \
 the enddate to the day after the startdate')
-    if stationconf is None and station_url is None and ISPAQ_and_latency:
-        raise exceptions.MissingConfigOrStationxml(
-            'Please include either the StationXML file or the Station Config \
-file')
+
     return UserInput(station=station,
                      network=network,
                      startdate=startdate,
