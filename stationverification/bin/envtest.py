@@ -15,9 +15,9 @@ def main():
     if user_inputs.latency_directory is None:
         latency_directory = parameters.LATENCY_DIRECTORY
     if user_inputs.miniseed_directory is None:
-        miniseed_directory = parameters.miniseed_directory
+        miniseed_directory = parameters.MINISEED_DIRECTORY
     if user_inputs.soh_directory is None:
-        soh_directory = parameters.soh_directory
+        soh_directory = parameters.SOH_DIRECTORY
     logging.info(f"latency directory {latency_directory}")
     logging.info(f"miniseed_directory {miniseed_directory}")
     logging.info(f"soh_directory {soh_directory}")
