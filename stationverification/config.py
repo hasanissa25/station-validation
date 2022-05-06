@@ -13,10 +13,12 @@ class LogLevels(Enum):
 
 class BaseAppSettings(BaseSettings):
 
-    latency_directory: str = "from_the_config_file/latency"
+    LATENCY_DIRECTORY: str = "from_the_config_file/latency"
+    MINISEED_DIRECTORY: str = "from_the_config_file/miniseed"
+    SOH_DIRECTORY: str = "from_the_config_file/soh"
 
     class Config:
-        env_prefix = 'validation_'
+        env_prefix = 'VALIDATION_'
 
 
 @lru_cache()
