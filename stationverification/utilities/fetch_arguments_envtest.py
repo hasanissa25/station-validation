@@ -9,9 +9,11 @@ class UserInput(dict):
     def latency_directory(self) -> list:
         return self["latency_directory"]
 
+    @property
     def miniseed_directory(self) -> list:
         return self["miniseed_directory"]
 
+    @property
     def soh_directory(self) -> list:
         return self["soh_directory"]
 

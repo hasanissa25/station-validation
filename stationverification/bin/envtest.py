@@ -12,6 +12,7 @@ def main():
     # Setting up a queue for processors to push their results to if needed
     user_inputs = fetch_arguments_env_test()
     parameters = get_default_parameters()
+    logging.info(f'user_inputs {user_inputs}')
     if user_inputs.latency_directory is None:
         latency_directory = parameters.LATENCY_DIRECTORY
     if user_inputs.miniseed_directory is None:
