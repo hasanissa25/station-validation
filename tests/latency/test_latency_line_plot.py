@@ -30,19 +30,19 @@ def test_latency_line_plot(latency_parameters_nanometrics, latency_test_files_na
                       timely_threshold=latency_parameters_nanometrics.timely_threshold
                       )
     latency_line_plot_1 = Path(
-        "stationvalidation_output/QW.QCC02-2022-04-01-latency_line_plot.png")
+        "stationvalidation_output/QW.QCC02.2022-04-01.latency_line_plot.png")
     if latency_line_plot_1.exists():
         assert True
     else:
         assert False
     latency_line_plot_2 = Path(
-        "stationvalidation_output/QW.QCC02-2022-04-02-latency_line_plot.png")
+        "stationvalidation_output/QW.QCC02.2022-04-02.latency_line_plot.png")
     if latency_line_plot_2.exists():
         assert True
     else:
         assert False
     latency_line_plot_3 = Path(
-        "stationvalidation_output/QW.QCC02-2022-04-03-latency_line_plot.png")
+        "stationvalidation_output/QW.QCC02.2022-04-03.latency_line_plot.png")
     if latency_line_plot_3.exists():
         assert True
     else:

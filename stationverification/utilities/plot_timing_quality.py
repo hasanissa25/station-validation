@@ -45,9 +45,9 @@ def plot_timing_quality(network: str,
         plt.xticks(rotation=90)
         filename = ""
         if startdate == enddate - timedelta(days=1):
-            filename = f'{network}.{station}-{startdate}'
+            filename = f'{network}.{station}.{startdate}'
         else:
-            filename = f'{network}.{station}-{startdate}_\
+            filename = f'{network}.{station}.{startdate}_\
 {enddate - timedelta(days=1)}'
         ax.set_title(
             f'Timing Quality [%]\n{filename}')
@@ -69,6 +69,6 @@ def plot_timing_quality(network: str,
         if not os.path.isdir("./stationvalidation_output"):
             os.mkdir('./stationvalidation_output')
         # plt.savefig(f'stationvalidation_output/{plot_filename}')
-        plt.savefig(f'stationvalidation_output/{filename}-timing_quality.png',
+        plt.savefig(f'stationvalidation_output/{filename}.timing_quality.png',
                     dpi=300, bbox_extra_artists=(legend,), bbox_inches='tight')
         plt.close()

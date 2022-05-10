@@ -166,10 +166,10 @@ ADC Count (range: [0, +/- 8,388,608])')
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}.{channel}-{start}-ADC_Count'
+            plot_filename = f'{network}.{station}.{channel}.{start}.adc_count'
         else:
-            plot_filename = f'{network}.{station}.{channel}-{start}_\
-{(stop + timedelta(days=-1))}-ADC_Count'
+            plot_filename = f'{network}.{station}.{channel}.{start}_\
+{(stop + timedelta(days=-1))}.adc_count'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300,
@@ -227,11 +227,11 @@ def num_overlaps_plot(
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}.{channel}-{start}\
--num_overlaps'
+            plot_filename = f'{network}.{station}.{channel}.{start}\
+.num_overlaps'
         else:
-            plot_filename = f'{network}.{station}.{channel}-{start}_\
-{(stop + timedelta(days=-1))}-num_overlaps'
+            plot_filename = f'{network}.{station}.{channel}.{start}_\
+{(stop + timedelta(days=-1))}.num_overlaps'
 
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
@@ -290,10 +290,10 @@ def num_gaps_plot(
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}.{channel}-{start}-num_gaps'
+            plot_filename = f'{network}.{station}.{channel}.{start}.num_gaps'
         else:
-            plot_filename = f'{network}.{station}.{channel}-{start}_\
-{(stop + timedelta(days=-1))}-num_gaps'
+            plot_filename = f'{network}.{station}.{channel}.{start}_\
+{(stop + timedelta(days=-1))}.num_gaps'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
@@ -350,10 +350,10 @@ def max_gap_plot(
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}.{channel}-{start}-max_gap'
+            plot_filename = f'{network}.{station}.{channel}.{start}.max_gap'
         else:
-            plot_filename = f'{network}.{station}.{channel}-{start}_\
-{(stop + timedelta(days=-1))}-max_gap'
+            plot_filename = f'{network}.{station}.{channel}.{start}_\
+{(stop + timedelta(days=-1))}.max_gap'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
@@ -413,10 +413,10 @@ def spikes_plot(
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}.{channel}-{start}-spikes'
+            plot_filename = f'{network}.{station}.{channel}.{start}.spikes'
         else:
-            plot_filename = f'{network}.{station}.{channel}-{start}_\
-{(stop + timedelta(days=-1))}-spikes'
+            plot_filename = f'{network}.{station}.{channel}.{start}_\
+{(stop + timedelta(days=-1))}.spikes'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
@@ -476,11 +476,11 @@ def percent_availability_plot(
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}.{channel}-{start}\
--percent_availability'
+            plot_filename = f'{network}.{station}.{channel}.{start}\
+.percent_availability'
         else:
-            plot_filename = f'{network}.{station}.{channel}-{start}_\
-{(stop + timedelta(days=-1))}-percent_availability'
+            plot_filename = f'{network}.{station}.{channel}.{start}_\
+{(stop + timedelta(days=-1))}.percent_availability'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
@@ -542,11 +542,11 @@ Percent above New High Noise Model')
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}.{channel}-{start}\
--pct_above_nhnm'
+            plot_filename = f'{network}.{station}.{channel}.{start}\
+.pct_above_nhnm'
         else:
-            plot_filename = f'{network}.{station}.{channel}-{start}_\
-{(stop + timedelta(days=-1))}-pct_above_nhnm'
+            plot_filename = f'{network}.{station}.{channel}.{start}_\
+{(stop + timedelta(days=-1))}.pct_above_nhnm'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
@@ -606,11 +606,11 @@ Percent below New Low Noise Model')
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}.{channel}-{start}\
--pct_below_nlnm'
+            plot_filename = f'{network}.{station}.{channel}.{start}\
+.pct_below_nlnm'
         else:
-            plot_filename = f'{network}.{station}.{channel}-{start}_\
-{(stop + timedelta(days=-1))}-pct_below_nlnm'
+            plot_filename = f'{network}.{station}.{channel}.{start}_\
+{(stop + timedelta(days=-1))}.pct_below_nlnm'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
                     dpi=300, bbox_inches='tight')
@@ -668,10 +668,10 @@ Percent below New Low Noise Model')
 #  metrics
 #         # aren't plotted on the same plot
 #         if start == stop - timedelta(days=1):
-#             plot_filename = f'{network}.{station}.{channel}-{start}\
+#             plot_filename = f'{network}.{station}.{channel}.{start}\
 # .dead_channel_lin'
 #         else:
-#             plot_filename = f'{network}.{station}.{channel}-{start}_\
+#             plot_filename = f'{network}.{station}.{channel}.{start}_\
 # {(stop + timedelta(days=-1))}-dead_channel_lin'
 #         # Write the plot to the output directory
 #         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
@@ -730,10 +730,10 @@ Percent below New Low Noise Model')
 #  metrics
 #         # aren't plotted on the same plot
 #         if start == stop - timedelta(days=1):
-#             plot_filename = f'{network}.{station}.{channel}-{start}\
+#             plot_filename = f'{network}.{station}.{channel}.{start}\
 # .dead_channel_gsn'
 #         else:
-#             plot_filename = f'{network}.{station}.{channel}-{start}_\
+#             plot_filename = f'{network}.{station}.{channel}.{start}_\
 # {(stop + timedelta(days=-1))}-dead_channel_gsn'
 #         # Write the plot to the output directory
 #         plt.savefig(f'stationvalidation_output/{plot_filename}.png',

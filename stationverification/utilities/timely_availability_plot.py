@@ -36,11 +36,11 @@ def timely_availability_plot(
             latencies=latencies, threshold=timely_threshold)
     filename = ""
     if startdate == enddate - timedelta(days=1):
-        filename = f'{network}.{station}-{startdate}\
+        filename = f'{network}.{station}.{startdate}\
 .timely_availability_plot.png'
     else:
-        filename = f'{network}.{station}-{startdate}_\
-{enddate - timedelta(days=1)}-timely_availability_plot.png'
+        filename = f'{network}.{station}.{startdate}_\
+{enddate - timedelta(days=1)}.timely_availability_plot.png'
     # Setting up the figure
     fig, axes = plt.subplots(
         3, 1, sharex=True, sharey=True, figsize=(18.5, 10.5))
