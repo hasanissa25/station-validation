@@ -1,6 +1,6 @@
 import os
 import warnings
-
+import logging
 from typing import List
 
 from datetime import date, timedelta
@@ -55,21 +55,22 @@ def timely_availability_plot(
 
     # Setting up our X-axis data
     x_axis = timely_availability_percentage_array_days_axis
-    # Format the dates on the x-axis
-    formatter = mdates.DateFormatter("%Y-%m-%d")
-    axes[0].xaxis.set_major_formatter(formatter)
-    locator = mdates.DayLocator()
-    axes[0].xaxis.set_major_locator(locator)
-    axes[0].tick_params(axis='x', labelrotation=90)
-    # Format the Y-axis values to be percentages
-    axes[0].yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
-    loc = plticker.MultipleLocator(base=2)
-    axes[0].yaxis.set_major_locator(loc)
-
     if len(HNN_timely_availability_percentage_array) == len(x_axis) and\
         len(HNE_timely_availability_percentage_array) == len(x_axis) and\
-            len(HNE_timely_availability_percentage_array) == len(x_axis):
-
+            len(HNE_timely_availability_percentage_array) == len(x_axis) and \
+            len(x_axis) != 0:
+        logging.info(
+            'inside the plot timely availability because lengths were same')
+        # Format the dates on the x-axis
+        formatter = mdates.DateFormatter("%Y-%m-%d")
+        axes[0].xaxis.set_major_formatter(formatter)
+        locator = mdates.DayLocator()
+        axes[0].xaxis.set_major_locator(locator)
+        axes[0].tick_params(axis='x', labelrotation=90)
+        # Format the Y-axis values to be percentages
+        axes[0].yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
+        loc = plticker.MultipleLocator(base=2)
+        axes[0].yaxis.set_major_locator(loc)
         # Plotting the data
         y_axis = HNN_timely_availability_percentage_array
         axes[0].bar(x_axis, [100], color="red")
@@ -118,3 +119,7 @@ def timely_availability_plot(
             bbox_extra_artists=(legend,),
             bbox_inches='tight')
         plt.close()
+    else:
+        logging.warning(
+            "Skipping Timely Availability. Please double check the latency\
+ files")
