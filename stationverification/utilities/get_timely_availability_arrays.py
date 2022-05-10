@@ -1,4 +1,6 @@
 import arrow
+import logging
+
 from datetime import date
 from pandas.core.frame import DataFrame
 from typing import List, Tuple
@@ -51,14 +53,22 @@ def get_timely_availability_arrays(
             HNZ_timely_availability_percentage_array.\
                 append(round(float(number_of_HNZ_latencies_below_threshold /
                                    total_number_of_HNZ_latencies * 100), 2))
+        logging.info(
+            f'get_timely_availability_arrays> latency_dataframe[0] \
+\n{latency_dataframe.iloc[0]}')
+        logging.info(f"get_timely_availability_arrays> start time formated to YYYY-MM-DD\n\
+{arrow.get(latency_dataframe.iloc[0].startTime).format('YYYY-MM-DD')}")
         current_dataframe_date = arrow.get(
             latency_dataframe.iloc[0].startTime).format('YYYY-MM-DD')
+        logging.info(
+            f"get_timely_availability_arrays> start time as date object\n\
+{arrow.get(current_dataframe_date, 'YYYY-MM-DD')}")
         current_dataframe_date_dateobject = arrow.get(
             current_dataframe_date, 'YYYY-MM-DD').date()
         timely_availability_percentage_array_days_axis.append(
             current_dataframe_date_dateobject)
 
-    return HNN_timely_availability_percentage_array,\
-        HNE_timely_availability_percentage_array, \
+    return HNN_timely_availability_percentage_array, \
+        HNE_timely_availability_percentage_array,\
         HNZ_timely_availability_percentage_array,\
         timely_availability_percentage_array_days_axis
