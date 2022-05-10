@@ -88,7 +88,6 @@ def generate_latency_results(typeofinstrument: str,
     latency_line_plot(
         latencies=array_of_daily_latency_dataframes_max_latency_only,
         station=station,
-        startdate=startdate,
         network=network,
         timely_threshold=timely_threshold
     )

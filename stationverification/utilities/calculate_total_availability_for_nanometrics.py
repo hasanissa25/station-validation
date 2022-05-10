@@ -1,7 +1,8 @@
+# flake8:noqa
+
 import json
 import math
-import logging
-# flake8:noqa
+from stationverification.utilities import exceptions
 
 
 def calculate_total_availability_for_nanometrics(files: list) -> float:
@@ -28,8 +29,11 @@ def calculate_total_availability_for_nanometrics(files: list) -> float:
     for file in files:
         # Getting the average percent availability for each file
         json_latency_file = open(file)
-        latency_dict = json.load(json_latency_file)
-
+        try:
+            latency_dict = json.load(json_latency_file)
+        except json.decoder.JSONDecodeError:
+            raise exceptions.LatencyFileError(
+                f'Problem detected in latency file: {file}')
         array_of_channels_in_current_latency_file = latency_dict["availability"]
         number_of_channels = len(latency_dict["availability"])
         sum_of_percent_availability_for_all_channels = 0.

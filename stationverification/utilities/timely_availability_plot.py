@@ -1,14 +1,14 @@
 import os
-from typing import List
 import warnings
 
-import numpy as np
+from typing import List
+
 from datetime import date, timedelta
 
-import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.ticker as plticker
+import matplotlib.dates as mdates
 
 from pandas.plotting import register_matplotlib_converters
 
@@ -30,7 +30,8 @@ def timely_availability_plot(
     register_matplotlib_converters()
     HNN_timely_availability_percentage_array, \
         HNE_timely_availability_percentage_array,\
-        HNZ_timely_availability_percentage_array = \
+        HNZ_timely_availability_percentage_array,\
+        timely_availability_percentage_array_days_axis = \
         get_timely_availability_arrays(
             latencies=latencies, threshold=timely_threshold)
     filename = ""
@@ -49,29 +50,26 @@ def timely_availability_plot(
     plt.tick_params(labelcolor='none', which='both', top=False,
                     bottom=False, left=False, right=False)
     plt.title(
-        f'Timely Availability [%]\n{network}.{station} {startdate}-{enddate}')
+        f'Timely Availability [%]\n{network}.{station} {startdate}_{enddate}')
     axes[1].set_ylabel("Timely availability [%]")
 
     # Setting up our X-axis data
-    difference = enddate - startdate
-    x_axis = np.arange(0, difference.days, 1)
-    if len(HNN_timely_availability_percentage_array) == x_axis.size and\
-        len(HNE_timely_availability_percentage_array) == x_axis.size and\
-            len(HNE_timely_availability_percentage_array) == x_axis.size:
-        # Function for formatting the x values to actually be dates
+    x_axis = timely_availability_percentage_array_days_axis
+    # Format the dates on the x-axis
+    formatter = mdates.DateFormatter("%Y-%m-%d")
+    axes[0].xaxis.set_major_formatter(formatter)
+    locator = mdates.DayLocator()
+    axes[0].xaxis.set_major_locator(locator)
+    axes[0].tick_params(axis='x', labelrotation=90)
+    # Format the Y-axis values to be percentages
+    axes[0].yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
+    loc = plticker.MultipleLocator(base=2)
+    axes[0].yaxis.set_major_locator(loc)
 
-        def timeTicks(x, pos):
-            date = startdate + timedelta(days=x)
-            return str(date.isoformat())
+    if len(HNN_timely_availability_percentage_array) == len(x_axis) and\
+        len(HNE_timely_availability_percentage_array) == len(x_axis) and\
+            len(HNE_timely_availability_percentage_array) == len(x_axis):
 
-        # Format the x axis values to be dates and rotate them 90 degrees
-        formatter = matplotlib.ticker.FuncFormatter(timeTicks)
-        axes[0].xaxis.set_major_formatter(formatter)
-        axes[0].tick_params(axis='x', labelrotation=90)
-        # Format the Y-axis values to be percentages
-        axes[0].yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
-        loc = plticker.MultipleLocator(base=2)
-        axes[0].yaxis.set_major_locator(loc)
         # Plotting the data
         y_axis = HNN_timely_availability_percentage_array
         axes[0].bar(x_axis, [100], color="red")

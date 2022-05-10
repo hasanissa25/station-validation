@@ -13,8 +13,8 @@ def get_latency_files(
     network: str,
     path: str,
     station: str,
-    startdate: date = (date.today()+timedelta(days=-14)),
-    enddate: date = (date.today()+timedelta(days=-1)),
+    startdate: date,
+    enddate: date,
 
 ) -> List[str]:
     '''
@@ -36,10 +36,10 @@ def get_latency_files(
         The path to the latency data storage.
 
     startdate: date
-        The date for the beginning of the test. Default: 14 days ago
+        The date for the beginning of the test.
 
     enddate: date
-        The last date of the test. Default: Yesterday
+        The last date of the test.
 
     Returns
     -------
@@ -61,11 +61,15 @@ def get_latency_files(
 {station}_*_*_\
 {datetime_to_year_and_julian_day(iterdate, typeofinstrument)}.csv \
 2>/dev/null'
+
         output = subprocess.getoutput(
             cmd
         ).split('\n')
+
         if not output == ['']:
             files.extend(output)
+        else:
+            logging.warning(f'No Latency file found for {iterdate}')
         iterdate += timedelta(days=+1)
 
     # Throw an exception if no files in the time period are found

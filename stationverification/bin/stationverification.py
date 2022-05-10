@@ -129,6 +129,7 @@ def main():
         snlc = f'{user_inputs.network}.{user_inputs.station}.x.Hxx'
     else:
         snlc = f'{user_inputs.station}'
+
     stationMetricData = gather_stats(
         snlc=snlc,
         start=user_inputs.startdate,
@@ -168,6 +169,7 @@ def main():
         startdate=user_inputs.startdate,
         enddate=user_inputs.enddate,
         outputdir=user_inputs.outputdir)
+
     if user_inputs.uploadresultstos3 is True:
         if user_inputs.startdate == user_inputs.enddate - timedelta(days=1):
             validation_output_directory = f'{user_inputs.outputdir}/{user_inputs.network}/{user_inputs.station}/\
@@ -175,6 +177,7 @@ def main():
         else:
             validation_output_directory = f'{user_inputs.outputdir}/{user_inputs.network}/{user_inputs.station}/\
     {user_inputs.startdate}-{user_inputs.enddate}'
+
         upload_results_to_s3(path_of_folder_to_upload=validation_output_directory,  # noqa
                              bucketName=user_inputs.bucketName,
                              s3directory=user_inputs.s3directory)

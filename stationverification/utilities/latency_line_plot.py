@@ -4,9 +4,6 @@ files and report on them
 '''
 import os
 import arrow
-
-from datetime import date, timedelta
-
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
@@ -17,7 +14,6 @@ def latency_line_plot(
     latencies: list,
     network: str,
     station: str,
-    startdate: date,
     timely_threshold: float
 ):
     '''
@@ -49,7 +45,11 @@ def latency_line_plot(
     # matplotlib converters.
     register_matplotlib_converters()
     for index, latency_dataframe in enumerate(latencies):
-        filename = f'{network}.{station}-{startdate + timedelta(days=index)}\
+        # Fetch the current date from the dataframe
+        startdate = arrow.get(
+            latency_dataframe.iloc[0].startTime).format('YYYY-MM-DD')
+        startdate_dateobject = arrow.get(startdate, 'YYYY-MM-DD').date()
+        filename = f'{network}.{station}-{startdate_dateobject}\
 -latency_line_plot.png'
         HNN_latencies = \
             latency_dataframe[latency_dataframe
@@ -70,7 +70,7 @@ def latency_line_plot(
                         bottom=False, left=False, right=False)
         plt.title(
             f'Latencies for {network}.{station} \n \
-{startdate + timedelta(days=index)}')
+{startdate_dateobject}')
         plt.ylabel("Latency (seconds)")
         threshold = timely_threshold
 

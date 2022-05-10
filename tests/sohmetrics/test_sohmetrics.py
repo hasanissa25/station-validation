@@ -1,6 +1,8 @@
 # flake8: noqa
 import obspy
 import pytest
+import subprocess
+
 import numpy as np
 import numpy.ma as ma
 
@@ -200,6 +202,9 @@ def test_check_clock_offset(list_of_streams_clock_offset: List[obspy.Stream],
     assert results.results == [-1.0, 0.1, 1.0, 0.5]
     assert results.details == ['Average clock phase error too high on 2021-01-03',
                                'Average clock phase error too high on 2021-01-04']
+
+    subprocess.getoutput(
+        "rm -rf 'stationvalidation_output'")
 
 
 def test_check_clock_locked(list_of_streams: List[obspy.Stream],

@@ -26,7 +26,6 @@ def test_latency_line_plot(latency_parameters_nanometrics, latency_test_files_na
             array_of_latencies=array_of_daily_latency_objects_max_latency_only)
     latency_line_plot(latencies=array_of_daily_latency_dataframes,
                       station=latency_parameters_nanometrics.station,
-                      startdate=latency_parameters_nanometrics.startdate,
                       network=latency_parameters_nanometrics.network,
                       timely_threshold=latency_parameters_nanometrics.timely_threshold
                       )
