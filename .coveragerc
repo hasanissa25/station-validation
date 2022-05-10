@@ -2,6 +2,7 @@
 omit =
         *stationverification/_version.py*
         *stationverification/nagios/**
+        *stationverification/config.py*
 
         *stationverification/bin/pushtonagios.py*
         *stationverification/bin/dailyverification.py*
