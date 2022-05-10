@@ -57,10 +57,10 @@ def latency_log_plot(
     # validation period or not to know if we include end date or not
     filename = ""
     if startdate == enddate - timedelta(days=1):
-        filename = f'{network}.{station}.{startdate}.latency_log_plot.png'
+        filename = f'{network}.{station}...{startdate}.latency_log_plot.png'
         plottitle = f'Latencies for {network}.{station} \n {startdate}'
     else:
-        filename = f'{network}.{station}.{startdate}_\
+        filename = f'{network}.{station}...{startdate}_\
 {enddate - timedelta(days=1)}.latency_log_plot.png'
         plottitle = f'Latencies for {network}.{station} \n {startdate} to\
  {enddate - timedelta(days=1)}'

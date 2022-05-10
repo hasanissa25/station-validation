@@ -13,9 +13,9 @@ def generate_CSV_from_failed_latencies(latencies: DataFrame,
                                        timely_threshold: float
                                        ):
     if startdate == enddate - timedelta(days=1):
-        filename = f'{network}.{station}.{startdate}'
+        filename = f'{network}.{station}...{startdate}'
     else:
-        filename = f'{network}.{station}.{startdate}_\
+        filename = f'{network}.{station}...{startdate}_\
 {enddate - timedelta(days=1)}'
     latencies_above_three = latencies.loc[latencies.data_latency
                                           > timely_threshold]

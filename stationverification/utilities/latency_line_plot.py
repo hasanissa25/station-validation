@@ -49,7 +49,7 @@ def latency_line_plot(
         startdate = arrow.get(
             latency_dataframe.iloc[0].startTime).format('YYYY-MM-DD')
         startdate_dateobject = arrow.get(startdate, 'YYYY-MM-DD').date()
-        filename = f'{network}.{station}.{startdate_dateobject}\
+        filename = f'{network}.{station}...{startdate_dateobject}\
 .latency_line_plot.png'
         HNN_latencies = \
             latency_dataframe[latency_dataframe
