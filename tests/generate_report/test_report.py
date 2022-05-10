@@ -35,7 +35,7 @@ def test_report(gather_stats_parameters, report_parameters):
            thresholds=report_parameters.thresholds,
            soharchive=report_parameters.soharchive)
 
-    json_report = "stationvalidation_output/QW.QCC02-2022-04-01-validation_results.json"
+    json_report = "stationvalidation_output/QW.QCC02.2022-04-01.validation_results.json"
     json_report_path = Path(json_report)
     if json_report_path.exists():
         assert True
