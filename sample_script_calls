@@ -19,7 +19,7 @@ Parameters:
 Sample Calls:
 
 stationverification script:
-    time nohup stationverification -T APOLLO -N QW -S ONE01 -d 2022-4-30 -e 2022-5-9  >> ONE01_log.out &
+    time nohup stationverification -T APOLLO -N QW -S ONE01 -d 2022-5-8 -e 2022-5-9  >> ONE01_log.out &
 
 latency script:
     time nohup stationverificationlatency -T APOLLO -N QW -S ONE01 -d 2022-4-30 -e 2022-5-9  >> ONE01_log.out &

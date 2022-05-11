@@ -158,8 +158,14 @@ def percentbelowthreshold(
     float:
         The percentage of latency values that were below the threshold
     '''
-    n = np.count_nonzero(latencies < threshold)
-    percent = n / len(latencies) * 100
-    logging.info(f'Percent of latencies for {station} below {threshold} \
-seconds: {round(float(percent),2)}%')
-    return float(percent)
+    if(len(latencies) > 0):
+        n = np.count_nonzero(latencies < threshold)
+        percent = n / len(latencies) * 100
+        logging.info(f'Percent of latencies for {station} below {threshold} \
+    seconds: {round(float(percent),2)}%')
+        return float(percent)
+    else:
+        logging.warning(
+            "Skipping Timely Availability calculation. Please check the \
+latency files.")
+        return 0.0
