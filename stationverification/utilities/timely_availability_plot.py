@@ -59,8 +59,6 @@ def timely_availability_plot(
         len(HNE_timely_availability_percentage_array) == len(x_axis) and\
             len(HNE_timely_availability_percentage_array) == len(x_axis) and \
             len(x_axis) != 0:
-        logging.info(
-            'inside the plot timely availability because lengths were same')
         # Format the dates on the x-axis
         formatter = mdates.DateFormatter("%Y-%m-%d")
         axes[0].xaxis.set_major_formatter(formatter)

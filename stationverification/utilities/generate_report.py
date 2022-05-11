@@ -440,7 +440,8 @@ def report(
     if start == end - timedelta(days=1):
         filename = f'{network}.{station}...{start}.validation_results.json'
     else:
-        filename = f'{network}.{station}...{start}_{end}.validation_results.json'
+        filename = f'{network}.{station}...{start}_{end}\
+.validation_results.json'
 
     # Write the json dictionary to a json file
     if not os.path.isdir('./stationvalidation_output'):
