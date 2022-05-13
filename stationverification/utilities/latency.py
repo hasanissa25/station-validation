@@ -162,7 +162,7 @@ def percentbelowthreshold(
         n = np.count_nonzero(latencies < threshold)
         percent = n / len(latencies) * 100
         logging.info(f'Percent of latencies for {station} below {threshold} \
-    seconds: {round(float(percent),2)}%')
+seconds: {round(float(percent),2)}%')
         return float(percent)
     else:
         logging.warning(
