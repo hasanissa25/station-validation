@@ -474,7 +474,7 @@ def add_soh_results_to_report(network: str,
         results = sohmetrics.check_clock_offset(
             list_of_streams=clock_offset_merged_streams,
             threshold=thresholds.getfloat(
-                'thresholds', 'clock_offset', fallback=0.100),
+                'thresholds', 'clock_offset', fallback=1),
             startdate=startdate,
             enddate=enddate,
             network=network,
