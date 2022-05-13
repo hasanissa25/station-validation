@@ -227,7 +227,7 @@
                                 },
                                 "num_gaps": {
                                     "type": "object",
-                                    "description": "How many gaps were found in the data, on the specified time period.",
+                                    "description": "How many gaps were found in the data, in the specified time period.",
                                     "properties": {
                                         "passed": {
                                             "type": "boolean",
@@ -300,16 +300,26 @@
                             "properties": {
                                 "average_latency": {
                                     "type": "number",
-                                    "description": "seconds, float"
+                                    "description": "Average latency value for the current channel over the validation period. Seconds, float"
                                 },
-                                "timely_percentage": {
+                                "timely_availability": {
                                     "type": "number",
-                                    "description": "percentage, float"
+                                    "description": "Percentage of latency values that fall below our threshold. Percentgage, float"
+                                },
+                                "total_latencies": {
+                                    "type": "number",
+                                    "description": "Number of latency values that have been fetched from the Latency files for the current channel, in the validation period. Integer"
+                                },
+                                "failed_latencies": {
+                                    "type": "number",
+                                    "description": "Number of latency values that have been fetched from the Latency files for the current channel that were above the threshold, in the validation period. Integer"
                                 }
                             },
                             "required": [
                                 "average_latency",
-                                "timely_percentage"
+                                "timely_availability",
+                                "total_latencies",
+                                "failed_latencies"
                             ]
                         }
                     },
@@ -521,7 +531,7 @@
                                 },
                                 "num_gaps": {
                                     "type": "object",
-                                    "description": "How many gaps were found in the data, on the specified time period.",
+                                    "description": "How many gaps were found in the data, in the specified time period.",
                                     "properties": {
                                         "passed": {
                                             "type": "boolean",
@@ -594,16 +604,26 @@
                             "properties": {
                                 "average_latency": {
                                     "type": "number",
-                                    "description": "seconds, float"
+                                    "description": "Average latency value for the current channel over the validation period. Seconds, float"
                                 },
-                                "timely_percentage": {
+                                "timely_availability": {
                                     "type": "number",
-                                    "description": "percentage, float"
+                                    "description": "Percentage of latency values that fall below our threshold. Percentgage, float"
+                                },
+                                "total_latencies": {
+                                    "type": "number",
+                                    "description": "Number of latency values that have been fetched from the Latency files for the current channel, in the validation period. Integer"
+                                },
+                                "failed_latencies": {
+                                    "type": "number",
+                                    "description": "Number of latency values that have been fetched from the Latency files for the current channel that were above the threshold, in the validation period. Integer"
                                 }
                             },
                             "required": [
                                 "average_latency",
-                                "timely_percentage"
+                                "timely_availability",
+                                "total_latencies",
+                                "failed_latencies"
                             ]
                         }
                     },
@@ -815,7 +835,7 @@
                                 },
                                 "num_gaps": {
                                     "type": "object",
-                                    "description": "How many gaps were found in the data, on the specified time period.",
+                                    "description": "How many gaps were found in the data, in the specified time period.",
                                     "properties": {
                                         "passed": {
                                             "type": "boolean",
@@ -888,16 +908,26 @@
                             "properties": {
                                 "average_latency": {
                                     "type": "number",
-                                    "description": "seconds, float"
+                                    "description": "Average latency value for the current channel over the validation period. Seconds, float"
                                 },
-                                "timely_percentage": {
+                                "timely_availability": {
                                     "type": "number",
-                                    "description": "percentage, float"
+                                    "description": "Percentage of latency values that fall below our threshold. Percentgage, float"
+                                },
+                                "total_latencies": {
+                                    "type": "number",
+                                    "description": "Number of latency values that have been fetched from the Latency files for the current channel, in the validation period. Integer"
+                                },
+                                "failed_latencies": {
+                                    "type": "number",
+                                    "description": "Number of latency values that have been fetched from the Latency files for the current channel that were above the threshold, in the validation period. Integer"
                                 }
                             },
                             "required": [
                                 "average_latency",
-                                "timely_percentage"
+                                "timely_availability",
+                                "total_latencies",
+                                "failed_latencies"
                             ]
                         }
                     },
@@ -913,7 +943,7 @@
                 "HNE"
             ]
         },
-        "latency": {
+        "station_latency": {
             "type": "object",
             "description": "The time in seconds between the acquisition of the sample in the field, until the time it received at the data centre",
             "properties": {
@@ -921,24 +951,24 @@
                     "type": "number",
                     "description": "Float; When the data is transmitted, there is a delay since it was created. That is refered to as latency. This property is the average of the latencies for the verifiction period"
                 },
-                "timely_percentage": {
+                "timely_availability": {
                     "type": "number",
                     "description": "Float; How many packages we received in the timing threshold out of the total number of packages"
                 },
                 "timely_passed": {
                     "type": "boolean",
-                    "description": "Integer; If timely percentage passes the treshold, then timely passed will be 1, otherwise it is 0"
+                    "description": "Integer; If timely availability passes the treshold, then timely passed will be 1, otherwise it is 0"
                 }
             },
             "required": [
                 "average_latency",
-                "timely_percentage",
+                "timely_availability",
                 "timely_passed"
             ]
         },
         "timing_quality": {
             "type": "object",
-            "description": "If the clock locked metric was above the threshold, then we describe the timing quality as `bad`",
+            "description": "Daily average of the SEED timing quality stored in miniSEED blockette 1001. This value is vendor specific and expressed as a percentage of maximum accuracy. Percentage is NULL if not present in the miniSEED.",
             "properties": {
                 "passed": {
                     "type": "boolean",
@@ -949,7 +979,7 @@
                     "items": [
                         {
                             "type": "number",
-                            "description": "Integer; Good = 1, bad = 0"
+                            "description": "Percentage, float"
                         }
                     ]
                 }

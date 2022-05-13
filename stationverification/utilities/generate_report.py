@@ -462,8 +462,6 @@ def add_soh_results_to_report(network: str,
                               json_dict: dict,
                               thresholds: ConfigParser):
     try:
-        # Get a list of "LCE" channel sohmetric files and merge the \
-        # resulting streams before passing them to check_timing_quality()
         clock_offset_sohfiles = sohmetrics.getsohfiles(network=network,
                                                        station=station,
                                                        startdate=startdate,
@@ -495,8 +493,6 @@ def add_soh_results_to_report(network: str,
             'LCE data does not exist. Skipping clock offset metric.')
 
     try:
-        # Get a list of "LCQ" channel sohmetric files and merge the resulting \
-        # streams before passing them to check_timing_quality()
         timing_quality_sohfiles = sohmetrics.getsohfiles(network=network,
                                                          station=station,
                                                          startdate=startdate,
@@ -528,8 +524,6 @@ def add_soh_results_to_report(network: str,
         logging.warning(
             'LCQ data does not exist. Skipping timing quality metric.')
     try:
-        # Get a list of "GST" channel sohmetric files and merge the resulting \
-        # streams before passing them to check_clock_locked()
         check_clock_locked_sohfiles = \
             sohmetrics.getsohfiles(network=network,
                                    station=station,
@@ -558,8 +552,6 @@ def add_soh_results_to_report(network: str,
         logging.warning(
             'GST data does not exist. Skipping clock locked metric.')
     try:
-        # Get a list of "GNS" channel sohmetric files and merge the resulting \
-        # streams before passing them to check_clock_locked()
         check_number_of_satellites_sohfiles = \
             sohmetrics.getsohfiles(network=network,
                                    station=station,
