@@ -46,7 +46,8 @@ def getsohfiles(
         channel: str,
         startdate: date,
         enddate: date,
-        directory: str) -> List[str]:
+        directory: str,
+        location: Any = None) -> List[str]:
     '''
     Retrieves a list of the daily SOH channel files for the specified SOH
     channel
@@ -74,13 +75,17 @@ def getsohfiles(
     '''
     files: List[str] = []
     iterdate = startdate
+    if location is None:
+        snlc = f'{network}.{station}.*.{channel}'
+    else:
+        snlc = f'{network}.{station}.{location}.{channel}'
     # Loop through all the dates
     while iterdate < enddate:
         # Get the julian day and convert it to a 3 digit string
         jday = "%03d" % iterdate.timetuple().tm_yday
         # Search for the file for the specific day
-        command = f'ls {directory}/{iterdate.strftime("%Y/%m/%d")}/{network}.\
-{station}.*.{channel}.{iterdate.year}.{jday} 2>/dev/null'
+        command = f'ls {directory}/{iterdate.strftime("%Y/%m/%d")}/{snlc}\
+.{iterdate.year}.{jday} 2>/dev/null'
         logging.debug(command)
         output = subprocess.getoutput(command)
         if len(output) > 0:

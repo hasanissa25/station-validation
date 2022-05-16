@@ -3,7 +3,8 @@ import subprocess
 from stationverification import XML_CONVERTER
 from obspy.io.xseed import Parser
 import os
-station = "QW.QCC02.*.H??"
+# station = "QW.QCC02.*.H??"
+station = "QW.QCC02.00.H??"
 ispaqloc = "../ISPAQ/ispaq/run_ispaq.py"
 pfile = 'stationverification/data/eew_preferences.txt'
 

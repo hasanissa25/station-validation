@@ -20,6 +20,7 @@ def handle_running_ispaq_command(
         miniseedarchive: str,
         network: str = None,
         station: str = None,
+        location: str = None,
         station_url: str = None,
         stationconf: str = None):
     if stationconf is None:
@@ -32,6 +33,7 @@ def handle_running_ispaq_command(
                                           miniseedarchive=miniseedarchive,
                                           network=network,
                                           station=station,
+                                          location=location,
                                           station_url=station_url)
     else:
         run_ispaq_command_with_configfile(ispaqloc=ispaqloc,
@@ -54,9 +56,14 @@ def run_ispaq_command_with_stationXML(
         miniseedarchive: str,
         network: str = None,
         station: str = None,
+        location: str = None,
         station_url: str = None,
         resp_dir: str = None):
 
+    if location is None:
+        snlc = f'{network}.{station}.*.H**'
+    else:
+        snlc = f'{network}.{station}.{location}.H**'
     subprocess.getoutput(f'java -jar {XML_CONVERTER} --input \
     {station_url} --output stationverification/data/stationXML.dataless')
     pars = Parser("stationverification/data/stationXML.dataless")
@@ -69,7 +76,7 @@ def run_ispaq_command_with_stationXML(
 
     cmd = f'{ispaqloc} -M {metrics} \
         --starttime={startdate} --endtime={enddate} \
-        -S {network}.{station}.*.H** -P {pfile} \
+        -S {snlc} -P {pfile} \
             --pdf_interval {pdfinterval} \
             --station_url {station_url} \
             --dataselect_url {miniseedarchive}\

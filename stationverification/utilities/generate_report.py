@@ -329,6 +329,7 @@ def report(
     end: date,
     thresholds: ConfigParser,
     soharchive: str,
+    location: str = None,
 ) -> dict:
     '''
     Function used to generate a report about station data quality, evaluating
@@ -429,6 +430,7 @@ def report(
     json_report_with_soh_results = \
         add_soh_results_to_report(network=network,
                                   station=station,
+                                  location=location,
                                   startdate=start,
                                   enddate=end,
                                   directory=soharchive,
@@ -436,11 +438,15 @@ def report(
                                   json_dict=json_dict,
                                   thresholds=thresholds)
     # Setup JSson report
+    if location is None:
+        snlc = f'{network}.{station}..'
+    else:
+        snlc = f'{network}.{station}.{location}.'
 
     if start == end - timedelta(days=1):
-        filename = f'{network}.{station}...{start}.validation_results.json'
+        filename = f'{snlc}.{start}.validation_results.json'
     else:
-        filename = f'{network}.{station}...{start}_{end}\
+        filename = f'{snlc}.{start}_{end}\
 .validation_results.json'
 
     # Write the json dictionary to a json file
@@ -455,6 +461,7 @@ def report(
 
 def add_soh_results_to_report(network: str,
                               station: str,
+                              location: Any,
                               startdate: date,
                               enddate: date,
                               directory: str,
@@ -464,6 +471,7 @@ def add_soh_results_to_report(network: str,
     try:
         clock_offset_sohfiles = sohmetrics.getsohfiles(network=network,
                                                        station=station,
+                                                       location=location,
                                                        startdate=startdate,
                                                        enddate=enddate,
                                                        channel="LCE",
@@ -495,6 +503,7 @@ def add_soh_results_to_report(network: str,
     try:
         timing_quality_sohfiles = sohmetrics.getsohfiles(network=network,
                                                          station=station,
+                                                         location=location,
                                                          startdate=startdate,
                                                          enddate=enddate,
                                                          channel="LCQ",
@@ -527,6 +536,7 @@ def add_soh_results_to_report(network: str,
         check_clock_locked_sohfiles = \
             sohmetrics.getsohfiles(network=network,
                                    station=station,
+                                   location=location,
                                    startdate=startdate,
                                    enddate=enddate,
                                    channel="GST",
@@ -555,6 +565,7 @@ def add_soh_results_to_report(network: str,
         check_number_of_satellites_sohfiles = \
             sohmetrics.getsohfiles(network=network,
                                    station=station,
+                                   location=location,
                                    startdate=startdate,
                                    enddate=enddate,
                                    channel="GNS",

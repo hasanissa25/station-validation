@@ -56,6 +56,10 @@ class PlotParameters(dict):
         return self["station"]
 
     @property
+    def location(self) -> str:
+        return self["location"]
+
+    @property
     def stationMetricData(self) -> StationMetricData:
         return self["stationMetricData"]
 
@@ -101,12 +105,19 @@ def ADC_plot(
 ):
     network = plotParameters.network
     station = plotParameters.station
+    location = plotParameters.location
     channel = plotParameters.channel
     stationMetricData = plotParameters.stationMetricData
     start = plotParameters.start
     stop = plotParameters.stop
+
+    if location is None:
+        snlc = f'{network}.{station}..{channel}'
+    else:
+        snlc = f'{network}.{station}.{location}.{channel}'
     # Generatre x-axis values as days since startdate
     difference = stop - start
+
     x_axis = np.arange(0, difference.days, 1)
 
     ax = plt.gca()
@@ -157,7 +168,7 @@ def ADC_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
         plt.title(
-            f'{network}.{station}..{channel} - \
+            f'{snlc} - \
 ADC Count (range: [0, +/- 8,388,608])')
         plt.ylabel('Amplitude value')
         ax.set_axisbelow(True)
@@ -166,9 +177,9 @@ ADC Count (range: [0, +/- 8,388,608])')
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}..{channel}.{start}.adc_count'
+            plot_filename = f'{snlc}.{start}.adc_count'
         else:
-            plot_filename = f'{network}.{station}..{channel}.{start}_\
+            plot_filename = f'{snlc}.{start}_\
 {(stop + timedelta(days=-1))}.adc_count'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
@@ -183,10 +194,16 @@ def num_overlaps_plot(
 ):
     network = plotParameters.network
     station = plotParameters.station
+    location = plotParameters.location
     channel = plotParameters.channel
     stationMetricData = plotParameters.stationMetricData
     start = plotParameters.start
     stop = plotParameters.stop
+
+    if location is None:
+        snlc = f'{network}.{station}..{channel}'
+    else:
+        snlc = f'{network}.{station}.{location}.{channel}'
 
     # Generatre x-axis values as days since startdate
     difference = stop - start
@@ -217,7 +234,7 @@ def num_overlaps_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{network}.{station}..{channel} - Number of overlaps')
+        ax.set_title(f'{snlc} - Number of overlaps')
         plt.ylabel('Overlaps')
 
         # Add a grid to the plot to make the symmetry more obvious
@@ -227,10 +244,10 @@ def num_overlaps_plot(
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}..{channel}.{start}\
+            plot_filename = f'{snlc}.{start}\
 .num_overlaps'
         else:
-            plot_filename = f'{network}.{station}..{channel}.{start}_\
+            plot_filename = f'{snlc}.{start}_\
 {(stop + timedelta(days=-1))}.num_overlaps'
 
         # Write the plot to the output directory
@@ -245,10 +262,16 @@ def num_gaps_plot(
 ):
     network = plotParameters.network
     station = plotParameters.station
+    location = plotParameters.location
     channel = plotParameters.channel
     stationMetricData = plotParameters.stationMetricData
     start = plotParameters.start
     stop = plotParameters.stop
+
+    if location is None:
+        snlc = f'{network}.{station}..{channel}'
+    else:
+        snlc = f'{network}.{station}.{location}.{channel}'
 
     # Generatre x-axis values as days since startdate
     difference = stop - start
@@ -280,7 +303,7 @@ def num_gaps_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{network}.{station}..{channel} - Number of Gaps')
+        ax.set_title(f'{snlc} - Number of Gaps')
         plt.ylabel('Gaps')
 
         # Add a grid to the plot to make the symmetry more obvious
@@ -290,9 +313,9 @@ def num_gaps_plot(
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}..{channel}.{start}.num_gaps'
+            plot_filename = f'{snlc}.{start}.num_gaps'
         else:
-            plot_filename = f'{network}.{station}..{channel}.{start}_\
+            plot_filename = f'{snlc}.{start}_\
 {(stop + timedelta(days=-1))}.num_gaps'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
@@ -306,11 +329,16 @@ def max_gap_plot(
 ):
     network = plotParameters.network
     station = plotParameters.station
+    location = plotParameters.location
     channel = plotParameters.channel
     stationMetricData = plotParameters.stationMetricData
     start = plotParameters.start
     stop = plotParameters.stop
 
+    if location is None:
+        snlc = f'{network}.{station}..{channel}'
+    else:
+        snlc = f'{network}.{station}.{location}.{channel}'
     # Generatre x-axis values as days since startdate
     difference = stop - start
     x_axis = np.arange(0, difference.days, 1)
@@ -340,7 +368,7 @@ def max_gap_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{network}.{station}..{channel} - Max Gaps')
+        ax.set_title(f'{snlc} - Max Gaps')
         plt.ylabel('Gap size')
 
         # Add a grid to the plot to make the symmetry more obvious
@@ -350,9 +378,9 @@ def max_gap_plot(
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}..{channel}.{start}.max_gap'
+            plot_filename = f'{snlc}.{start}.max_gap'
         else:
-            plot_filename = f'{network}.{station}..{channel}.{start}_\
+            plot_filename = f'{snlc}.{start}_\
 {(stop + timedelta(days=-1))}.max_gap'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
@@ -366,11 +394,15 @@ def spikes_plot(
 ):
     network = plotParameters.network
     station = plotParameters.station
+    location = plotParameters.location
     channel = plotParameters.channel
     stationMetricData = plotParameters.stationMetricData
     start = plotParameters.start
     stop = plotParameters.stop
-
+    if location is None:
+        snlc = f'{network}.{station}..{channel}'
+    else:
+        snlc = f'{network}.{station}.{location}.{channel}'
     # Generatre x-axis values as days since startdate
     difference = stop - start
     x_axis = np.arange(0, difference.days, 1)
@@ -403,7 +435,7 @@ def spikes_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{network}.{station}..{channel} - Spikes')
+        ax.set_title(f'{snlc} - Spikes')
         plt.ylabel('Spikes')
 
         # Add a grid to the plot to make the symmetry more obvious
@@ -413,9 +445,9 @@ def spikes_plot(
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}..{channel}.{start}.spikes'
+            plot_filename = f'{snlc}.{start}.spikes'
         else:
-            plot_filename = f'{network}.{station}..{channel}.{start}_\
+            plot_filename = f'{snlc}.{start}_\
 {(stop + timedelta(days=-1))}.spikes'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
@@ -429,11 +461,15 @@ def percent_availability_plot(
 ):
     network = plotParameters.network
     station = plotParameters.station
+    location = plotParameters.location
     channel = plotParameters.channel
     stationMetricData = plotParameters.stationMetricData
     start = plotParameters.start
     stop = plotParameters.stop
-
+    if location is None:
+        snlc = f'{network}.{station}..{channel}'
+    else:
+        snlc = f'{network}.{station}.{location}.{channel}'
     # Generatre x-axis values as days since startdate
     difference = stop - start
     x_axis = np.arange(0, difference.days, 1)
@@ -462,7 +498,7 @@ def percent_availability_plot(
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{network}.{station}..{channel} - Percent Availability')
+        ax.set_title(f'{snlc} - Percent Availability')
         plt.ylabel('Availability')
         ax.yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
         ax.set_ylim(ymin=90, ymax=100)
@@ -476,10 +512,10 @@ def percent_availability_plot(
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}..{channel}.{start}\
+            plot_filename = f'{snlc}.{start}\
 .percent_availability'
         else:
-            plot_filename = f'{network}.{station}..{channel}.{start}_\
+            plot_filename = f'{snlc}.{start}_\
 {(stop + timedelta(days=-1))}.percent_availability'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
@@ -493,11 +529,15 @@ def pct_above_nhnm_plot(
 ):
     network = plotParameters.network
     station = plotParameters.station
+    location = plotParameters.location
     channel = plotParameters.channel
     stationMetricData = plotParameters.stationMetricData
     start = plotParameters.start
     stop = plotParameters.stop
-
+    if location is None:
+        snlc = f'{network}.{station}..{channel}'
+    else:
+        snlc = f'{network}.{station}.{location}.{channel}'
     # Generatre x-axis values as days since startdate
     difference = stop - start
     x_axis = np.arange(0, difference.days, 1)
@@ -531,7 +571,7 @@ def pct_above_nhnm_plot(
         plt.xticks(rotation=90)
 
         ax.set_title(
-            f'{network}.{station}..{channel} - \
+            f'{snlc} - \
 Percent above New High Noise Model')
         plt.ylabel('Percentage')
         ax.yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
@@ -542,10 +582,10 @@ Percent above New High Noise Model')
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}..{channel}.{start}\
+            plot_filename = f'{snlc}.{start}\
 .pct_above_nhnm'
         else:
-            plot_filename = f'{network}.{station}..{channel}.{start}_\
+            plot_filename = f'{snlc}.{start}_\
 {(stop + timedelta(days=-1))}.pct_above_nhnm'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
@@ -559,11 +599,15 @@ def pct_below_nlnm_plot(
 ):
     network = plotParameters.network
     station = plotParameters.station
+    location = plotParameters.location
     channel = plotParameters.channel
     stationMetricData = plotParameters.stationMetricData
     start = plotParameters.start
     stop = plotParameters.stop
-
+    if location is None:
+        snlc = f'{network}.{station}..{channel}'
+    else:
+        snlc = f'{network}.{station}.{location}.{channel}'
     # Generatre x-axis values as days since startdate
     difference = stop - start
     x_axis = np.arange(0, difference.days, 1)
@@ -595,7 +639,7 @@ def pct_below_nlnm_plot(
         plt.xticks(rotation=90)
 
         ax.set_title(
-            f'{network}.{station}..{channel} - \
+            f'{snlc} - \
 Percent below New Low Noise Model')
         plt.ylabel('Percentage')
         ax.yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
@@ -606,10 +650,10 @@ Percent below New Low Noise Model')
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
-            plot_filename = f'{network}.{station}..{channel}.{start}\
+            plot_filename = f'{snlc}.{start}\
 .pct_below_nlnm'
         else:
-            plot_filename = f'{network}.{station}..{channel}.{start}_\
+            plot_filename = f'{snlc}.{start}_\
 {(stop + timedelta(days=-1))}.pct_below_nlnm'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
@@ -658,7 +702,7 @@ Percent below New Low Noise Model')
 #         ax.xaxis.set_major_formatter(formatter)
 #         plt.xticks(rotation=90)
 
-#         ax.set_title(f'{network}.{station}..{channel} - Dead Channel Lin')
+#         ax.set_title(f'{snlc} - Dead Channel Lin')
 
 #         # Add a grid to the plot to make the symmetry more obvious
 #         ax.set_axisbelow(True)
@@ -668,10 +712,10 @@ Percent below New Low Noise Model')
 #  metrics
 #         # aren't plotted on the same plot
 #         if start == stop - timedelta(days=1):
-#             plot_filename = f'{network}.{station}..{channel}.{start}\
+#             plot_filename = f'{snlc}.{start}\
 # .dead_channel_lin'
 #         else:
-#             plot_filename = f'{network}.{station}..{channel}.{start}_\
+#             plot_filename = f'{snlc}.{start}_\
 # {(stop + timedelta(days=-1))}-dead_channel_lin'
 #         # Write the plot to the output directory
 #         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
@@ -720,7 +764,7 @@ Percent below New Low Noise Model')
 #         ax.xaxis.set_major_formatter(formatter)
 #         plt.xticks(rotation=90)
 
-#         ax.set_title(f'{network}.{station}..{channel} - Dead Channel GSN')
+#         ax.set_title(f'{snlc} - Dead Channel GSN')
 
 #         # Add a grid to the plot to make the symmetry more obvious
 #         ax.set_axisbelow(True)
@@ -730,10 +774,10 @@ Percent below New Low Noise Model')
 #  metrics
 #         # aren't plotted on the same plot
 #         if start == stop - timedelta(days=1):
-#             plot_filename = f'{network}.{station}..{channel}.{start}\
+#             plot_filename = f'{snlc}.{start}\
 # .dead_channel_gsn'
 #         else:
-#             plot_filename = f'{network}.{station}..{channel}.{start}_\
+#             plot_filename = f'{snlc}.{start}_\
 # {(stop + timedelta(days=-1))}-dead_channel_gsn'
 #         # Write the plot to the output directory
 #         plt.savefig(f'stationvalidation_output/{plot_filename}.png',

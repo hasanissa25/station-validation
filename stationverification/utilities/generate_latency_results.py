@@ -19,7 +19,7 @@ from stationverification.utilities.timely_availability_plot import \
     timely_availability_plot
 
 logging.basicConfig(
-    format='%(asctime)s Latency: %(message)s',
+    format='%(asctime)s Station Validation: %(message)s',
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S')
 

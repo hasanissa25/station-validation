@@ -18,6 +18,10 @@ class UserInput(dict):
         return self["network"]
 
     @property
+    def location(self) -> str:
+        return self["location"]
+
+    @property
     def startdate(self) -> list:
         return self["startdate"]
 
@@ -153,6 +157,12 @@ ispaq',
         type=str,
     )
     argsparser.add_argument(
+        '-L',
+        '--location',
+        help='The location code. I.e: 00',
+        type=str,
+    )
+    argsparser.add_argument(
         '-m',
         '--miniseedarchive',
         help='The parent directory of the miniseed archive.',
@@ -275,7 +285,7 @@ span',
 
     # Optional parameters, with no default value
     uploadresultstos3 = args.uploadresultstos3
-
+    location = args.location
     # fdsnws = args.fdsnws
 
     if startdate > enddate:
@@ -286,6 +296,7 @@ the enddate to the day after the startdate')
 
     return UserInput(station=station,
                      network=network,
+                     location=location,
                      startdate=startdate,
                      enddate=enddate,
                      ispaqloc=ispaqloc,

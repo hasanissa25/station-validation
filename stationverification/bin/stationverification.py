@@ -114,6 +114,7 @@ def main():
             user_inputs.miniseedarchive,
             user_inputs.network,
             user_inputs.station,
+            user_inputs.location,
             user_inputs.station_url,
             user_inputs.stationconf,
         ))
@@ -126,7 +127,11 @@ def main():
 
     # Read the files generated from ISPAQ and populate the dictionary object
     if user_inputs.stationconf is None:
-        snlc = f'{user_inputs.network}.{user_inputs.station}.x.Hxx'
+        if user_inputs.location is None:
+            snlc = f'{user_inputs.network}.{user_inputs.station}.x.Hxx'
+        else:
+            snlc = f'{user_inputs.network}.\
+{user_inputs.station}.{user_inputs.location}.Hxx'
     else:
         snlc = f'{user_inputs.station}'
 
@@ -143,6 +148,7 @@ def main():
         plot_metrics(
             PlotParameters(network=user_inputs.network,
                            station=user_inputs.station,
+                           location=user_inputs.location,
                            channel=channel,
                            stationMetricData=stationMetricData,
                            start=user_inputs.startdate,
@@ -155,6 +161,7 @@ def main():
         typeofinstrument=user_inputs.typeofinstrument,
         network=user_inputs.network,
         station=user_inputs.station,
+        location=user_inputs.location,
         stationmetricdata=stationMetricData,
         start=user_inputs.startdate,
         end=user_inputs.enddate,
