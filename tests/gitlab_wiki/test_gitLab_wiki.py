@@ -72,7 +72,7 @@ class GitLabWikis(dict):
         link
     ):
         response = requests.get(link)
-        file = open(f"{link.split('/')[-1]}", "wb")
+        file = open(f"results/{link.split('/')[-1]}", "wb")
         file.write(response.content)
         file.close()
 
@@ -84,7 +84,7 @@ GitLabWikisObj = GitLabWikis(url="http://gitlab.seismo.nrcan.gc.ca",
 
 
 # 1 - Download the files we need
-def read_url(url):
+def get_all_files_from_url(url):
     url = url.replace(" ", "%20")
     req = Request(url)
     a = urlopen(req).read()
@@ -95,13 +95,12 @@ def read_url(url):
         url_new = url + file_name
         url_new = url_new.replace(" ", "%20")
         if(file_name[-1] == '/' and file_name[0] != '.'):
-            read_url(url_new)
+            get_all_files_from_url(url_new)
         if "png" in url_new or "csv" in url_new or "json" in url_new:
             GitLabWikisObj.download_attachments(link=url_new)
 
 
-read_url("http://3.96.234.48:18010/")
-# GitLabWikisObj.download_attachments(link=files)
+get_all_files_from_url("http://3.96.234.48:18010/")
 
 
 # 2 - Upload the files to WIKI
