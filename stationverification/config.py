@@ -25,6 +25,12 @@ class BaseAppSettings(BaseSettings):
     THRESHOLDS: str = CONFIG
     STATION_URL: str = STATION_URL
 
+    # GitLab
+    GITLAB_URL: str = "http://gitlab.seismo.nrcan.gc.ca"
+    PROJECT_TOKEN: str = "WJgJ8NZDP2ei_KpiF8s8"
+    PROJECT_ID: int = 10
+    WEB_SERVER: str = "http://3.96.234.48:18010/"
+
     class Config:
         env_prefix = 'VALIDATION_'
 

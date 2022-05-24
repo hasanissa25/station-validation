@@ -1,6 +1,5 @@
 import argparse
 from configparser import ConfigParser
-from typing import Optional
 
 from dateutil import parser as dateparser  # type: ignore
 
@@ -90,7 +89,7 @@ class UserInput(dict):
         return self["stationconf"]
 
 
-def fetch_arguments(ISPAQ_and_latency: Optional[bool] = False) -> UserInput:
+def fetch_arguments() -> UserInput:
     # Create argparse object to handle user arguments
     argsparser = argparse.ArgumentParser()
     argsparser.add_argument(
