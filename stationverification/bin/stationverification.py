@@ -83,7 +83,7 @@ def main():
     '''
     # Setting up a queue for processors to push their results to if needed
     queue = Queue()
-    user_inputs = fetch_arguments(ISPAQ_and_latency=True)
+    user_inputs = fetch_arguments()
 
     # Run Latency
     logging.info("Process 1: Generating Latency results..")

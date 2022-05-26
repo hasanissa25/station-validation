@@ -31,8 +31,8 @@ def upload_report_fetch_arguments() -> UserInput:
     argsparser.add_argument(
         "-w",
         "--web server",
-        help='Server hosting the validation result files. \
-Ex: "http: // 3.96.234.48: 18010 /"',
+        help='Path to the validation result files. \
+Ex: "http://3.96.234.48:18010/QW/ONE01/2022-04-21-2022-05-01/"',
         type=str,
     )
     args = argsparser.parse_args()
