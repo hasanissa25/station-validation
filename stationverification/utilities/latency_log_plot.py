@@ -7,7 +7,7 @@ import numpy as np
 from datetime import date, timedelta
 
 import matplotlib.pyplot as plt
-
+import matplotlib
 from pandas.core.frame import DataFrame
 
 
@@ -66,13 +66,17 @@ def latency_log_plot(
  {enddate - timedelta(days=1)}'
 
     # Setting up the figure
+    font = {'family': 'normal',
+            'size': 13}
+
+    matplotlib.rc('font', **font)
     fig = plt.figure()
     fig.set_size_inches(18.5, 10.5)
 
     ax1 = fig.add_subplot(111)
     ax1.set_title(plottitle)  # Add a title to the axes.
-    ax1.set_xlabel('Latency (seconds)')
-    ax1.set_ylabel('Occurrences')  # Add a y-label to the axes.
+    ax1.set_xlabel('Latency (seconds)', fontsize=13)
+    ax1.set_ylabel('Occurrences', fontsize=13)  # Add a y-label to the axes.
     ax1.set_yscale('log')
     if typeofinstrument == "APOLLO":
         note_content = f'Type of Instrument: TitanSMA\n\
@@ -83,7 +87,7 @@ Standard deviation: {round(np.std(latencies.data_latency),1)}'
         note_content = f'Instrument: Fortimus\nActual number of data points: \
 {latencies.data_latency.size}'
 
-    ax1.text(0, 0.95, note_content, style='italic', fontsize=9,
+    ax1.text(0.9, 0.8, note_content, style='italic', fontsize=12,
              transform=ax1.transAxes,
              bbox={'facecolor': 'grey', 'alpha': 0.5, 'pad': 6})
     ax1.set_axisbelow(True)
@@ -102,7 +106,7 @@ Standard deviation: {round(np.std(latencies.data_latency),1)}'
                 label=f"Data Timeliness threshold: \
 {timely_threshold} seconds")
     legend = ax1.legend(bbox_to_anchor=(1.1, 1),
-                        loc='upper right', fontsize="9")
+                        loc='upper right', fontsize="13")
     plt.show()
 
     fig.tight_layout()  # Important for the plot labels to not overlap
