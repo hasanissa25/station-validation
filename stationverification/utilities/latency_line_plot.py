@@ -4,10 +4,12 @@ files and report on them
 '''
 import os
 import arrow
+import logging
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 from pandas.plotting import register_matplotlib_converters
+from datetime import timedelta
 
 
 def latency_line_plot(
@@ -76,10 +78,12 @@ def latency_line_plot(
             threshold = timely_threshold
 
             axes[0].set_ylim([0, 10])
-
             # Setting up our data
             x_axis = HNN_latencies.startTime
+            logging.info(f"x_axis {x_axis}")
             x_axis_as_dates = [arrow.get(x).datetime for x in x_axis]
+            axes[0].set_xlim(
+                [x_axis_as_dates[0], x_axis_as_dates[0]+timedelta(hours=24)])
             y_axis = HNN_latencies.data_latency
 
             # Format the dates on the x-axis
