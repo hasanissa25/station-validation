@@ -63,6 +63,24 @@ def latency_parameters_nanometrics() -> LatencyParameters:
 
 
 @pytest.fixture(scope="session")
+def latency_parameters_nanometrics_timely_availability() -> LatencyParameters:
+    return LatencyParameters(type_of_instrument="APOLLO",
+                             network="QW",
+                             station="QCC02",
+                             startdate=date(2022, 4, 3),
+                             enddate=date(2022, 4, 4),
+                             path="tests/latency/test_data/apollo/archive/latency",
+                             json_dict={
+                                 "channels": {
+                                     "HNN": {},
+                                     "HNE": {},
+                                     "HNZ": {}
+                                 }},
+                             timely_threshold=3,
+                             timely_percent=98)
+
+
+@pytest.fixture(scope="session")
 def latency_parameters_nanometrics_no_files() -> LatencyParameters:
     return LatencyParameters(type_of_instrument="APOLLO",
                              network="QW",
