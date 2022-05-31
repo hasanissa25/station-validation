@@ -32,6 +32,9 @@ def timely_availability_plot(
         timely_availability_percentage_array_days_axis = \
         get_timely_availability_arrays(
             latencies=latencies, threshold=timely_threshold)
+    logging.info(f'{HNN_timely_availability_percentage_dataframe}')
+    logging.info(f'{HNE_timely_availability_percentage_dataframe}')
+    logging.info(f'{HNZ_timely_availability_percentage_dataframe}')
     filename = ""
     if startdate == enddate - timedelta(days=1):
         filename = f'{network}.{station}...{startdate}\

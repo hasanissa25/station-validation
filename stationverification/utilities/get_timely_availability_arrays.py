@@ -64,7 +64,8 @@ def get_timely_availability_arrays(
                 (HNE_latencies["data_latency"] != -1)]["data_latency"].size
             number_of_HNE_latencies_that_are_negative = HNE_latencies.loc[
                 HNE_latencies["data_latency"] == -1]["data_latency"].size
-            if total_number_of_HNN_latencies == 0:
+
+            if total_number_of_HNE_latencies == 0:
                 current_HNE_dictionary = \
                     {'below_threshold': 0.0,
                      'above_threshold': 0.0,
@@ -98,7 +99,7 @@ def get_timely_availability_arrays(
                 (HNZ_latencies["data_latency"] != -1)]["data_latency"].size
             number_of_HNZ_latencies_that_are_negative = HNZ_latencies.loc[
                 HNZ_latencies["data_latency"] == -1]["data_latency"].size
-            if total_number_of_HNN_latencies == 0:
+            if total_number_of_HNZ_latencies == 0:
                 current_HNZ_dictionary = \
                     {'below_threshold': 0.0,
                      'above_threshold': 0.0,

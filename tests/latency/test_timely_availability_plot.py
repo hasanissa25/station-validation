@@ -10,13 +10,13 @@ from stationverification.utilities.\
     import convert_array_of_latency_objects_into_array_of_dataframes
 
 
-def test_timely_availability_plot(latency_parameters_nanometrics_timely_availability, latency_test_file_nanometrics_timely_availability_test):
+def test_timely_availability_plot(latency_parameters_nanometrics_timely_availability, latency_test_files_nanometrics_negative_latency):
     subprocess.getoutput(
         "rm -rf 'stationvalidation_output'")
     combined_latency_dataframe_for_all_days_dataframe,\
         array_of_daily_latency_objects_max_latency_only,\
         array_of_daily_latency_objects_all_latencies = get_latencies_from_apollo(
-            files=latency_test_file_nanometrics_timely_availability_test,
+            files=latency_test_files_nanometrics_negative_latency,
             network=latency_parameters_nanometrics_timely_availability.network,
             station=latency_parameters_nanometrics_timely_availability.station)
     array_of_daily_latency_dataframes = \

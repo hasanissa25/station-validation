@@ -10,7 +10,8 @@ main()
 '''
 
 
-# from stationverification.utilities.upload_report_fetch_arguments import upload_report_fetch_arguments
+# from stationverification.utilities.upload_report_fetch_arguments import \
+# upload_report_fetch_arguments
 
 
 def main():
