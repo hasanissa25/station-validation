@@ -80,7 +80,6 @@ def latency_line_plot(
             axes[0].set_ylim([0, 10])
             # Setting up our data
             x_axis = HNN_latencies.startTime
-            logging.info(f"x_axis {x_axis}")
             x_axis_as_dates = [arrow.get(x).datetime for x in x_axis]
             axes[0].set_xlim(
                 [x_axis_as_dates[0], x_axis_as_dates[0]+timedelta(hours=24)])
