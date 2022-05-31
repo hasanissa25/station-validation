@@ -66,8 +66,7 @@ def latency_log_plot(
  {enddate - timedelta(days=1)}'
 
     # Setting up the figure
-    font = {'family': 'normal',
-            'size': 13}
+    font = {'size': 13}
 
     matplotlib.rc('font', **font)
     fig = plt.figure()
