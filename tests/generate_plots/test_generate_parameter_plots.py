@@ -24,6 +24,7 @@ def test_generate_parameter_plots(gather_stats_parameters):
             PlotParameters(network=gather_stats_parameters.network,
                            station=gather_stats_parameters.station,
                            channel=channel,
+                           location=None,
                            stationMetricData=stationMetricData_multiple_days_days,
                            start=gather_stats_parameters.startdate,
                            stop=gather_stats_parameters.enddate)
@@ -43,6 +44,7 @@ def test_generate_parameter_plots(gather_stats_parameters):
             PlotParameters(network=gather_stats_parameters.network,
                            station=gather_stats_parameters.station,
                            channel=channel,
+                           location=None,
                            stationMetricData=stationMetricData_single_day,
                            start=gather_stats_parameters.startdate,
                            stop=gather_stats_parameters.startdate + timedelta(days=1))
