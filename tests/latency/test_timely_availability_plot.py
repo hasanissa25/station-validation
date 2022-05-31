@@ -10,26 +10,26 @@ from stationverification.utilities.\
     import convert_array_of_latency_objects_into_array_of_dataframes
 
 
-def test_timely_availability_plot(latency_parameters_nanometrics_timely_availability, latency_test_files_nanometrics_negative_latency):
+def test_timely_availability_plot(latency_parameters_nanometrics, latency_test_files_nanometrics):
     subprocess.getoutput(
         "rm -rf 'stationvalidation_output'")
     combined_latency_dataframe_for_all_days_dataframe,\
         array_of_daily_latency_objects_max_latency_only,\
         array_of_daily_latency_objects_all_latencies = get_latencies_from_apollo(
-            files=latency_test_files_nanometrics_negative_latency,
-            network=latency_parameters_nanometrics_timely_availability.network,
-            station=latency_parameters_nanometrics_timely_availability.station)
+            files=latency_test_files_nanometrics,
+            network=latency_parameters_nanometrics.network,
+            station=latency_parameters_nanometrics.station)
     array_of_daily_latency_dataframes = \
         convert_array_of_latency_objects_into_array_of_dataframes(
             array_of_latencies=array_of_daily_latency_objects_all_latencies)
     timely_availability_plot(
         latencies=array_of_daily_latency_dataframes,
-        network=latency_parameters_nanometrics_timely_availability.network,
-        station=latency_parameters_nanometrics_timely_availability.station,
-        startdate=latency_parameters_nanometrics_timely_availability.startdate,
-        enddate=latency_parameters_nanometrics_timely_availability.enddate,
-        timely_threshold=latency_parameters_nanometrics_timely_availability.timely_threshold
+        network=latency_parameters_nanometrics.network,
+        station=latency_parameters_nanometrics.station,
+        startdate=latency_parameters_nanometrics.startdate,
+        enddate=latency_parameters_nanometrics.enddate,
+        timely_threshold=latency_parameters_nanometrics.timely_threshold
     )
 
-    # subprocess.getoutput(
-    #     "rm -rf 'stationvalidation_output'")
+    subprocess.getoutput(
+        "rm -rf 'stationvalidation_output'")

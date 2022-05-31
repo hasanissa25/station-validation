@@ -9,10 +9,12 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.ticker as plticker
 import matplotlib.dates as mdates
+
 from pandas.plotting import register_matplotlib_converters
 
 from stationverification.utilities.get_timely_availability_arrays\
     import get_timely_availability_arrays
+
 
 warnings.filterwarnings("ignore")
 
@@ -26,9 +28,9 @@ def timely_availability_plot(
     timely_threshold: float,
 ):
     register_matplotlib_converters()
-    HNN_timely_availability_percentage_dataframe,\
-        HNE_timely_availability_percentage_dataframe,\
-        HNZ_timely_availability_percentage_dataframe,\
+    HNN_timely_availability_percentage_array, \
+        HNE_timely_availability_percentage_array,\
+        HNZ_timely_availability_percentage_array,\
         timely_availability_percentage_array_days_axis = \
         get_timely_availability_arrays(
             latencies=latencies, threshold=timely_threshold)
@@ -53,10 +55,10 @@ def timely_availability_plot(
 
     # Setting up our X-axis data
     x_axis = timely_availability_percentage_array_days_axis
-    if len(HNN_timely_availability_percentage_dataframe) == len(x_axis) and\
-        len(HNE_timely_availability_percentage_dataframe) == len(x_axis) and\
-            len(HNZ_timely_availability_percentage_dataframe) == len(x_axis)\
-            and len(x_axis) != 0:
+    if len(HNN_timely_availability_percentage_array) == len(x_axis) and\
+        len(HNE_timely_availability_percentage_array) == len(x_axis) and\
+            len(HNE_timely_availability_percentage_array) == len(x_axis) and \
+            len(x_axis) != 0:
         # Format the dates on the x-axis
         formatter = mdates.DateFormatter("%Y-%m-%d")
         axes[0].xaxis.set_major_formatter(formatter)
@@ -68,20 +70,10 @@ def timely_availability_plot(
         loc = plticker.MultipleLocator(base=2)
         axes[0].yaxis.set_major_locator(loc)
         # Plotting the data
-        y_axis_below_threshold = \
-            HNN_timely_availability_percentage_dataframe.below_threshold
-        y_axis_negative_values = \
-            HNN_timely_availability_percentage_dataframe.below_threshold\
-            + HNN_timely_availability_percentage_dataframe.negative_value
-
+        y_axis = HNN_timely_availability_percentage_array
         axes[0].bar(x_axis, [100], color="red")
-        axes[0].bar(x_axis, y_axis_negative_values, color="yellow",
-                    label='HNN Timely Availability [%],\
- Latency value of infinity')
-        axes[0].bar(x_axis, y_axis_below_threshold, color="blue",
-                    label='HNN Timely Availability [%],\
- Latency value below threshold')
-
+        axes[0].bar(x_axis, y_axis,
+                    label='HNN Timely Availability [%]')
         legend = axes[0].legend(bbox_to_anchor=(1.1, 1),
                                 loc='upper right', fontsize="9")
         # Show the grid
@@ -91,20 +83,10 @@ def timely_availability_plot(
 
         # Second plot
         # Setting up our data
-        y_axis_below_threshold = \
-            HNE_timely_availability_percentage_dataframe.below_threshold
-        y_axis_negative_values = \
-            HNE_timely_availability_percentage_dataframe.below_threshold\
-            + HNE_timely_availability_percentage_dataframe.negative_value
-
+        y_axis = HNE_timely_availability_percentage_array
+        # Plotting the data
         axes[1].bar(x_axis, [100], color="red")
-        axes[1].bar(x_axis, y_axis_negative_values, color="yellow",
-                    label='HNE Timely Availability [%],\
- Latency value of infinity')
-        axes[1].bar(x_axis, y_axis_below_threshold, color="blue",
-                    label='HNE Timely Availability [%],\
- Latency value below threshold')
-
+        axes[1].bar(x_axis, y_axis, label='HNE Timely Availability [%]')
         legend = axes[1].legend(bbox_to_anchor=(1.1, 1),
                                 loc='upper right', fontsize="9")
         axes[1].yaxis.set_major_locator(loc)
@@ -115,19 +97,10 @@ def timely_availability_plot(
 
         # Third plot
         # Setting up our data
-        y_axis_below_threshold = \
-            HNZ_timely_availability_percentage_dataframe.below_threshold
-        y_axis_negative_values = \
-            HNZ_timely_availability_percentage_dataframe.below_threshold\
-            + HNZ_timely_availability_percentage_dataframe.negative_value
-
+        y_axis = HNZ_timely_availability_percentage_array
+        # Plotting the data
         axes[2].bar(x_axis, [100], color="red")
-        axes[2].bar(x_axis, y_axis_negative_values, color="yellow",
-                    label='HNZ Timely Availability [%],\
- Latency value of infinity')
-        axes[2].bar(x_axis, y_axis_below_threshold, color="blue",
-                    label='HNZ Timely Availability [%],\
- Latency value below threshold')
+        axes[2].bar(x_axis, y_axis, label='HNZ Timely Availability [%]')
         legend = axes[2].legend(bbox_to_anchor=(1.1, 1),
                                 loc='upper right', fontsize="9")
         # Show the grid

@@ -237,21 +237,6 @@ def get_latency_value_for_current_timestamp(current_latency: dict,
                     start_time=current_latency[
                         'startTime'],
                     packet_id=f"average{iteration+1}")
-    elif current_latency["retx"]["allPackets"] == -1:
-        append_to_latency_objects(
-            append_to_current_day_max_latencies=False,
-            append_to_combined_latency_data_for_all_days=False,
-            append_to_current_day_all_latencies=True,
-            current_latency=current_latency["latency"]["maximum"],
-            combined_latency_data_for_all_days=combined_latency_data_for_all_days,  # noqa
-            current_day_max_latencies=current_day_max_latencies,
-            current_day_all_latencies=current_day_all_latencies,
-            current_network=current_network,
-            current_station=current_station,
-            current_channel=current_channel,
-            start_time=current_latency[
-                'startTime'],
-            packet_id="max")
     return combined_latency_data_for_all_days,\
         current_day_max_latencies, \
         current_day_all_latencies
