@@ -4,7 +4,6 @@ files and report on them
 '''
 import os
 import arrow
-import logging
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
