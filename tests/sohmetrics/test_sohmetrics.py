@@ -179,13 +179,11 @@ def test_check_clock_offset(list_of_streams_clock_offset: List[obspy.Stream],
                             passing_threshold: float = 1.0,
                             failing_threshold: float = 0.1,
                             startdate: date = date(2021, 1, 1),
-                            enddate: date = date(2021, 1, 5),
-                            network: str = "QW",
-                            station: str = "QCC02"):
+                            ):
     # Clock offset passes
     results = sohmetrics.check_clock_offset(
         list_of_streams_clock_offset, threshold=passing_threshold,
-        startdate=startdate, enddate=enddate, network=network, station=station)
+        startdate=startdate)
     assert results.passed
     assert results.details == []
     assert results.results == [-1.0, 0.1, 1.0, 0.5]
@@ -194,10 +192,7 @@ def test_check_clock_offset(list_of_streams_clock_offset: List[obspy.Stream],
     results = sohmetrics.check_clock_offset(
         list_of_streams_clock_offset,
         threshold=failing_threshold,
-        startdate=startdate,
-        enddate=enddate,
-        network="QW",
-        station="QCC02")
+        startdate=startdate)
     # assert not results.passed
     assert results.results == [-1.0, 0.1, 1.0, 0.5]
     assert results.details == ['Average clock phase error too high on 2021-01-03',

@@ -204,6 +204,27 @@ def get_stream_data_of_merged_streams(stream: obspy.Stream) -> obspy.Trace:
             'There were no traces found in the stream passed')
 
 
+def get_list_of_data_from_list_of_streams(list_of_streams:
+                                          List[obspy.Stream]) \
+        -> List[Any]:
+    '''
+    Takes a list of merged streams, and returns a list of stream data
+
+    Parameters
+    ----------
+    list_of_streams: list of Obspy Streams
+
+    Returns
+    ----------
+        a list of arrays from the stream data
+    '''
+    list_of_data = []
+    for stream in list_of_streams:
+        stream_data = get_stream_data_of_merged_streams(stream)
+        list_of_data.append(stream_data)
+    return list_of_data
+
+
 def check_timing_quality(list_of_streams: List[obspy.Stream],
                          threshold: float,
                          startdate: date,

@@ -69,6 +69,8 @@ from stationverification.utilities.handle_running_ispaq_command import \
     handle_running_ispaq_command
 from stationverification.utilities.upload_results_to_s3 import \
     upload_results_to_s3
+from stationverification.utilities.timely_availability_plot import \
+    timely_availability_plot
 
 
 def main():
@@ -119,7 +121,8 @@ def main():
             user_inputs.stationconf,
         ))
     process_two.start()
-    combined_latency_dataframe_for_all_days_dataframe = queue.get()
+    combined_latency_dataframe_for_all_days_dataframe,\
+        array_of_daily_latency_dataframes_all_latencies = queue.get()
     process_one.join()
     logging.info("Finished Process 1: Generating Latency results")
     process_two.join()
@@ -153,9 +156,20 @@ def main():
                            stationMetricData=stationMetricData,
                            start=user_inputs.startdate,
                            stop=user_inputs.enddate)
-
         )
-
+    logging.info("Generating timely availability plot..")
+    timely_availability_plot(
+        latencies=array_of_daily_latency_dataframes_all_latencies,
+        stationMetricData=stationMetricData,
+        station=user_inputs.station,
+        startdate=user_inputs.startdate,
+        enddate=user_inputs.enddate,
+        network=user_inputs.network,
+        timely_threshold=user_inputs.thresholds
+        .getfloat('thresholds',
+                  'data_timeliness',
+                  fallback=3),
+    )
     report(
         combined_latency_dataframe_for_all_days_dataframe=combined_latency_dataframe_for_all_days_dataframe,  # noqa
         typeofinstrument=user_inputs.typeofinstrument,

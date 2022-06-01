@@ -27,6 +27,9 @@ def add_soh_results_to_report(network: str,
         clock_offset_merged_streams =\
             sohmetrics.get_list_of_streams_from_list_of_files(
                 clock_offset_sohfiles)
+        clock_offset_data = sohmetrics.get_list_of_data_from_list_of_streams(
+            clock_offset_merged_streams)
+        logging.info(f'clock_offset_data {clock_offset_data}')
         clock_offset_results = sohmetrics.check_clock_offset(
             list_of_streams=clock_offset_merged_streams,
             threshold=thresholds.getfloat(
@@ -57,6 +60,9 @@ def add_soh_results_to_report(network: str,
         check_clock_locked_merged_streams =\
             sohmetrics.get_list_of_streams_from_list_of_files(
                 check_clock_locked_sohfiles)
+        clock_locked_data = sohmetrics.get_list_of_data_from_list_of_streams(
+            check_clock_locked_merged_streams)
+        logging.info(f'clock_locked_data {clock_locked_data}')
         clock_locked_results = sohmetrics.check_clock_locked(
             list_of_streams=check_clock_locked_merged_streams,
             threshold=thresholds.getfloat(
@@ -75,16 +81,16 @@ def add_soh_results_to_report(network: str,
         logging.error(e)
         logging.warning(
             'GST data does not exist. Skipping clock locked metric.')
-
-    plot_clock_offset(network=network,
-                      station=station,
-                      startdate=startdate,
-                      enddate=enddate,
-                      clock_offset_results=clock_offset_results.results,
-                      clock_locked_results=clock_locked_results.results,
-                      threshold=thresholds.getfloat(
-                          'thresholds', 'clock_offset', fallback=1)
-                      )
+    if clock_locked_data and clock_offset_data:
+        plot_clock_offset(network=network,
+                          station=station,
+                          startdate=startdate,
+                          enddate=enddate,
+                          clock_offset_results=clock_offset_data,
+                          clock_locked_results=clock_locked_data,
+                          threshold=thresholds.getfloat(
+                              'thresholds', 'clock_offset', fallback=1)
+                          )
 
     try:
         timing_quality_sohfiles = sohmetrics.getsohfiles(network=network,

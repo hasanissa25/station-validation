@@ -11,6 +11,7 @@ import matplotlib.ticker as plticker
 import matplotlib.dates as mdates
 
 from pandas.plotting import register_matplotlib_converters
+from stationverification.utilities.generate_report import StationMetricData
 
 from stationverification.utilities.get_timely_availability_arrays\
     import get_timely_availability_arrays
@@ -26,7 +27,10 @@ def timely_availability_plot(
     enddate: date,
     network: str,
     timely_threshold: float,
+    stationMetricData: StationMetricData
 ):
+    logging.info(
+        f'timely_availiablity_plot>stationMetricData {stationMetricData}')
     register_matplotlib_converters()
     HNN_timely_availability_percentage_array, \
         HNE_timely_availability_percentage_array,\

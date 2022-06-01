@@ -15,8 +15,7 @@ from stationverification.utilities.get_latencies import get_latencies
 from stationverification.utilities.get_latency_files import get_latency_files
 from stationverification.utilities.latency_line_plot import latency_line_plot
 from stationverification.utilities.latency_log_plot import latency_log_plot
-from stationverification.utilities.timely_availability_plot import \
-    timely_availability_plot
+
 
 logging.basicConfig(
     format='%(asctime)s Station Validation: %(message)s',
@@ -63,15 +62,6 @@ def generate_latency_results(typeofinstrument: str,
         convert_array_of_latency_objects_into_array_of_dataframes(
             array_of_latencies=array_of_daily_latency_objects_all_latencies)
 
-    logging.info("Generating timely availability plot..")
-    timely_availability_plot(
-        latencies=array_of_daily_latency_dataframes_all_latencies,
-        station=station,
-        startdate=startdate,
-        enddate=enddate,
-        network=network,
-        timely_threshold=timely_threshold,
-    )
     logging.info("Generating latency log plots..")
 
     latency_log_plot(latencies=combined_latency_dataframe_for_all_days_dataframe,  # noqa
@@ -101,6 +91,9 @@ def generate_latency_results(typeofinstrument: str,
         enddate=enddate,
         timely_threshold=timely_threshold
     )
+    tuple_of_data_to_return = [
+        combined_latency_dataframe_for_all_days_dataframe,
+        array_of_daily_latency_dataframes_all_latencies]
     if queue:
-        queue.put(combined_latency_dataframe_for_all_days_dataframe)
+        queue.put(tuple_of_data_to_return)
     return combined_latency_dataframe_for_all_days_dataframe
