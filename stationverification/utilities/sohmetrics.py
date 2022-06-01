@@ -7,7 +7,6 @@ from datetime import date, timedelta
 from typing import List, Any
 
 from stationverification.utilities import exceptions
-from stationverification.utilities.plot_clock_offset import plot_clock_offset
 from stationverification.utilities.plot_timing_quality import\
     plot_timing_quality
 
@@ -322,10 +321,7 @@ def check_clock_locked(
 
 def check_clock_offset(list_of_streams: List[obspy.Stream],
                        threshold: float,
-                       startdate: date,
-                       enddate: date,
-                       network: str,
-                       station: str) -> MetricResults:
+                       startdate: date) -> MetricResults:
     '''
     Check the average clock offset for each day.
 
@@ -364,13 +360,6 @@ def check_clock_offset(list_of_streams: List[obspy.Stream],
     for stream in list_of_streams:
         stats = getstats(stream)
         offsets.append(stats.average)
-    plot_clock_offset(network=network,
-                      station=station,
-                      startdate=startdate,
-                      enddate=enddate,
-                      results=offsets,
-                      threshold=threshold
-                      )
     for index, clockPhaseError in enumerate(offsets):
         testdate = startdate + timedelta(index)
         if clockPhaseError > threshold:

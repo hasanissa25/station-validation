@@ -19,18 +19,18 @@ report:
     to the screen if no file is specified.
 
 '''
-from stationverification.utilities import exceptions
 from datetime import date, timedelta
 import os
+from stationverification.utilities.add_soh_results_to_report \
+    import add_soh_results_to_report
+
 from .metric_handler import metric_handler, check_metric_exists
 import json
 from typing import Optional
 import logging
 import pandas as pd
 from pandas.core.frame import DataFrame
-# from stationverification import CONFIG
 from .latency import latencyreport
-from . import sohmetrics
 from configparser import ConfigParser
 from typing import Any, Dict
 
@@ -457,194 +457,3 @@ def report(
 
     # Return the report information in json format
     return json_report_with_soh_results
-
-
-def add_soh_results_to_report(network: str,
-                              station: str,
-                              location: Any,
-                              startdate: date,
-                              enddate: date,
-                              directory: str,
-                              typeofinstrument: str,
-                              json_dict: dict,
-                              thresholds: ConfigParser):
-    try:
-        clock_offset_sohfiles = sohmetrics.getsohfiles(network=network,
-                                                       station=station,
-                                                       location=location,
-                                                       startdate=startdate,
-                                                       enddate=enddate,
-                                                       channel="LCE",
-                                                       directory=directory)
-        clock_offset_merged_streams =\
-            sohmetrics.get_list_of_streams_from_list_of_files(
-                clock_offset_sohfiles)
-        results = sohmetrics.check_clock_offset(
-            list_of_streams=clock_offset_merged_streams,
-            threshold=thresholds.getfloat(
-                'thresholds', 'clock_offset', fallback=1),
-            startdate=startdate,
-            enddate=enddate,
-            network=network,
-            station=station
-        )
-
-        if results is not None:
-            json_dict['clock_offset'] = {}
-            json_dict['clock_offset']['passed'] = results.passed
-            json_dict['clock_offset']['values'] = results.results
-            if results.passed is False:
-                json_dict['clock_offset']['details'] = results.details
-    except exceptions.StreamError as e:
-        logging.error(e)
-        logging.warning(
-            'LCE data does not exist. Skipping clock offset metric.')
-
-    try:
-        timing_quality_sohfiles = sohmetrics.getsohfiles(network=network,
-                                                         station=station,
-                                                         location=location,
-                                                         startdate=startdate,
-                                                         enddate=enddate,
-                                                         channel="LCQ",
-                                                         directory=directory)
-        timing_quality_merged_streams =\
-            sohmetrics.get_list_of_streams_from_list_of_files(
-                timing_quality_sohfiles)
-        results = sohmetrics.check_timing_quality(
-            list_of_streams=timing_quality_merged_streams,
-            threshold=thresholds.getfloat(
-                'thresholds', 'timing_quality', fallback=70.0),
-            startdate=startdate, enddate=enddate, network=network,
-            station=station,
-
-        )
-
-        if results is not None:
-            json_dict['timing_quality'] = {}
-            json_dict['timing_quality']['passed'] = results.passed
-            json_dict['timing_quality']['values'] = results.results
-            if results.passed is False:
-                json_dict['timing_quality']['details'] = results.details
-            # plot the timing quality results
-
-    except exceptions.StreamError as e:
-        logging.error(e)
-        logging.warning(
-            'LCQ data does not exist. Skipping timing quality metric.')
-    try:
-        check_clock_locked_sohfiles = \
-            sohmetrics.getsohfiles(network=network,
-                                   station=station,
-                                   location=location,
-                                   startdate=startdate,
-                                   enddate=enddate,
-                                   channel="GST",
-                                   directory=directory)
-        check_clock_locked_merged_streams =\
-            sohmetrics.get_list_of_streams_from_list_of_files(
-                check_clock_locked_sohfiles)
-        results = sohmetrics.check_clock_locked(
-            list_of_streams=check_clock_locked_merged_streams,
-            threshold=thresholds.getfloat(
-                'thresholds', 'clock_locked', fallback=6),
-            startdate=startdate
-        )
-
-        if results is not None:
-            json_dict['clock_locked'] = {}
-            json_dict['clock_locked']['passed'] = results.passed
-            json_dict['clock_locked']['values'] = results.results
-            if results.passed is False:
-                json_dict['clock_locked']['details'] = results.details
-    except exceptions.StreamError as e:
-        logging.error(e)
-        logging.warning(
-            'GST data does not exist. Skipping clock locked metric.')
-    try:
-        check_number_of_satellites_sohfiles = \
-            sohmetrics.getsohfiles(network=network,
-                                   station=station,
-                                   location=location,
-                                   startdate=startdate,
-                                   enddate=enddate,
-                                   channel="GNS",
-                                   directory=directory)
-        check_number_of_satellites_merged_streams =\
-            sohmetrics.get_list_of_streams_from_list_of_files(
-                check_number_of_satellites_sohfiles)
-        results = sohmetrics.check_number_of_satellites(
-            list_of_streams=check_number_of_satellites_merged_streams,
-            threshold=thresholds.getfloat(
-                'thresholds', 'satellites_locked', fallback=6),
-            startdate=startdate
-        )
-
-        if results is not None:
-            json_dict['satellites_locked'] = {}
-            json_dict['satellites_locked']['passed'] = results.passed
-            # Since were getting the average of a list of size 1, \
-            # were only returning the first element of the list
-            json_dict['satellites_locked']['values'] = results.results
-            if results.passed is False:
-                json_dict['satellites_locked']['details'] = results.details
-    except exceptions.StreamError as e:
-        logging.error(e)
-        logging.warning(
-            'GNS data does not exist. Skipping number of satellites metric.')
-    return json_dict
-
-# Needs to be refactored as this will not work with the current version of
-# station verification
-# def bulk_report(
-#     stationmetricdata: StationMetricData,
-#     hdf5_files: str,
-#     outputdir: str,
-#     start: date,
-#     end: date = None,
-#     thresholds: Optional[str] = CONFIG,
-# ) -> str:
-#     '''
-#     Loops through all networks and stations in a StationMetricData object and
-#     generates a report for each, returns a path to the reports
-
-#     Parameters
-#     ----------
-
-#     stationmetricdata: StationMetricData
-#         Object containing results from ISPAQ tests
-
-#     hdf5_files: str
-#     start: date
-#         The date to preform the test for
-#     '''
-#     year = start.year
-#     month = start.month
-#     if month < 10:
-#         month = f'0{month}'
-#     day = start.day
-#     if day < 10:
-#         day = f'0{day}'
-
-#     if end is None:
-#         end = start + timedelta(days=+1)
-
-#     # Determine the correct directory to store the reports
-#     path = f'{outputdir}/{year}/{month}/{day}'
-#     if not os.path.isdir(path):
-#         os.makedirs(path)
-#     # Generate report for each station
-#     endDate: date = start + timedelta(days=+1)
-#     for network in stationmetricdata.get_networks():
-#         for station in stationmetricdata.get_stations(network):
-#             report(network=network,
-#                    station=station,
-#                    stationmetricdata=stationmetricdata,
-#                    start=start,
-#                    endDate=endDate,
-#                    latencyFiles=hdf5_files,
-#                    thresholds=thresholds,
-#                    sohdirectory=path,
-#                    outputdir=outputdir)
-
-#     return path
