@@ -1,5 +1,4 @@
 import os
-import logging
 import arrow
 
 import numpy as np
@@ -19,10 +18,6 @@ def plot_clock_offset(network: str,
                       clock_locked_results: Any,
                       threshold: float):
 
-    # Testing
-    enddate = enddate + timedelta(days=2)
-    clock_offset_results = [1.5, 0, -1.5]
-    clock_locked_results = [2, 0, 1]
     filename = ""
     if startdate == enddate - timedelta(days=1):
         filename = f'{network}.{station}...{startdate}'
