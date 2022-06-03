@@ -67,8 +67,8 @@ def latency_parameters_nanometrics_timely_availability() -> LatencyParameters:
     return LatencyParameters(type_of_instrument="APOLLO",
                              network="QW",
                              station="QCC02",
-                             startdate=date(2022, 4, 3),
-                             enddate=date(2022, 4, 4),
+                             startdate=date(2022, 4, 1),
+                             enddate=date(2022, 4, 2),
                              path="tests/latency/test_data/apollo/archive/latency",
                              json_dict={
                                  "channels": {
@@ -152,6 +152,11 @@ def latency_test_file_nanometrics_bad_file() -> list:
 @ pytest.fixture(scope="session")
 def latency_test_files_nanometrics_negative_latency() -> list:
     return ['tests/latency/test_data/sample_nanometrics_latency_data_6.json']
+
+
+@ pytest.fixture(scope="session")
+def latency_test_files_timely_availability() -> list:
+    return ['tests/latency/test_data/sample_nanometrics_latency_data_1.json']
 
 
 @ pytest.fixture(scope="session")

@@ -84,7 +84,7 @@ def plot_clock_offset(network: str,
                 # Second Plot
                 axes[1].plot(
                     x_axis_as_dates, clock_locked_data[index],
-                    marker='o',  label='0 = Clock is Off\n1 = Clock is Unlocked\n2 \
+                    marker='o',  label='0 = Clock is Off, 1 = Clock is Unlocked, 2\
 = Clock is Locked', linewidth=1,
                     markeredgewidth=1,
                     markersize=1, markevery=60, c="green")
