@@ -4,12 +4,18 @@ from stationverification import XML_CONVERTER
 from obspy.io.xseed import Parser
 import os
 # station = "QW.QCC02.*.H??"
-station = "QW.QCC02.00.H??"
+station = "QW.BCV11..H??"
+
+# ISPAQ with merge
 ispaqloc = "../ISPAQ/ispaq/run_ispaq.py"
+
+# ISPAQ withOUT merge
+# ispaqloc = "../ISPAQ-Original/ispaq/run_ispaq.py"
+
 pfile = 'stationverification/data/eew_preferences.txt'
 
-startdate = date(2022, 4, 1)
-enddate = date(2022, 4, 2)
+startdate = date(2022, 6, 1)
+enddate = date(2022, 6, 2)
 metrics = "eew_test"
 
 station_url = "stationverification/data/QW.xml"
