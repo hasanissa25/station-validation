@@ -97,9 +97,10 @@ class GitLabWikis(dict):
             raise err
         return request_result
 
-    def _upload_attachments_wiki_api(self, attachments: List):
+    def _upload_attachments_wiki_api(self, attachments: List) -> List[dict]:
         request_url = f'{self.gitlabUrl}/attachments'
         headers = {'PRIVATE-TOKEN': self.token}
+        list_of_attachment_references: List[dict] = []
         for attachment in attachments:
             print(f'Adding attachment {attachment["filename"]}')
             try:
@@ -113,23 +114,25 @@ class GitLabWikis(dict):
                         )
                     })
                 req.raise_for_status()
-                # print(f"{attachment['filename']}, Status: {req}", )
                 request_as_json = json.loads(req.content.decode('utf-8'))
-                print(json.dumps(request_as_json, sort_keys=False, indent=4))
+                list_of_attachment_references.append(request_as_json)
             except requests.exceptions.HTTPError as err:
                 logging.error(err)
+        return list_of_attachment_references
 
-    def _handle_attachments(self, list_of_documents: List):
-        # Download attachments from Web server
-        list_of_attachment_references = list(
+    def _download_documents(self, list_of_documents: List) -> List[dict]:
+        # Download the documents from the webserver
+        list_of_document_references = list(
             map(lambda attachment: {"filename": attachment, "content": self._get_api(attachment).content}, list_of_documents))
-        # Upload attachments to Git Lab
-        self._upload_attachments_wiki_api(
-            attachments=list_of_attachment_references)
+        # Upload documents to Git Lab as attachments
+        list_of_attachment_references = self._upload_attachments_wiki_api(
+            attachments=list_of_document_references)
+        return list_of_attachment_references
 
-    def _get_list_of_attachments(
+    def _get_list_of_documents(
         self,
     ) -> List:
+        # Getting the list of documents from the webserver provided
         request_result = self._get_api()
         array_of_documents = list(
             map(lambda document: document["name"], request_result.json()))
@@ -138,11 +141,13 @@ class GitLabWikis(dict):
         return filtered_array_of_documents
 
     def setup_wiki(self):
-        list_of_documents = self._get_list_of_attachments()
-        self._handle_attachments(list_of_documents)
+        list_of_documents = self._get_list_of_documents()
+        list_of_attachment_references = self._download_documents(list_of_documents)
         # content = generate_markdown_template()
         # self._post_wiki_api(title=self.title,
         #                     content=content)
+        print(json.dumps(list_of_attachment_references,
+                      sort_keys=False, indent=4))
 
 
 GitLabWikisObj = GitLabWikis(
@@ -152,7 +157,9 @@ GitLabWikisObj = GitLabWikis(
     token="gJ-TxBSSMYBrsxhh9jze",
     webserver="https://3.96.234.48:18010/json/QW/ONE01/2022-04-21-2022-05-01/")
 
+GitLabWikisObj.setup_wiki()
 
-content = generate_markdown_template()
-GitLabWikisObj._post_wiki_api(title="(Network.Station) (date) Test:2",
-                              content=content)
+
+# content = generate_markdown_template()
+# GitLabWikisObj._post_wiki_api(title="(Network.Station) (date) Test:2",
+#                               content=content)
