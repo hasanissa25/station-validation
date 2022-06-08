@@ -5,12 +5,6 @@ import json
 import warnings
 warnings.filterwarnings("ignore")
 
-#######################################################################
-# TODO:
-# Add mypy
-# Get the Specific directory, for one date for now. But make it scalable
-#######################################################################
-
 
 class GitLabWikis(dict):
     '''
@@ -92,7 +86,7 @@ class GitLabWikis(dict):
             request_result = requests.get(
                 request_url, verify=False
             )
-            # print(f"Getting file: {request_url}")
+            logging.info(f"Getting file: {request_url}")
             request_result.raise_for_status()
         except requests.exceptions.HTTPError as err:
             logging.error(err.response.content)
@@ -104,7 +98,7 @@ class GitLabWikis(dict):
         headers = {'PRIVATE-TOKEN': self.token}
         list_of_attachment_references: List[dict] = []
         for attachment in attachments:
-            # print(f'Adding attachment {attachment["filename"]}')
+            logging.info(f'Adding attachment {attachment["filename"]}')
             try:
                 req = requests.post(
                     request_url,
@@ -149,6 +143,3 @@ class GitLabWikis(dict):
     def setup_wiki(self):
         self._get_list_of_documents()
         self._download_documents()
-        # content = generate_markdown_template()
-        # self._post_wiki_api(title=self.title,
-        #                     content=content)

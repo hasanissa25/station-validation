@@ -14,8 +14,39 @@ main()
 #  import upload_report_fetch_arguments
 
 
+from stationverification.utilities.GitLabAttachments \
+    import GitLabAttachments
+from stationverification.utilities.GitLabWikis \
+    import GitLabWikis
+from stationverification.utilities.generate_markdown_template \
+    import generate_markdown_template
+from stationverification.utilities.upload_report_fetch_arguments\
+    import upload_report_fetch_arguments
+import logging
+
+logging.basicConfig(
+    format='%(asctime)s Upload to GitLab: %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
+
+
 def main():
     # Add the defaults to the AWS config file
     # Update the token to be alot longer
-    # user_input = upload_report_fetch_arguments()
-    pass
+    user_input = upload_report_fetch_arguments()
+
+    GitLabWikisObj = GitLabWikis(
+        title=user_input.wikiTitle,
+        gitlabUrl=user_input.gitlabUrl,
+        projectId=user_input.projectId,
+        token=user_input.projectToken,
+        webserver=user_input.webServer)
+
+    GitLabWikisObj.setup_wiki()
+
+    GitLabAttachmentsObj = GitLabAttachments(
+        list_of_attachments=GitLabWikisObj.list_of_attachment_references)
+    attachments = GitLabAttachmentsObj.get_attachments()
+
+    content = generate_markdown_template(attachments=attachments)
+    GitLabWikisObj._post_wiki_api(content=content)

@@ -29,7 +29,8 @@ setup(
         'boto3',
         'numpy==1.19.5',
         'arrow',
-        "pydantic"
+        "pydantic",
+        "Jinja2"
     ],
     extras_require={
         'dev': [
