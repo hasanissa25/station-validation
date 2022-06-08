@@ -11,7 +11,6 @@ def generate_markdown_template() -> str:
 </details>
 
 <details><summary>PDF</summary>
-
 </details>
 
 <details><summary>Latency Log Plot</summary>

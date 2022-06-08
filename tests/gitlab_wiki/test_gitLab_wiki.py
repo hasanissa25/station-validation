@@ -1,22 +1,34 @@
 # flake8: noqa
-from typing import Dict, List, Optional
-from urllib.request import Request, urlopen, urlretrieve
+from typing import List, Optional
 import requests
 import logging
 from tests.gitlab_wiki.generate_markdown_template import generate_markdown_template
-from pprint import pprint
 import json
-import re
 import warnings
 warnings.filterwarnings("ignore")
+
+############################################################################################
+# TODO:
+# Add mypy
+# Get the Specific directory, for one date for now. But make it scalable
+############################################################################################
 
 
 class GitLabWikis(dict):
     '''
     Gitlab handler
 
-    :param str url: url of gitlab
-    :param str token: api token
+    Params:
+        Title: Title of the wiki page: \
+            Example: "QW.QCC01"
+        gitlabUrl: URL to the gitlab website: \
+            Example: "http://gitlab.seismo.nrcan.gc.ca"
+        projectId: The project Id of the repository: \
+            Example: 10
+        token: The private token of the repository: \
+            Example: "gJ-TxBSSMYBrsxhh9jze"
+        webserver: The direct link to the web server that includes the attachments we are uploading to the wiki. \
+            Example: "https://3.96.234.48:18010/json/QW/ONE01/2022-04-21-2022-05-01/"
     '''
 
     def __init__(
@@ -71,6 +83,20 @@ class GitLabWikis(dict):
             logging.error(err.response.content)
             raise err
 
+    def _get_api(self,
+                 path_to_attachments: Optional[str] = None) -> requests.Response:
+        request_url = self.webserver if path_to_attachments is None else f"{self.webserver}{path_to_attachments}"
+        try:
+            request_result = requests.get(
+                request_url, verify=False
+            )
+            print(f"Getting file: {request_url}")
+            request_result.raise_for_status()
+        except requests.exceptions.HTTPError as err:
+            logging.error(err.response.content)
+            raise err
+        return request_result
+
     def _upload_attachments_wiki_api(self, attachments: List):
         request_url = f'{self.gitlabUrl}/attachments'
         headers = {'PRIVATE-TOKEN': self.token}
@@ -87,23 +113,11 @@ class GitLabWikis(dict):
                         )
                     })
                 req.raise_for_status()
-                print(f"{attachment['filename']}, Status: {req}", )
+                # print(f"{attachment['filename']}, Status: {req}", )
+                request_as_json = json.loads(req.content.decode('utf-8'))
+                print(json.dumps(request_as_json, sort_keys=False, indent=4))
             except requests.exceptions.HTTPError as err:
                 logging.error(err)
-
-    def _get_api(self,
-                 path_to_attachments: Optional[str] = None) -> requests.Response:
-        request_url = self.webserver if path_to_attachments is None else f"{self.webserver}{path_to_attachments}"
-        try:
-            request_result = requests.get(
-                request_url, verify=False
-            )
-            print(f"Getting file: {request_url}")
-            request_result.raise_for_status()
-        except requests.exceptions.HTTPError as err:
-            logging.error(err.response.content)
-            raise err
-        return request_result
 
     def _handle_attachments(self, list_of_documents: List):
         # Download attachments from Web server
@@ -123,44 +137,22 @@ class GitLabWikis(dict):
                                                   array_of_documents))
         return filtered_array_of_documents
 
-    def create_wiki(self):
+    def setup_wiki(self):
         list_of_documents = self._get_list_of_attachments()
         self._handle_attachments(list_of_documents)
+        # content = generate_markdown_template()
+        # self._post_wiki_api(title=self.title,
+        #                     content=content)
 
 
 GitLabWikisObj = GitLabWikis(
     title="QW.QCC01",
     gitlabUrl="http://gitlab.seismo.nrcan.gc.ca",
     projectId=10,
-    token="WJgJ8NZDP2ei_KpiF8s8",
+    token="gJ-TxBSSMYBrsxhh9jze",
     webserver="https://3.96.234.48:18010/json/QW/ONE01/2022-04-21-2022-05-01/")
 
-############################################################################################
-# 1 - Download the files we need
-# 2 - Upload the files to WIKI
-# 3 - Create the wiki page
 
-GitLabWikisObj.create_wiki()
-
-############################################################################################
-# content = generate_markdown_template()
-# GitLabWikisObj.post_wiki(title="(Network.Station) (date)",
-#                          content=content)
-
-############################################################################################
-# TODO:
-# Add mypy
-# Get the Specific directory, for one date for now. But make it scalable
-# Dont download the files, get the reference and push them immediately
-
-
-############################################################################################
-
-def download_attachments(
-    self,
-    link
-):
-    response = requests.get(link)
-    file = open(f"results/{link.split('/')[-1]}", "wb")
-    file.write(response.content)
-    file.close()
+content = generate_markdown_template()
+GitLabWikisObj._post_wiki_api(title="(Network.Station) (date) Test:2",
+                              content=content)
