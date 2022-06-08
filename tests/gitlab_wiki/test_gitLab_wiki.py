@@ -23,14 +23,10 @@ GitLabWikisObj = GitLabWikis(
     webserver="https://3.96.234.48:18010/json/QW/ONE01/2022-04-21-2022-05-01/")
 
 GitLabWikisObj.setup_wiki()
+
 GitLabAttachmentsObj = GitLabAttachments(
     list_of_attachments=GitLabWikisObj.list_of_attachment_references)
-
 attachments = GitLabAttachmentsObj.get_attachments()
 
-# content = generate_markdown_template(GitLabAttachmentsObj)
-# GitLabWikisObj._post_wiki_api(title="(Network.Station) (date) Test:2",
-#                               content=content)
-
-print(json.dumps(attachments,
-                 sort_keys=False, indent=4))
+content = generate_markdown_template(attachments=attachments)
+GitLabWikisObj._post_wiki_api(content=content)

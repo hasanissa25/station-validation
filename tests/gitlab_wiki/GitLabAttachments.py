@@ -104,35 +104,67 @@ class GitLabAttachments(dict):
             "pdf": []}
         for attachment in self.list_of_attachments:
             if "failed_latencies" in attachment["file_name"]:
-                attachments["failed_latencies"].append(attachment)
+                attachments["failed_latencies"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "latency_line_plot" in attachment["file_name"]:
-                attachments["latency_line_plot"].append(attachment)
+                attachments["latency_line_plot"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "latency_log_plot" in attachment["file_name"]:
-                attachments["latency_log_plot"].append(attachment)
+                attachments["latency_log_plot"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "timely_availability_plot" in attachment["file_name"]:
-                attachments["timely_availability_plot"].append(attachment)
+                attachments["timely_availability_plot"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "timing_error" in attachment["file_name"]:
-                attachments["timing_error"].append(attachment)
+                attachments["timing_error"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "timing_quality" in attachment["file_name"]:
-                attachments["timing_quality"].append(attachment)
+                attachments["timing_quality"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "validation_results" in attachment["file_name"]:
-                attachments["validation_results"].append(attachment)
+                attachments["validation_results"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "adc_count" in attachment["file_name"]:
-                attachments["adc_count"].append(attachment)
+                attachments["adc_count"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "max_gap" in attachment["file_name"]:
-                attachments["max_gap"].append(attachment)
+                attachments["max_gap"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "num_gaps" in attachment["file_name"]:
-                attachments["num_gaps"].append(attachment)
+                attachments["num_gaps"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "num_overlaps" in attachment["file_name"]:
-                attachments["num_overlaps"].append(attachment)
+                attachments["num_overlaps"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "pct_above_nhnm" in attachment["file_name"]:
-                attachments["pct_above_nhnm"].append(attachment)
+                attachments["pct_above_nhnm"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "pct_below_nlnm" in attachment["file_name"]:
-                attachments["pct_below_nlnm"].append(attachment)
+                attachments["pct_below_nlnm"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "percent_availability" in attachment["file_name"]:
-                attachments["percent_availability"].append(attachment)
+                attachments["percent_availability"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "spikes" in attachment["file_name"]:
-                attachments["spikes"].append(attachment)
+                attachments["spikes"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
             elif "pdf" in attachment["file_name"]:
-                attachments["pdf"].append(attachment)
+                attachments["pdf"].append(
+                    {"name": attachment["file_name"],
+                     "link": attachment["link"]["markdown"]})
         return Attachments(attachments)

@@ -46,12 +46,11 @@ class GitLabWikis(dict):
         self.list_of_attachment_references: List[Any] = []
 
     def _post_wiki_api(self,
-                       title: str,
                        content: Optional[str] = None,
                        ):
         request_url = f'{self.gitlabUrl}'
         headers = {'PRIVATE-TOKEN': self.token}
-        data = {"title": title,
+        data = {"title": self.title,
                 "content": content}
         try:
             req = requests.post(
@@ -61,7 +60,7 @@ class GitLabWikis(dict):
             )
             req.raise_for_status()
         except requests.exceptions.HTTPError:
-            self._put_wiki_api(title=title,
+            self._put_wiki_api(title=self.title,
                                content=content)
 
     def _put_wiki_api(

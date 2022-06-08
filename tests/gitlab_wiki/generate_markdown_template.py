@@ -1,9 +1,9 @@
 # flake8: noqa
 import json
-from tests.gitlab_wiki.GitLabWikis import GitLabWikis
+from tests.gitlab_wiki.GitLabAttachments import Attachments
 
 
-def generate_markdown_template(GitLabAttachmentsObj: GitLabWikis) -> str:
+def generate_markdown_template(attachments: Attachments) -> str:
     return \
         '''
 <details><summary>JSON Report</summary>
@@ -16,6 +16,7 @@ def generate_markdown_template(GitLabAttachmentsObj: GitLabWikis) -> str:
 </details>
 
 <details><summary>PDF</summary>
+
 </details>
 
 <details><summary>Latency Log Plot</summary>
