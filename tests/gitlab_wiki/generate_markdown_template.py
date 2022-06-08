@@ -1,4 +1,9 @@
-def generate_markdown_template() -> str:
+# flake8: noqa
+import json
+from tests.gitlab_wiki.GitLabWikis import GitLabWikis
+
+
+def generate_markdown_template(GitLabAttachmentsObj: GitLabWikis) -> str:
     return \
         '''
 <details><summary>JSON Report</summary>
