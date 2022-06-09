@@ -27,7 +27,7 @@ class BaseAppSettings(BaseSettings):
 
     # GitLab
     GITLAB_URL: str = "http://gitlab.seismo.nrcan.gc.ca"
-    PROJECT_TOKEN: Any = None
+    PROJECT_TOKEN: Any = "gJ-TxBSSMYBrsxhh9jze"
     PROJECT_ID: int = 10
 
     class Config:
