@@ -33,4 +33,6 @@ stationverification script with station config file, and overwritting default ar
 latency script, and overwritting default archive directories:
     time nohup stationverificationlatency -T APOLLO -N QW -S BCL25 -d 2022-4-21 -e 2022-4-22 -l /apollo/archive/latency -o /validation >> BCL25_log.out &
 
+Run upload_report_to_gitlab script:
+    nohup uploadreport -t "QW.ONE01.Results" -w "https://3.96.234.48:18010/json/QW/ONE01/2022-04-21-2022-05-01/" >> upload_log.out &
 

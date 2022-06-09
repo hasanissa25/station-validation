@@ -66,8 +66,7 @@ Ex: "http://3.96.234.48:18010/QW/ONE01/2022-04-21-2022-05-01/"',
         else default_parameters.GITLAB_URL
     projectId = args.projectId if args.projectId is not None\
         else default_parameters.PROJECT_ID
-    projectToken = args.projectToken if args.projectToken is not None\
-        else default_parameters.PROJECT_TOKEN
+    projectToken = default_parameters.PROJECT_TOKEN
     # webserver = args.webserver if args.webserver is not None\
     #     else default_parameters.WEB_SERVER
     webServer = args.webServer
