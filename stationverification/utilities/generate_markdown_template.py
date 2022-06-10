@@ -2,8 +2,9 @@
 from jinja2 import Template
 from stationverification.utilities.GitLabAttachments import Attachments
 
-def generate_markdown_template(attachments: Attachments) -> str:
 
+def generate_markdown_template(attachments: Attachments,
+                               json_report: dict) -> str:
     template = Template('''
 <details><summary>JSON Report</summary>
 {% for element in validation_results -%}
@@ -52,22 +53,22 @@ def generate_markdown_template(attachments: Attachments) -> str:
  {{ element["link"] }}
 {% endfor %}
 </details>
-<details><summary>Max Gap</summary>
+<details><summary>Max Gap {{ max_gap_status }}</summary>
 {% for element in max_gap -%}
  {{ element["link"] }}
 {% endfor %}
 </details>
-<details><summary>Number of Gaps</summary>
+<details><summary>Number of Gaps {{ num_gaps_status }}</summary>
 {% for element in num_gaps -%}
  {{ element["link"] }}
 {% endfor %}
 </details>
-<details><summary>Number of Overlaps</summary>
+<details><summary>Number of Overlaps {{ num_overlaps_status }}</summary>
 {% for element in num_overlaps -%}
  {{ element["link"] }}
 {% endfor %}
 </details>
-<details><summary>Spikes</summary>
+<details><summary>Spikes {{ spikes_status }}</summary>
 {% for element in spikes -%}
  {{ element["link"] }}
 {% endfor %}
@@ -82,12 +83,13 @@ def generate_markdown_template(attachments: Attachments) -> str:
  {{ element["link"] }}
 {% endfor %}
 </details>
-<details><summary>Percent below New Low Noise Model</summary>
+<details><summary>Percent below New Low Noise Model {{pct_below_nlnm_status}}</summary>
 {% for element in pct_below_nlnm -%}
  {{ element["link"] }}
 {% endfor %}
 </details>
 ''')
+    empty_fields_dictionary = get_empty_fields(json_report)
     template_render = template.render(
         failed_latencies=attachments.failed_latencies,
         latency_line_plot=attachments.latency_line_plot,
@@ -98,12 +100,51 @@ def generate_markdown_template(attachments: Attachments) -> str:
         validation_results=attachments.validation_results,
         adc_count=attachments.adc_count,
         max_gap=attachments.max_gap,
+        max_gap_status=empty_fields_dictionary["max_gap"],
         num_gaps=attachments.num_gaps,
+        num_gaps_status=empty_fields_dictionary["num_gaps"],
         num_overlaps=attachments.num_overlaps,
+        num_overlaps_status=empty_fields_dictionary["num_overlaps"],
         pct_above_nhnm=attachments.pct_above_nhnm,
         pct_below_nlnm=attachments.pct_below_nlnm,
+        pct_below_nlnm_status=empty_fields_dictionary["pct_below_nlnm"],
         percent_availability=attachments.percent_availability,
         spikes=attachments.spikes,
+        spikes_status=empty_fields_dictionary["spikes"],
         pdf=attachments.pdf,
     )
     return template_render
+
+
+def get_empty_fields(json_report: dict):
+    empty_fields_dictionary = {}
+    empty_fields_dictionary["max_gap"] = check_if_empty(
+        json_report=json_report, name_of_field="max_gap")
+    empty_fields_dictionary["num_gaps"] = check_if_empty(
+        json_report=json_report, name_of_field="num_gaps")
+    empty_fields_dictionary["num_overlaps"] = check_if_empty(
+        json_report=json_report, name_of_field="num_overlaps")
+    empty_fields_dictionary["pct_below_nlnm"] = check_if_empty(
+        json_report=json_report, name_of_field="pct_below_nlnm")
+    empty_fields_dictionary["spikes"] = check_if_empty(
+        json_report=json_report, name_of_field="spikes")
+    return empty_fields_dictionary
+
+
+def check_if_empty(json_report: dict,
+                   name_of_field: str):
+    HNE_is_all_zero = check_if_all_values_are_zero(
+        list_to_check=json_report["channels"]["HNE"]["metrics"][name_of_field]["values"])
+    HNN_is_all_zero = check_if_all_values_are_zero(
+        list_to_check=json_report["channels"]["HNN"]["metrics"][name_of_field]["values"])
+    HNZ_is_all_zero = check_if_all_values_are_zero(
+        list_to_check=json_report["channels"]["HNZ"]["metrics"][name_of_field]["values"])
+
+    if HNE_is_all_zero and HNN_is_all_zero and HNZ_is_all_zero:
+        return "(Empty)"
+    else:
+        return ""
+
+
+def check_if_all_values_are_zero(list_to_check: list):
+    return all(value == 0 for value in list_to_check)

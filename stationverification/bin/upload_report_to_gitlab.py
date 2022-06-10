@@ -31,8 +31,6 @@ logging.basicConfig(
 
 
 def main():
-    # Add the defaults to the AWS config file
-    # Update the token to be alot longer
     user_input = upload_report_fetch_arguments()
 
     GitLabWikisObj = GitLabWikis(
@@ -48,5 +46,7 @@ def main():
         list_of_attachments=GitLabWikisObj.list_of_attachment_references)
     attachments = GitLabAttachmentsObj.get_attachments()
 
-    content = generate_markdown_template(attachments=attachments)
+    content = generate_markdown_template(
+        attachments=attachments,
+        json_report=GitLabWikisObj.validation_json)
     GitLabWikisObj._post_wiki_api(content=content)

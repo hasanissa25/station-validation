@@ -38,6 +38,7 @@ class GitLabWikis(dict):
         self.webserver = webserver
         self.title = title
         self.list_of_attachment_references: List[Any] = []
+        self.validation_json: dict = {}
 
     def _post_wiki_api(self,
                        content: Optional[str] = None,
@@ -122,6 +123,12 @@ class GitLabWikis(dict):
             map(lambda attachment: {"filename": attachment, "content":
                 self._get_api(attachment).content}, self.list_of_documents))
 
+        validation_doc = list(filter(
+            lambda document: "validation_results" in document["filename"],
+            list_of_document_references))
+        validation_json = json.loads(
+            validation_doc[0]["content"].decode('utf-8'))
+        self.validation_json = validation_json
         # Upload documents to Git Lab as attachments
         self._upload_attachments_wiki_api(
             attachments=list_of_document_references)
