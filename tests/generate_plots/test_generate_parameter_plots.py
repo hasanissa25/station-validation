@@ -10,13 +10,13 @@ from stationverification.utilities.generate_plots import plot_metrics,\
 def test_generate_parameter_plots(gather_stats_parameters):
     subprocess.getoutput(
         "rm -rf 'stationvalidation_output'")
-    stationMetricData_multiple_days_days = gather_stats(
+    stationMetricData_multiple_days = gather_stats(
         snlc=gather_stats_parameters.snlc,
         start=gather_stats_parameters.startdate,
         stop=gather_stats_parameters.enddate,
         metrics=gather_stats_parameters.metrics,
         ispaq_output_directory=gather_stats_parameters.ispaq_output_directory)
-    for channel in stationMetricData_multiple_days_days.get_channels(
+    for channel in stationMetricData_multiple_days.get_channels(
         network=gather_stats_parameters.network,
         station=gather_stats_parameters.station
     ):
@@ -25,7 +25,7 @@ def test_generate_parameter_plots(gather_stats_parameters):
                            station=gather_stats_parameters.station,
                            channel=channel,
                            location=None,
-                           stationMetricData=stationMetricData_multiple_days_days,
+                           stationMetricData=stationMetricData_multiple_days,
                            start=gather_stats_parameters.startdate,
                            stop=gather_stats_parameters.enddate)
         )
@@ -61,8 +61,6 @@ def test_generate_parameter_plots(gather_stats_parameters):
         "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.pct_above_nhnm.png")
     pct_below_nlnm_HNE_multiple_days = Path(
         "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.pct_below_nlnm.png")
-    percent_availability_HNE_multiple_days = Path(
-        "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.percent_availability.png")
     spikes_HNE_multiple_days = Path(
         "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.spikes.png")
     adc_count_HNN_multiple_days = Path(
@@ -77,8 +75,6 @@ def test_generate_parameter_plots(gather_stats_parameters):
         "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.pct_above_nhnm.png")
     pct_below_nlnm_HNN_multiple_days = Path(
         "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.pct_below_nlnm.png")
-    percent_availability_HNN_multiple_days = Path(
-        "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.percent_availability.png")
     spikes_HNN_multiple_days = Path(
         "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.spikes.png")
     adc_count_HNZ_multiple_days = Path(
@@ -93,8 +89,6 @@ def test_generate_parameter_plots(gather_stats_parameters):
         "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.pct_above_nhnm.png")
     pct_below_nlnm_HNZ_multiple_days = Path(
         "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.pct_below_nlnm.png")
-    percent_availability_HNZ_multiple_days = Path(
-        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.percent_availability.png")
     spikes_HNZ_multiple_days = Path(
         "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.spikes.png")
     adc_count_HNE_single_day = Path(
@@ -109,8 +103,6 @@ def test_generate_parameter_plots(gather_stats_parameters):
         "stationvalidation_output/QW.QCC02..HNE.2022-04-01.pct_above_nhnm.png")
     pct_below_nlnm_HNE_single_day = Path(
         "stationvalidation_output/QW.QCC02..HNE.2022-04-01.pct_below_nlnm.png")
-    percent_availability_HNE_single_day = Path(
-        "stationvalidation_output/QW.QCC02..HNE.2022-04-01.percent_availability.png")
     spikes_HNE_single_day = Path(
         "stationvalidation_output/QW.QCC02..HNE.2022-04-01.spikes.png")
     adc_count_HNN_single_day = Path(
@@ -125,8 +117,6 @@ def test_generate_parameter_plots(gather_stats_parameters):
         "stationvalidation_output/QW.QCC02..HNN.2022-04-01.pct_above_nhnm.png")
     pct_below_nlnm_HNN_single_day = Path(
         "stationvalidation_output/QW.QCC02..HNN.2022-04-01.pct_below_nlnm.png")
-    percent_availability_HNN_single_day = Path(
-        "stationvalidation_output/QW.QCC02..HNN.2022-04-01.percent_availability.png")
     spikes_HNN_single_day = Path(
         "stationvalidation_output/QW.QCC02..HNN.2022-04-01.spikes.png")
     adc_count_HNZ_single_day = Path(
@@ -141,8 +131,6 @@ def test_generate_parameter_plots(gather_stats_parameters):
         "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.pct_above_nhnm.png")
     pct_below_nlnm_HNZ_single_day = Path(
         "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.pct_below_nlnm.png")
-    percent_availability_HNZ_single_day = Path(
-        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.percent_availability.png")
     spikes_HNZ_single_day = Path(
         "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.spikes.png")
     if adc_count_HNE_multiple_days.exists() \
@@ -151,7 +139,6 @@ def test_generate_parameter_plots(gather_stats_parameters):
             and num_overlaps_HNE_multiple_days.exists()\
             and pct_above_nhnm_HNE_multiple_days.exists()\
             and pct_below_nlnm_HNE_multiple_days.exists()\
-            and percent_availability_HNE_multiple_days.exists()\
             and spikes_HNE_multiple_days.exists() \
             and adc_count_HNN_multiple_days.exists() \
             and max_gap_HNN_multiple_days.exists()\
@@ -159,7 +146,6 @@ def test_generate_parameter_plots(gather_stats_parameters):
             and num_overlaps_HNN_multiple_days.exists()\
             and pct_above_nhnm_HNN_multiple_days.exists()\
             and pct_below_nlnm_HNN_multiple_days.exists()\
-            and percent_availability_HNN_multiple_days.exists()\
             and spikes_HNN_multiple_days.exists()\
             and adc_count_HNZ_multiple_days.exists() \
             and max_gap_HNZ_multiple_days.exists()\
@@ -167,7 +153,6 @@ def test_generate_parameter_plots(gather_stats_parameters):
             and num_overlaps_HNZ_multiple_days.exists()\
             and pct_above_nhnm_HNZ_multiple_days.exists()\
             and pct_below_nlnm_HNZ_multiple_days.exists()\
-            and percent_availability_HNZ_multiple_days.exists()\
             and spikes_HNZ_multiple_days.exists()\
             and adc_count_HNE_single_day.exists() \
             and max_gap_HNE_single_day.exists()\
@@ -175,7 +160,6 @@ def test_generate_parameter_plots(gather_stats_parameters):
             and num_overlaps_HNE_single_day.exists()\
             and pct_above_nhnm_HNE_single_day.exists()\
             and pct_below_nlnm_HNE_single_day.exists()\
-            and percent_availability_HNE_single_day.exists()\
             and spikes_HNE_single_day.exists() \
             and adc_count_HNN_single_day.exists() \
             and max_gap_HNN_single_day.exists()\
@@ -183,7 +167,6 @@ def test_generate_parameter_plots(gather_stats_parameters):
             and num_overlaps_HNN_single_day.exists()\
             and pct_above_nhnm_HNN_single_day.exists()\
             and pct_below_nlnm_HNN_single_day.exists()\
-            and percent_availability_HNN_single_day.exists()\
             and spikes_HNN_single_day.exists()\
             and adc_count_HNZ_single_day.exists() \
             and max_gap_HNZ_single_day.exists()\
@@ -191,7 +174,6 @@ def test_generate_parameter_plots(gather_stats_parameters):
             and num_overlaps_HNZ_single_day.exists()\
             and pct_above_nhnm_HNZ_single_day.exists()\
             and pct_below_nlnm_HNZ_single_day.exists()\
-            and percent_availability_HNZ_single_day.exists()\
             and spikes_HNZ_single_day.exists():
         assert True
     else:
