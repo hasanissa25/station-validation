@@ -8,9 +8,14 @@ from stationverification import CONFIG, ISPAQ_PREF, STATION_URL
 class BaseAppSettings(BaseSettings):
     # Default Archives
     ISPAQ_LOCATION: str = "/home/ec2-user/ispaq/run_ispaq.py"
-    LATENCY_ARCHIVE: str = "/apollo/archive/latency/"
-    MINISEED_ARCHIVE: str = "/apollo/archive/miniseed/"
-    SOH_ARCHIVE: str = "/apollo/archive/soh/"
+
+    APOLLO_LATENCY_ARCHIVE: str = "/apollo/archive/latency/"
+    APOLLO_MINISEED_ARCHIVE: str = "/apollo/archive/miniseed/"
+    APOLLO_SOH_ARCHIVE: str = "/apollo/archive/soh/"
+
+    GURALP_LATENCY_ARCHIVE: str = "/guralp/archive/latency/"
+    GURALP_MINISEED_ARCHIVE: str = "/guralp/archive/miniseed/"
+    GURALP_SOH_ARCHIVE: str = "/guralp/archive/soh/"
 
     # Default Parameters
     STATION_CONFIG: Any = None

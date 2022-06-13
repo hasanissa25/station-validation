@@ -262,12 +262,19 @@ span',
     # Directories, with default paths
     ispaqloc = args.ispaqlocation if args.ispaqlocation is not None\
         else default_parameters.ISPAQ_LOCATION
+
     latencyFiles = args.latency if args.latency is not None\
-        else default_parameters.LATENCY_ARCHIVE
+        else default_parameters.APOLLO_LATENCY_ARCHIVE \
+        if typeofinstrument == "APOLLO" \
+        else default_parameters.GURALP_LATENCY_ARCHIVE
     miniseedarchive = args.miniseedarchive if args.miniseedarchive is not None\
-        else default_parameters.MINISEED_ARCHIVE
+        else default_parameters.APOLLO_MINISEED_ARCHIVE \
+        if typeofinstrument == "APOLLO" \
+        else default_parameters.GURALP_MINISEED_ARCHIVE
     soharchive = args.soh_archive if args.soh_archive is not None\
-        else default_parameters.SOH_ARCHIVE
+        else default_parameters.APOLLO_SOH_ARCHIVE \
+        if typeofinstrument == "APOLLO" \
+        else default_parameters.GURALP_SOH_ARCHIVE
     outputdir = args.outputdir if args.outputdir is not None\
         else default_parameters.OUTPUT_DIRECTORY
     s3directory = args.s3bucketpathtosaveto \
