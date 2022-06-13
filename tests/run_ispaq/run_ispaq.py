@@ -3,8 +3,9 @@ import subprocess
 from stationverification import XML_CONVERTER
 from obspy.io.xseed import Parser
 import os
-# station = "QW.QCC02.*.H??"
-station = "QW.BCV11..H??"
+# station = "QW.QCC02.00.H??"
+# station = "QW.BCV11..H??"
+station = "QW.QCN08.??.H??"
 
 # ISPAQ with merge
 ispaqloc = "../ISPAQ/ispaq/run_ispaq.py"
@@ -19,7 +20,7 @@ enddate = date(2022, 6, 2)
 metrics = "eew_test"
 
 station_url = "stationverification/data/QW.xml"
-miniseedarchive = "tests/data/apollo/archive/miniseed"
+miniseedarchive = "tests/data/guralp/archive/miniseed"
 pdfinterval = "aggregated"
 
 # Use IRIS's stationxml-seed-converter java porgram to convert stationxml

@@ -16,6 +16,8 @@ def add_soh_results_to_report(network: str,
                               typeofinstrument: str,
                               json_dict: dict,
                               thresholds: ConfigParser):
+    clock_locked_data = None
+    clock_offset_data = None
     try:
         clock_offset_sohfiles = sohmetrics.getsohfiles(network=network,
                                                        station=station,
@@ -79,7 +81,7 @@ def add_soh_results_to_report(network: str,
         logging.error(e)
         logging.warning(
             'GST data does not exist. Skipping clock locked metric.')
-    if clock_locked_data and clock_offset_data:
+    if clock_locked_data is not None and clock_offset_data is not None:
         plot_clock_offset(network=network,
                           station=station,
                           startdate=startdate,
