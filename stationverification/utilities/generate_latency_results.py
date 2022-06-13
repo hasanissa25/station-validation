@@ -51,16 +51,24 @@ def generate_latency_results(typeofinstrument: str,
             startdate=startdate,
             enddate=enddate)
     # Produce latency plots
-    logging.info("Calculating total availability..")
-    total_availability = calculate_total_availability_for_nanometrics(files)
+    total_availability = None
+    if typeofinstrument == "APOLLO":
+        logging.info("Calculating total availability..")
+        total_availability = calculate_total_availability_for_nanometrics(
+            files)
 
-    array_of_daily_latency_dataframes_max_latency_only = \
-        convert_array_of_latency_objects_into_array_of_dataframes(
-            array_of_latencies=array_of_daily_latency_objects_max_latency_only)
+        array_of_daily_latency_dataframes_max_latency_only = \
+            convert_array_of_latency_objects_into_array_of_dataframes(
+                array_of_latencies=array_of_daily_latency_objects_max_latency_only)  # noqa
 
-    array_of_daily_latency_dataframes_all_latencies = \
-        convert_array_of_latency_objects_into_array_of_dataframes(
-            array_of_latencies=array_of_daily_latency_objects_all_latencies)
+        array_of_daily_latency_dataframes_all_latencies = \
+            convert_array_of_latency_objects_into_array_of_dataframes(
+                array_of_latencies=array_of_daily_latency_objects_all_latencies)  # noqa
+    else:
+        array_of_daily_latency_dataframes_max_latency_only = \
+            array_of_daily_latency_objects_all_latencies
+        array_of_daily_latency_dataframes_all_latencies = \
+            array_of_daily_latency_objects_all_latencies
 
     logging.info("Generating latency log plots..")
 

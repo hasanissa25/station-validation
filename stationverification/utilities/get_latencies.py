@@ -1,9 +1,6 @@
 from typing import Any, List, Tuple
 from datetime import date
 
-
-from pandas.core.frame import DataFrame
-
 from stationverification.utilities.get_latencies_from_apollo \
     import get_latencies_from_apollo
 from stationverification.utilities.get_latencies_from_guralp import \
@@ -17,7 +14,7 @@ def get_latencies(
     station: str,
     startdate=date,
     enddate=date
-) -> Tuple[DataFrame, Any, Any]:
+) -> Tuple:
     '''
     A function that returns a dataframe that includes 'network', 'station', \
         'channel', 'data_latency' columns given CSV or  JSON files
@@ -55,11 +52,13 @@ def get_latencies(
 
     elif typeofinstrument == "GURALP":
         combined_latency_dataframe_for_all_days_dataframe, \
-            array_of_daily_latency_objects_max_latency_only =\
+            array_of_daily_latency_objects_all_latencies =\
             get_latencies_from_guralp(
                 files=files,
                 startdate=startdate,
                 enddate=enddate)
+        array_of_daily_latency_objects_max_latency_only = \
+            array_of_daily_latency_objects_all_latencies
     return combined_latency_dataframe_for_all_days_dataframe,\
         array_of_daily_latency_objects_max_latency_only,\
         array_of_daily_latency_objects_all_latencies

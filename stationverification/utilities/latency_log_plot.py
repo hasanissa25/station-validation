@@ -83,8 +83,9 @@ Data availability: {total_availability}%\n\
 Average latency:{round(latencies.data_latency.mean(),2)} seconds\n\
 Standard deviation: {round(np.std(latencies.data_latency),1)}'
     elif typeofinstrument == "GURALP":
-        note_content = f'Instrument: Fortimus\nActual number of data points: \
-{latencies.data_latency.size}'
+        note_content = f'Type of Instrument: Fortimus\n\
+Average latency:{round(latencies.data_latency.mean(),2)} seconds\n\
+Standard deviation: {round(np.std(latencies.data_latency),1)}'
 
     ax1.text(0.9, 0.8, note_content, style='italic', fontsize=12,
              transform=ax1.transAxes,
