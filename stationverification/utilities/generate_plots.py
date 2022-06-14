@@ -225,7 +225,7 @@ def num_overlaps_plot(
     if size_of_metric_data == size_of_x_axis:
         ax.bar(
             x_axis, stationMetricData.get_values(
-                'num_overlaps', network, station, channel))
+                'num_overlaps', network, station, channel), 0.1)
         # Function for formatting the x values to actually be dates
 
         def timeTicks(x, pos):
@@ -295,7 +295,7 @@ def num_gaps_plot(
     if size_of_metric_data == size_of_x_axis:
         ax.bar(
             x_axis, stationMetricData.get_values(
-                'num_gaps', network, station, channel))
+                'num_gaps', network, station, channel), 0.1)
 
         # Function for formatting the x values to actually be dates
 
@@ -362,7 +362,7 @@ def max_gap_plot(
     if size_of_metric_data == size_of_x_axis:
         ax.bar(
             x_axis, stationMetricData.get_values(
-                'max_gap', network, station, channel))
+                'max_gap', network, station, channel), 0.1)
         # Function for formatting the x values to actually be dates
 
         def timeTicks(x, pos):
@@ -428,7 +428,7 @@ def spikes_plot(
     if size_of_metric_data == size_of_x_axis:
         ax.bar(
             x_axis, stationMetricData.get_values(
-                'spikes', network, station, channel))
+                'spikes', network, station, channel), 0.1)
 
         # legend = plt.legend(fancybox=True, framealpha=0.2,
         #                     loc='upper right', fontsize="9")
@@ -497,7 +497,7 @@ def pct_above_nhnm_plot(
     if size_of_metric_data == size_of_x_axis:
         ax.bar(
             x_axis, stationMetricData.get_values(
-                'pct_above_nhnm', network, station, channel))
+                'pct_above_nhnm', network, station, channel), 0.1)
 
         # legend = plt.legend(fancybox=True, framealpha=0.2,
         #                     loc='upper right', fontsize="9")
@@ -569,7 +569,7 @@ def pct_below_nlnm_plot(
     if size_of_metric_data == size_of_x_axis:
         ax.bar(
             x_axis, stationMetricData.get_values(
-                'pct_below_nlnm', network, station, channel))
+                'pct_below_nlnm', network, station, channel), 0.1)
 
         # Function for formatting the x values to actually be dates
 
