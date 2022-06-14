@@ -7,6 +7,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.ticker as plticker
+import matplotlib.dates as mdates
 
 
 def plot_timing_quality(network: str,
@@ -42,6 +43,8 @@ def plot_timing_quality(network: str,
         # Format the x axis values to be dates and rotate them 90 degrees
         formatter = matplotlib.ticker.FuncFormatter(timeTicks)
         ax.xaxis.set_major_formatter(formatter)
+        locator = mdates.DayLocator()
+        ax.xaxis.set_major_locator(locator)
         plt.xticks(rotation=90)
         filename = ""
         if startdate == enddate - timedelta(days=1):

@@ -73,11 +73,6 @@ def generate_markdown_template(attachments: Attachments,
  {{ element["link"] }}
 {% endfor %}
 </details>
-<details><summary>Percent Availability</summary>
-{% for element in percent_availability -%}
- {{ element["link"] }}
-{% endfor %}
-</details>
 <details><summary>Percent above New High Noise Model</summary>
 {% for element in pct_above_nhnm -%}
  {{ element["link"] }}
@@ -108,7 +103,6 @@ def generate_markdown_template(attachments: Attachments,
         pct_above_nhnm=attachments.pct_above_nhnm,
         pct_below_nlnm=attachments.pct_below_nlnm,
         pct_below_nlnm_status=empty_fields_dictionary["pct_below_nlnm"],
-        percent_availability=attachments.percent_availability,
         spikes=attachments.spikes,
         spikes_status=empty_fields_dictionary["spikes"],
         pdf=attachments.pdf,
