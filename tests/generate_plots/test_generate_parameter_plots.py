@@ -178,5 +178,5 @@ def test_generate_parameter_plots(gather_stats_parameters):
         assert True
     else:
         assert False
-    subprocess.getoutput(
-        "rm -rf 'stationvalidation_output'")
+    # subprocess.getoutput(
+    #     "rm -rf 'stationvalidation_output'")

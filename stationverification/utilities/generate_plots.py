@@ -41,6 +41,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import matplotlib.ticker as plticker
+import matplotlib.dates as mdates
 
 
 from .generate_report import StationMetricData
@@ -166,6 +167,8 @@ def ADC_plot(
         # Format the x axis values to be dates and rotate them 90 degrees
         formatter = matplotlib.ticker.FuncFormatter(timeTicks)
         ax.xaxis.set_major_formatter(formatter)
+        locator = mdates.DayLocator()
+        ax.xaxis.set_major_locator(locator)
         plt.xticks(rotation=90)
         plt.title(
             f'{snlc} - \
@@ -232,6 +235,8 @@ def num_overlaps_plot(
         # Format the x axis values to be dates and rotate them 90 degrees
         formatter = matplotlib.ticker.FuncFormatter(timeTicks)
         ax.xaxis.set_major_formatter(formatter)
+        locator = mdates.DayLocator()
+        ax.xaxis.set_major_locator(locator)
         plt.xticks(rotation=90)
 
         ax.set_title(f'{snlc} - Number of overlaps')
@@ -302,7 +307,8 @@ def num_gaps_plot(
         formatter = matplotlib.ticker.FuncFormatter(timeTicks)
         ax.xaxis.set_major_formatter(formatter)
         plt.xticks(rotation=90)
-
+        locator = mdates.DayLocator()
+        ax.xaxis.set_major_locator(locator)
         ax.set_title(f'{snlc} - Number of Gaps')
         plt.ylabel('Gaps')
 
@@ -366,6 +372,8 @@ def max_gap_plot(
         # Format the x axis values to be dates and rotate them 90 degrees
         formatter = matplotlib.ticker.FuncFormatter(timeTicks)
         ax.xaxis.set_major_formatter(formatter)
+        locator = mdates.DayLocator()
+        ax.xaxis.set_major_locator(locator)
         plt.xticks(rotation=90)
 
         ax.set_title(f'{snlc} - Max Gaps')
@@ -433,6 +441,8 @@ def spikes_plot(
         # Format the x axis values to be dates and rotate them 90 degrees
         formatter = matplotlib.ticker.FuncFormatter(timeTicks)
         ax.xaxis.set_major_formatter(formatter)
+        locator = mdates.DayLocator()
+        ax.xaxis.set_major_locator(locator)
         plt.xticks(rotation=90)
 
         ax.set_title(f'{snlc} - Spikes')
@@ -454,75 +464,6 @@ def spikes_plot(
                     dpi=300, bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
     plt.close()
-
-
-# def percent_availability_plot(
-#     plotParameters: PlotParameters
-# ):
-#     network = plotParameters.network
-#     station = plotParameters.station
-#     location = plotParameters.location
-#     channel = plotParameters.channel
-#     stationMetricData = plotParameters.stationMetricData
-#     start = plotParameters.start
-#     stop = plotParameters.stop
-#     if location is None:
-#         snlc = f'{network}.{station}..{channel}'
-#     else:
-#         snlc = f'{network}.{station}.{location}.{channel}'
-#     # Generatre x-axis values as days since startdate
-#     difference = stop - start
-#     x_axis = np.arange(0, difference.days, 1)
-
-#     # Create plot
-#     fig = plt.figure()
-#     ax = fig.add_subplot(111)
-
-#     size_of_x_axis = x_axis.size
-#     size_of_metric_data = len(stationMetricData.get_values(
-#         'percent_availability', network, station, channel))
-#     if size_of_metric_data == size_of_x_axis:
-#         ax.bar(x_axis, [100], color="red")
-#         ax.bar(
-#             x_axis, stationMetricData.get_values(
-#                 'percent_availability', network, station, channel))
-
-#         # Function for formatting the x values to actually be dates
-
-#         def timeTicks(x, pos):
-#             date = start + timedelta(days=x)
-#             return str(date.isoformat())
-
-#         # Format the x axis values to be dates and rotate them 90 degrees
-#         formatter = matplotlib.ticker.FuncFormatter(timeTicks)
-#         ax.xaxis.set_major_formatter(formatter)
-#         plt.xticks(rotation=90)
-
-#         ax.set_title(f'{snlc} - Percent Availability')
-#         plt.ylabel('Availability')
-#         ax.yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
-#         ax.set_ylim(ymin=90, ymax=100)
-#         # this locator puts ticks at regular intervals in setps of "base"
-#         loc = plticker.MultipleLocator(base=2)
-#         ax.yaxis.set_major_locator(loc)
-#         # Add a grid to the plot to make the symmetry more obvious
-#         ax.set_axisbelow(True)
-#         plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
-
-#         # Save the plot to file and then close it so the next channel's \
-# metrics
-#         # aren't plotted on the same plot
-#         if start == stop - timedelta(days=1):
-#             plot_filename = f'{snlc}.{start}\
-# .percent_availability'
-#         else:
-#             plot_filename = f'{snlc}.{start}_\
-# {(stop + timedelta(days=-1))}.percent_availability'
-#         # Write the plot to the output directory
-#         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
-#                     dpi=300, bbox_inches='tight')
-#         logging.info(f'{plot_filename} created.')
-#     plt.close()
 
 
 def pct_above_nhnm_plot(
@@ -569,6 +510,8 @@ def pct_above_nhnm_plot(
         # Format the x axis values to be dates and rotate them 90 degrees
         formatter = matplotlib.ticker.FuncFormatter(timeTicks)
         ax.xaxis.set_major_formatter(formatter)
+        locator = mdates.DayLocator()
+        ax.xaxis.set_major_locator(locator)
         plt.xticks(rotation=90)
 
         ax.set_title(
@@ -637,6 +580,8 @@ def pct_below_nlnm_plot(
         # Format the x axis values to be dates and rotate them 90 degrees
         formatter = matplotlib.ticker.FuncFormatter(timeTicks)
         ax.xaxis.set_major_formatter(formatter)
+        locator = mdates.DayLocator()
+        ax.xaxis.set_major_locator(locator)
         plt.xticks(rotation=90)
 
         ax.set_title(
