@@ -62,7 +62,7 @@ def plot_clock_offset(network: str,
                 axes[0].xaxis.set_major_formatter(formatter)
                 locator = mdates.HourLocator()
                 axes[0].xaxis.set_major_locator(locator)
-                axes[0].tick_params(axis='x', labelrotation=45)
+                axes[0].tick_params(axis='x', labelrotation=90)
                 axes[0].set_ylim(ymin=-2, ymax=2)
 
                 # Add a grid to the plot to make the symmetry more obvious
