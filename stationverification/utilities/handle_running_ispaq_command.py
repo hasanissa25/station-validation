@@ -1,8 +1,7 @@
 import subprocess
 import os
 import tempfile
-import requests
-import logging
+# import requests
 
 from datetime import date
 from obspy.io.xseed import Parser
@@ -62,10 +61,11 @@ def run_ispaq_command_with_stationXML(
         location: str = None,
         resp_dir: str = None):
 
-    logging.info(
-        f"run_ispaq_command_with_stationXML \nstation_url:{station_url}")
-    request = requests.get(station_url, allow_redirects=True)
-    open('stationverification/data/QW.xml', 'wb').write(request.content)
+    # TODO: Uncomment this code when the location code is added \
+    # to the miniseed files
+
+    # request = requests.get(station_url, allow_redirects=True)
+    # open('stationverification/data/QW.xml', 'wb').write(request.content)
 
     station_url_path = "stationverification/data/QW.xml"
 

@@ -14,15 +14,12 @@ open('stationverification/data/QW.xml', 'wb').write(request.content)
 # ISPAQ with merge
 ispaqloc = "../ISPAQ/ispaq/run_ispaq.py"
 
-# ISPAQ withOUT merge
-# ispaqloc = "../ISPAQ-Original/ispaq/run_ispaq.py"
-
 pfile = 'stationverification/data/eew_preferences.txt'
 
 # Apollo
-# station = "QW.QCC02.00.H??"
-# startdate = date(2022, 4, 1)
-# enddate = date(2022, 4, 2)
+# station = "QW.BCV11.*.H??"
+# startdate = date(2022, 6, 1)
+# enddate = date(2022, 6, 2)
 # miniseedarchive = "tests/data/apolloLocation/archive/miniseed"
 
 # Guralp
