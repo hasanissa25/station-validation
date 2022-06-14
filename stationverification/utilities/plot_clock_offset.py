@@ -90,7 +90,7 @@ def plot_clock_offset(network: str,
                     markersize=1, markevery=60, c="green")
                 # Add a y-label to the axes.
                 axes[1].set_ylabel('Clock Status')
-                axes[1].tick_params(axis='x', labelrotation=45)
+                axes[1].tick_params(axis='x', labelrotation=90)
 
             # labelpad=20
                 axes[1].set_ylim(ymin=-1, ymax=3)
