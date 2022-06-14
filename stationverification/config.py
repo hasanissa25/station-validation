@@ -2,7 +2,7 @@
 from functools import lru_cache
 from typing import Any
 from pydantic import BaseSettings
-from stationverification import CONFIG, ISPAQ_PREF, STATION_URL
+from stationverification import CONFIG, ISPAQ_PREF
 
 
 class BaseAppSettings(BaseSettings):
@@ -26,9 +26,9 @@ class BaseAppSettings(BaseSettings):
     OUTPUT_DIRECTORY: str = "/validation"
 
     # Default Config Files
+    STATION_URL: str = "http://fdsn.seismo.nrcan.gc.ca/fdsnws/station/1/query?network=QW&level=channel&nodata=404"
     PREFERENCE_FILE: str = ISPAQ_PREF
     THRESHOLDS: str = CONFIG
-    STATION_URL: str = STATION_URL
 
     # GitLab
     GITLAB_URL: str = "http://gitlab.seismo.nrcan.gc.ca"

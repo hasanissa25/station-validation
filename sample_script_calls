@@ -6,6 +6,7 @@ Parameters:
 -T: Type of instrument, Example: APOLLO or GURALP
 -N: The network code, Example: QW
 -S: The station code, Example: QCC01
+-L: The location code, Example: 00
 -d: Start date, YYYY-M-D; Example: 2022-3-9
 -e: End date, EXCLUSIVE YYYY-M-D; for a one day validation period, the end date should be startdate + 1. Example: 2022-3-15
 -s: Station xml location, Example: '/home/ec2-user/station-validation/stationverification/data/QW.xml'

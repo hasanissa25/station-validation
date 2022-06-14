@@ -3,6 +3,13 @@ import subprocess
 from stationverification import XML_CONVERTER
 from obspy.io.xseed import Parser
 import os
+import requests
+
+
+url = 'http://fdsn.seismo.nrcan.gc.ca/fdsnws/station/1/query?network=QW&level=channel&nodata=404'  # noqa
+request = requests.get(url, allow_redirects=True)
+
+open('stationverification/data/QW.xml', 'wb').write(request.content)
 
 # ISPAQ with merge
 ispaqloc = "../ISPAQ/ispaq/run_ispaq.py"

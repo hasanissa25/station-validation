@@ -1,6 +1,8 @@
 import subprocess
 import os
 import tempfile
+import requests
+import logging
 
 from datetime import date
 from obspy.io.xseed import Parser
@@ -34,7 +36,7 @@ def handle_running_ispaq_command(
                                           network=network,
                                           station=station,
                                           location=location,
-                                          station_url=station_url)
+                                          station_url=station_url)  # type: ignore # noqa
     else:
         run_ispaq_command_with_configfile(ispaqloc=ispaqloc,
                                           metrics=metrics,
@@ -54,18 +56,25 @@ def run_ispaq_command_with_stationXML(
         pfile: str,
         pdfinterval: str,
         miniseedarchive: str,
+        station_url: str,
         network: str = None,
         station: str = None,
         location: str = None,
-        station_url: str = None,
         resp_dir: str = None):
+
+    logging.info(
+        f"run_ispaq_command_with_stationXML \nstation_url:{station_url}")
+    request = requests.get(station_url, allow_redirects=True)
+    open('stationverification/data/QW.xml', 'wb').write(request.content)
+
+    station_url_path = "stationverification/data/QW.xml"
 
     if location is None:
         snlc = f'{network}.{station}.*.H**'
     else:
         snlc = f'{network}.{station}.{location}.H**'
     subprocess.getoutput(f'java -jar {XML_CONVERTER} --input \
-    {station_url} --output stationverification/data/stationXML.dataless')
+    {station_url_path} --output stationverification/data/stationXML.dataless')
     pars = Parser("stationverification/data/stationXML.dataless")
     if not os.path.isdir("stationverification/data/resp_files"):
         os.mkdir('stationverification/data/resp_files')
@@ -78,7 +87,7 @@ def run_ispaq_command_with_stationXML(
         --starttime={startdate} --endtime={enddate} \
         -S {snlc} -P {pfile} \
             --pdf_interval {pdfinterval} \
-            --station_url {station_url} \
+            --station_url {station_url_path} \
             --dataselect_url {miniseedarchive}\
             --resp_dir {resp_dir}'
     print("ISPAQ:", cmd)
