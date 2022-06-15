@@ -116,12 +116,14 @@ def ADC_plot(
         snlc = f'{network}.{station}..{channel}'
     else:
         snlc = f'{network}.{station}.{location}.{channel}'
+
     # Generatre x-axis values as days since startdate
     difference = stop - start
-
     x_axis = np.arange(0, difference.days, 1)
 
-    ax = plt.gca()
+    # Create plot
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
 
     # Plot the min, max and median normalized to the mean. This makes it
     # easier to see how symmetrical it is.
@@ -158,8 +160,8 @@ def ADC_plot(
         legend = plt.legend(fancybox=True, framealpha=0.2,
                             bbox_to_anchor=(1.4, 1.0),
                             loc='upper right', fontsize="9")
-        # Function for formatting the x values to actually be dates
 
+        # Function for formatting the x values to actually be dates
         def timeTicks(x, pos):
             date = start + timedelta(days=x)
             return str(date.isoformat())
@@ -215,14 +217,12 @@ def num_overlaps_plot(
     # Create plot
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    # this locator puts ticks at regular intervals in setps of "base"
-    # loc = plticker.MultipleLocator(base=1.0)
-    # ax.yaxis.set_major_locator(loc)
 
     size_of_x_axis = x_axis.size
     size_of_metric_data = len(stationMetricData.get_values(
         'num_overlaps', network, station, channel))
     if size_of_metric_data == size_of_x_axis:
+        logging.info(f"num_overlaps_plot>x_axis {x_axis}")
         ax.bar(
             x_axis, stationMetricData.get_values(
                 'num_overlaps', network, station, channel), 0.1)
@@ -497,7 +497,7 @@ def pct_above_nhnm_plot(
     if size_of_metric_data == size_of_x_axis:
         ax.bar(
             x_axis, stationMetricData.get_values(
-                'pct_above_nhnm', network, station, channel), 0.1)
+                'pct_above_nhnm', network, station, channel), width=0.1)
 
         # legend = plt.legend(fancybox=True, framealpha=0.2,
         #                     loc='upper right', fontsize="9")
