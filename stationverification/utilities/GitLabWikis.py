@@ -126,9 +126,10 @@ class GitLabWikis(dict):
         validation_doc = list(filter(
             lambda document: "validation_results" in document["filename"],
             list_of_document_references))
-        validation_json = json.loads(
-            validation_doc[0]["content"].decode('utf-8'))
-        self.validation_json = validation_json
+        if len(validation_doc) != 0:
+            validation_json = json.loads(
+                validation_doc[0]["content"].decode('utf-8'))
+            self.validation_json = validation_json
         # Upload documents to Git Lab as attachments
         self._upload_attachments_wiki_api(
             attachments=list_of_document_references)

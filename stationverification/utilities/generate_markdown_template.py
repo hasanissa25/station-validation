@@ -3,9 +3,9 @@ from jinja2 import Template
 from stationverification.utilities.GitLabAttachments import Attachments
 
 
-def generate_markdown_template(attachments: Attachments,
-                               json_report: dict) -> str:
-    template = Template('''
+def generate_markdown_template_for_full_validation(attachments: Attachments,
+                                                   json_report: dict) -> str:
+    full_validation_template = Template('''
 <details><summary>JSON Report</summary>
 {% for element in validation_results -%}
     {{ element["link"] }}
@@ -85,7 +85,7 @@ def generate_markdown_template(attachments: Attachments,
 </details>
 ''')
     empty_fields_dictionary = get_empty_fields(json_report)
-    template_render = template.render(
+    template_render = full_validation_template.render(
         failed_latencies=attachments.failed_latencies,
         latency_line_plot=attachments.latency_line_plot,
         latency_log_plot=attachments.latency_log_plot,
@@ -142,3 +142,30 @@ def check_if_empty(json_report: dict,
 
 def check_if_all_values_are_zero(list_to_check: list):
     return all(value == 0 for value in list_to_check)
+
+
+def generate_markdown_template_for_latency_validation(attachments: Attachments)\
+        -> str:
+    latency_validation_template = Template('''
+<details><summary>Latency Log Plot</summary>
+{% for element in latency_log_plot -%}
+ {{ element["link"] }}
+{% endfor %}
+</details>
+<details><summary>Latency Line Plots</summary>
+{% for element in latency_line_plot -%}
+ {{ element["link"] }}
+{% endfor %}
+</details>
+<details><summary>Failed Latencies</summary>
+{% for element in failed_latencies -%}
+ {{ element["link"] }}
+{% endfor %}
+</details>
+''')
+    template_render = latency_validation_template.render(
+        failed_latencies=attachments.failed_latencies,
+        latency_line_plot=attachments.latency_line_plot,
+        latency_log_plot=attachments.latency_log_plot,
+    )
+    return template_render

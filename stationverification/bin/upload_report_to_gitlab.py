@@ -19,7 +19,8 @@ from stationverification.utilities.GitLabAttachments \
 from stationverification.utilities.GitLabWikis \
     import GitLabWikis
 from stationverification.utilities.generate_markdown_template \
-    import generate_markdown_template
+    import generate_markdown_template_for_full_validation, \
+    generate_markdown_template_for_latency_validation
 from stationverification.utilities.upload_report_fetch_arguments\
     import upload_report_fetch_arguments
 import logging
@@ -45,8 +46,11 @@ def main():
     GitLabAttachmentsObj = GitLabAttachments(
         list_of_attachments=GitLabWikisObj.list_of_attachment_references)
     attachments = GitLabAttachmentsObj.get_attachments()
-
-    content = generate_markdown_template(
-        attachments=attachments,
-        json_report=GitLabWikisObj.validation_json)
+    if not GitLabWikisObj.validation_json:
+        content = generate_markdown_template_for_latency_validation(
+            attachments=attachments)
+    else:
+        content = generate_markdown_template_for_full_validation(
+            attachments=attachments,
+            json_report=GitLabWikisObj.validation_json)
     GitLabWikisObj._post_wiki_api(content=content)
