@@ -47,7 +47,8 @@ def get_latencies_from_apollo(files: list,
                 # and channel values, id originally looks like the following :
                 # "QW.QCC01.HNN"
                 logging.info("get_latencies_from_apollo> About to call split")
-                current_network, current_station, current_channel = \
+                current_network, current_station, current_location,\
+                    current_channel = \
                     current_NSC['id'].split('.')
                 logging.info("get_latencies_from_apollo> After calling split")
 
