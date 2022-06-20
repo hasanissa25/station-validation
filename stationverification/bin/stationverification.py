@@ -121,8 +121,10 @@ def main():
             user_inputs.stationconf,
         ))
     process_two.start()
+    latency_results = queue.get()
+    logging.info(f'HASAN: Latency results \n{latency_results}')
     combined_latency_dataframe_for_all_days_dataframe,\
-        array_of_daily_latency_dataframes_all_latencies = queue.get()
+        array_of_daily_latency_dataframes_all_latencies = latency_results
     process_one.join()
     logging.info("Finished Process 1: Generating Latency results")
     process_two.join()

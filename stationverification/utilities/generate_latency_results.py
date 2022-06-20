@@ -104,6 +104,5 @@ def generate_latency_results(typeofinstrument: str,
             array_of_daily_latency_dataframes_all_latencies]
         if queue:
             queue.put(tuple_of_data_to_return)
-        return combined_latency_dataframe_for_all_days_dataframe
     except FileNotFoundError as e:
         logging.error(e)
