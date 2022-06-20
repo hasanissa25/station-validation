@@ -1,6 +1,6 @@
 from typing import Any, List, Tuple
 from datetime import date
-
+import logging
 from stationverification.utilities.get_latencies_from_apollo \
     import get_latencies_from_apollo
 from stationverification.utilities.get_latencies_from_guralp import \
@@ -42,6 +42,7 @@ def get_latencies(
     array_of_daily_latency_objects_all_latencies: List[Any] = []
 
     if typeofinstrument == "APOLLO":
+        logging.info('get_latencies>Type=APOLLO')
         combined_latency_dataframe_for_all_days_dataframe,\
             array_of_daily_latency_objects_max_latency_only, \
             array_of_daily_latency_objects_all_latencies =\
@@ -49,8 +50,16 @@ def get_latencies(
                 files=files,
                 network=network,
                 station=station)
+        logging.info(
+            f'Get_latencies_from_apollo \n Combined latency dataframe: \
+            {combined_latency_dataframe_for_all_days_dataframe}\n\
+                array_of_daily_latency_objects_max_latency_only:\
+                    {array_of_daily_latency_objects_max_latency_only}\n\
+                    array_of_daily_latency_objects_all_latencies:\
+                         {array_of_daily_latency_objects_all_latencies}')
 
     elif typeofinstrument == "GURALP":
+        logging.info('get_latencies>Type=GURALP')
         combined_latency_dataframe_for_all_days_dataframe, \
             array_of_daily_latency_objects_all_latencies =\
             get_latencies_from_guralp(
