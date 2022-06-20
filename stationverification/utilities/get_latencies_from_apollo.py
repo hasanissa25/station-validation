@@ -46,9 +46,11 @@ def get_latencies_from_apollo(files: list,
                 # splitting the id column and fetching the network, station
                 # and channel values, id originally looks like the following :
                 # "QW.QCC01.HNN"
+                logging.info("get_latencies_from_apollo> About to call split")
                 current_network, current_station, current_channel = \
-                    current_NSC['id'].split(
-                        '.')
+                    current_NSC['id'].split('.')
+                logging.info("get_latencies_from_apollo> After calling split")
+
                 # looping over the intervals array, which contains all the
                 # latency objects a specific NSC
                 for current_latency in current_NSC['intervals']:
