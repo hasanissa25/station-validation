@@ -222,7 +222,6 @@ def num_overlaps_plot(
     size_of_metric_data = len(stationMetricData.get_values(
         'num_overlaps', network, station, channel))
     if size_of_metric_data == size_of_x_axis:
-        logging.info(f"num_overlaps_plot>x_axis {x_axis}")
         ax.bar(
             x_axis, stationMetricData.get_values(
                 'num_overlaps', network, station, channel), 0.1)

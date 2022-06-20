@@ -122,7 +122,6 @@ def main():
         ))
     process_two.start()
     latency_results = queue.get()
-    logging.info(f'HASAN: Latency results \n{latency_results}')
     combined_latency_dataframe_for_all_days_dataframe,\
         array_of_daily_latency_dataframes_all_latencies = latency_results
     process_one.join()
