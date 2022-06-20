@@ -3,8 +3,8 @@ import os
 
 from datetime import date, timedelta
 
-from stationverification.utilities.change_name_of_ISPAQ_PDFs_files \
-    import change_name_of_ISPAQ_PDFs_files
+from stationverification.utilities.change_name_of_ISPAQ_files \
+    import change_name_of_ISPAQ_files
 
 
 def cleanup_directory(
@@ -47,11 +47,14 @@ def cleanup_directory(
         subprocess.getoutput(
             f"mkdir -p '{validation_output_directory}'")
 
-    change_name_of_ISPAQ_PDFs_files(network=network,
-                                    station=station)
+    change_name_of_ISPAQ_files(network=network,
+                               station=station)
     pdffiles = f'ispaq_outputs/PDFs/{network}/{station}/*.png'
+    psdfiles = f'ispaq_outputs/PSDs/{network}/{station}/*.csv'
     subprocess.getoutput(
         f"mv {pdffiles} {validation_output_directory}/")
+    subprocess.getoutput(
+        f"mv {psdfiles} {validation_output_directory}/")
     subprocess.getoutput(
         f"mv ./stationvalidation_output/* {validation_output_directory}")  # noqa
 
