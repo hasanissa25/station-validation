@@ -61,9 +61,6 @@ def run_ispaq_command_with_stationXML(
         location: str = None,
         resp_dir: str = None):
 
-    # TODO: Uncomment this code when the location code is added \
-    # to the miniseed files
-
     request = requests.get(station_url, allow_redirects=True)
     open('stationverification/data/QW.xml', 'wb').write(request.content)
 

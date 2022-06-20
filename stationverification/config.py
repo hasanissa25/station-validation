@@ -27,9 +27,7 @@ class BaseAppSettings(BaseSettings):
 
     # Default Config Files
 
-    # TODO: Change station url to the fdsn when location code is added to nanometrics
-    # STATION_URL: str = "http://fdsn.seismo.nrcan.gc.ca/fdsnws/station/1/query?network=QW&level=channel&nodata=404"
-    STATION_URL: str = "stationverification/data/QW.xml"
+    STATION_URL: str = "http://fdsn.seismo.nrcan.gc.ca/fdsnws/station/1/query?network=QW&level=channel&nodata=404"
 
     PREFERENCE_FILE: str = ISPAQ_PREF
     THRESHOLDS: str = CONFIG
