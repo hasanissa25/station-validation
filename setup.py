@@ -45,6 +45,8 @@ setup(
                 stationverification.bin.stationverification_latency:main',
             'uploadreport = \
                 stationverification.bin.upload_report_to_gitlab:main',
+            'fetchStationXml = \
+                stationverification.bin.fetch_station_xml:main',
             # These will not work with the current version of
             # stationverification, they will need refactoring
             # 'dailyverification = \

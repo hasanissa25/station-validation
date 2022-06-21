@@ -27,7 +27,7 @@ class BaseAppSettings(BaseSettings):
 
     # Default Config Files
 
-    STATION_URL: str = "http://fdsn.seismo.nrcan.gc.ca/fdsnws/station/1/query?network=QW&level=channel&nodata=404"
+    STATION_URL: str = "stationverification/data/QW.xml"
 
     PREFERENCE_FILE: str = ISPAQ_PREF
     THRESHOLDS: str = CONFIG

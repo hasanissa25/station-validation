@@ -1,7 +1,6 @@
 import subprocess
 import os
 import tempfile
-import requests
 
 from datetime import date
 from obspy.io.xseed import Parser
@@ -60,9 +59,6 @@ def run_ispaq_command_with_stationXML(
         station: str = None,
         location: str = None,
         resp_dir: str = None):
-
-    request = requests.get(station_url, allow_redirects=True)
-    open('stationverification/data/QW.xml', 'wb').write(request.content)
 
     station_url_path = "stationverification/data/QW.xml"
 
