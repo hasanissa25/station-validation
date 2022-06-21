@@ -1,7 +1,7 @@
 # flake8:noqa
 import subprocess
 from pathlib import Path
-from stationverification.utilities.generate_report import gather_stats, report, StationMetricData
+from stationverification.utilities.generate_report import gather_stats, report
 from stationverification.utilities.generate_latency_results\
     import generate_latency_results
 
