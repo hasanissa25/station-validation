@@ -49,8 +49,11 @@ def calculate_total_availability_for_nanometrics(files: list) -> float:
             average_percent_availability_for_current_channel = sum_of_current_channels_percent_availability / \
                 number_of_latency_objects_in_current_channel
             sum_of_percent_availability_for_all_channels += average_percent_availability_for_current_channel
-        average_percent_availability_for_file = sum_of_percent_availability_for_all_channels / \
-            number_of_channels
+        if number_of_channels > 0:
+            average_percent_availability_for_file = sum_of_percent_availability_for_all_channels / \
+                number_of_channels
+        else:
+            average_percent_availability_for_file = 0
         total_sum_of_percent_availability_for_all_files += average_percent_availability_for_file
     final_average_percent_availability_for_all_files = math.floor(
         total_sum_of_percent_availability_for_all_files
