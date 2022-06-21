@@ -376,7 +376,7 @@ def max_gap_plot(
         plt.xticks(rotation=90)
 
         ax.set_title(f'{snlc} - Max Gaps')
-        plt.ylabel('Gap size')
+        plt.ylabel('Gap size (Seconds)')
 
         # Add a grid to the plot to make the symmetry more obvious
         ax.set_axisbelow(True)

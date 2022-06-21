@@ -20,7 +20,7 @@ Parameters:
 Sample Calls:
 
 stationverification script:
-    time nohup stationverification -T APOLLO -N QW -S BCV11 -d 2022-6-1 -e 2022-6-2  >> BCV11_log.out &
+    time nohup stationverification -T APOLLO -N QW -S BCL25 -d 2022-6-19 -e 2022-6-20  >> logs/BCL25_log.out &
 
 latency script:
     time nohup stationverificationlatency -T GURALP -N QW -S QCN08 -d 2022-6-5 -e 2022-6-15  >> QCN08_log.out &
@@ -37,3 +37,5 @@ latency script, and overwritting default archive directories:
 Run upload_report_to_gitlab script (Within CHIS Network):
     uploadreport -t "QW BCV11 2022-06-01" -w "https://3.96.234.48:18010/json/QW/BCV11/2022-06-01/"
 
+Run fetch_station_xml script (Within CHIS Network):
+    fetchStationXml
