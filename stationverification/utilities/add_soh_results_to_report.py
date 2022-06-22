@@ -88,7 +88,8 @@ def add_soh_results_to_report(network: str,
                           enddate=enddate,
                           results=(clock_locked_data, clock_offset_data),
                           threshold=thresholds.getfloat(
-                              'thresholds', 'clock_offset', fallback=1)
+                              'thresholds', 'clock_offset', fallback=1),
+                          location=location
                           )
 
     try:
@@ -108,6 +109,7 @@ def add_soh_results_to_report(network: str,
                 'thresholds', 'timing_quality', fallback=70.0),
             startdate=startdate, enddate=enddate, network=network,
             station=station,
+            location=location
 
         )
 

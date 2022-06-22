@@ -100,6 +100,7 @@ def main():
                                                .getfloat('thresholds',
                                                          'data_timeliness',
                                                          fallback=3),
+                                               user_inputs.location,
                                                queue,
                                                ))
     process_one.start()
@@ -170,6 +171,7 @@ def main():
         .getfloat('thresholds',
                   'data_timeliness',
                   fallback=3),
+        location=user_inputs.location
     )
     report(
         combined_latency_dataframe_for_all_days_dataframe=combined_latency_dataframe_for_all_days_dataframe,  # noqa

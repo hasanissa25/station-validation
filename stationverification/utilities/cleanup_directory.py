@@ -79,7 +79,7 @@ def cleanup_directory_after_latency_call(startdate: date,
 {startdate}'
     else:
         validation_output_directory = f'{outputdir}/{network}/{station}/\
-{startdate}-{enddate}'
+{startdate}-{enddate - timedelta(days=1)}'
     # Create the directory if it doesn't already exist
     if not os.path.isdir(validation_output_directory):
         subprocess.getoutput(

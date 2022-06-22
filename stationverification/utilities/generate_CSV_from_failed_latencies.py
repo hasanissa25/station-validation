@@ -1,6 +1,7 @@
 import os
 
 from datetime import date, timedelta
+from typing import Optional
 
 from pandas.core.frame import DataFrame
 
@@ -10,12 +11,17 @@ def generate_CSV_from_failed_latencies(latencies: DataFrame,
                                        network: str,
                                        startdate: date,
                                        enddate: date,
-                                       timely_threshold: float
+                                       timely_threshold: float,
+                                       location: Optional[str] = None,
                                        ):
-    if startdate == enddate - timedelta(days=1):
-        filename = f'{network}.{station}...{startdate}'
+    if location is None:
+        snlc = f'{network}.{station}..'
     else:
-        filename = f'{network}.{station}...{startdate}_\
+        snlc = f'{network}.{station}.{location}.'
+    if startdate == enddate - timedelta(days=1):
+        filename = f'{snlc}.{startdate}'
+    else:
+        filename = f'{snlc}.{startdate}_\
 {enddate - timedelta(days=1)}'
     latencies_above_three = latencies.loc[latencies.data_latency
                                           > timely_threshold]

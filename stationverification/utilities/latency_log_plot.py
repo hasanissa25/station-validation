@@ -22,6 +22,7 @@ def latency_log_plot(
     typeofinstrument: str,
     network: str,
     timely_threshold: float,
+    location: Optional[str] = None,
     total_availability: Optional[float] = None
 ):
     '''
@@ -56,11 +57,15 @@ def latency_log_plot(
     # Setting up the file name and plot name based on whether its a one day \
     # validation period or not to know if we include end date or not
     filename = ""
+    if location is None:
+        snlc = f'{network}.{station}..'
+    else:
+        snlc = f'{network}.{station}.{location}.'
     if startdate == enddate - timedelta(days=1):
-        filename = f'{network}.{station}...{startdate}.latency_log_plot.png'
+        filename = f'{snlc}.{startdate}.latency_log_plot.png'
         plottitle = f'Latencies for {network}.{station} \n {startdate}'
     else:
-        filename = f'{network}.{station}...{startdate}_\
+        filename = f'{snlc}.{startdate}_\
 {enddate - timedelta(days=1)}.latency_log_plot.png'
         plottitle = f'Latencies for {network}.{station} \n {startdate} to\
  {enddate - timedelta(days=1)}'

@@ -4,7 +4,7 @@ import subprocess
 import numpy as np
 import numpy.ma as ma
 from datetime import date, timedelta
-from typing import List, Any
+from typing import List, Any, Optional
 
 from stationverification.utilities import exceptions
 from stationverification.utilities.plot_timing_quality import\
@@ -230,7 +230,8 @@ def check_timing_quality(list_of_streams: List[obspy.Stream],
                          startdate: date,
                          enddate: date,
                          network: str,
-                         station: str) -> MetricResults:
+                         station: str,
+                         location: Optional[str] = None) -> MetricResults:
     '''
     Function to check the timing quality SOH channel and ensure the daily
     averages fall above a specific threshold
@@ -278,7 +279,8 @@ def check_timing_quality(list_of_streams: List[obspy.Stream],
                         startdate=startdate,
                         enddate=enddate,
                         results=results,
-                        threshold=threshold
+                        threshold=threshold,
+                        location=location
                         )
     for index, value in enumerate(results):
         if value < threshold:

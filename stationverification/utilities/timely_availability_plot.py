@@ -4,7 +4,7 @@ import logging
 import matplotlib
 import numpy as np
 
-from typing import List
+from typing import List, Optional
 
 from datetime import date, timedelta
 
@@ -30,7 +30,8 @@ def timely_availability_plot(
     enddate: date,
     network: str,
     timely_threshold: float,
-    stationMetricData: StationMetricData
+    stationMetricData: StationMetricData,
+    location: Optional[str] = None
 ):
     font = {'size': 13}
     matplotlib.rc('font', **font)
@@ -49,11 +50,15 @@ def timely_availability_plot(
             latencies=latencies, threshold=timely_threshold)
     # Setting up the figure
     filename = ""
+    if location is None:
+        snlc = f'{network}.{station}..'
+    else:
+        snlc = f'{network}.{station}.{location}.'
     if startdate == enddate - timedelta(days=1):
-        filename = f'{network}.{station}...{startdate}\
+        filename = f'{snlc}.{startdate}\
 .timely_availability_plot.png'
     else:
-        filename = f'{network}.{station}...{startdate}_\
+        filename = f'{snlc}.{startdate}_\
 {enddate - timedelta(days=1)}.timely_availability_plot.png'
 
     fig, axes = plt.subplots(

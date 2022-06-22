@@ -329,7 +329,7 @@ def report(
     end: date,
     thresholds: ConfigParser,
     soharchive: str,
-    location: str = None,
+    location: Optional[str] = None,
 ) -> dict:
     '''
     Function used to generate a report about station data quality, evaluating

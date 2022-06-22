@@ -1,7 +1,7 @@
 import os
 import numpy as np
 from datetime import date, timedelta
-from typing import Any
+from typing import Any, Optional
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -15,7 +15,8 @@ def plot_timing_quality(network: str,
                         startdate: date,
                         enddate: date,
                         results: Any,
-                        threshold: float):
+                        threshold: float,
+                        location: Optional[str] = None):
 
     # Generatre x-axis values as days since startdate
     difference = enddate - startdate
@@ -47,10 +48,14 @@ def plot_timing_quality(network: str,
         ax.xaxis.set_major_locator(locator)
         plt.xticks(rotation=90)
         filename = ""
-        if startdate == enddate - timedelta(days=1):
-            filename = f'{network}.{station}...{startdate}'
+        if location is None:
+            snlc = f'{network}.{station}..'
         else:
-            filename = f'{network}.{station}...{startdate}_\
+            snlc = f'{network}.{station}.{location}.'
+        if startdate == enddate - timedelta(days=1):
+            filename = f'{snlc}.{startdate}'
+        else:
+            filename = f'{snlc}.{startdate}_\
 {enddate - timedelta(days=1)}'
         ax.set_title(
             f'Timing Quality [%]\n{filename}')

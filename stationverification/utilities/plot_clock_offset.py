@@ -1,4 +1,5 @@
 import os
+from typing import Optional
 import arrow
 
 from datetime import date, timedelta
@@ -13,7 +14,8 @@ def plot_clock_offset(network: str,
                       startdate: date,
                       enddate: date,
                       results: tuple,
-                      threshold: float):
+                      threshold: float,
+                      location: Optional[str] = None):
 
     number_of_expected_samples = 1440
     x_axis = list(range(0, number_of_expected_samples))
@@ -38,8 +40,11 @@ def plot_clock_offset(network: str,
                                 bottom=False, left=False, right=False)
 
                 # Setting up the current plot
-                filename = f'{network}.{station}...\
-{startdate + timedelta(days=index)}'
+                if location is None:
+                    snlc = f'{network}.{station}..'
+                else:
+                    snlc = f'{network}.{station}.{location}.'
+                filename = f'{snlc}.{startdate + timedelta(days=index)}'
                 plt.title(
                     f'Timing Error (+/- 0.5 microseconds rounded to 0)\n\
 {filename}')

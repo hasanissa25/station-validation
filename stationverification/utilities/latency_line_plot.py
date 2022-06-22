@@ -3,6 +3,7 @@ A module that contains utilities to extract latency values from HDF5 format
 files and report on them
 '''
 import os
+from typing import Optional
 import arrow
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -15,7 +16,8 @@ def latency_line_plot(
     latencies: list,
     network: str,
     station: str,
-    timely_threshold: float
+    timely_threshold: float,
+    location: Optional[str] = None
 ):
     '''
     Generates a line plot of latency values for each channel of a station
@@ -51,7 +53,12 @@ def latency_line_plot(
             startdate = arrow.get(
                 latency_dataframe.iloc[0].startTime).format('YYYY-MM-DD')
             startdate_dateobject = arrow.get(startdate, 'YYYY-MM-DD').date()
-            filename = f'{network}.{station}...{startdate_dateobject}\
+            if location is None:
+                snlc = f'{network}.{station}..'
+            else:
+                snlc = f'{network}.{station}.{location}.'
+
+            filename = f'{snlc}.{startdate_dateobject}\
 .latency_line_plot.png'
             HNN_latencies = \
                 latency_dataframe[latency_dataframe

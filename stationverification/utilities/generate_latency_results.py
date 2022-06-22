@@ -30,6 +30,7 @@ def generate_latency_results(typeofinstrument: str,
                              enddate: date,
                              path: str,
                              timely_threshold: float,
+                             location: Optional[str] = None,
                              queue: Optional[Any] = False,) -> DataFrame:
     logging.info("Fetching latency files..")
     try:
@@ -79,7 +80,8 @@ def generate_latency_results(typeofinstrument: str,
                          typeofinstrument=typeofinstrument,
                          network=network,
                          timely_threshold=timely_threshold,
-                         total_availability=total_availability
+                         total_availability=total_availability,
+                         location=location
                          )
         logging.info("Generating latency line plots..")
 
@@ -87,7 +89,8 @@ def generate_latency_results(typeofinstrument: str,
             latencies=array_of_daily_latency_dataframes_max_latency_only,
             station=station,
             network=network,
-            timely_threshold=timely_threshold
+            timely_threshold=timely_threshold,
+            location=location
         )
         logging.info("Generating CSV of failed latencies..")
 
@@ -97,7 +100,8 @@ def generate_latency_results(typeofinstrument: str,
             network=network,
             startdate=startdate,
             enddate=enddate,
-            timely_threshold=timely_threshold
+            timely_threshold=timely_threshold,
+            location=location
         )
         tuple_of_data_to_return = [
             combined_latency_dataframe_for_all_days_dataframe,
