@@ -2007,7 +2007,7 @@
 				<Name>A64</Name>
 			</Site>
 			<CreationDate>2018-01-01T00:00:00</CreationDate>
-			<Channel code="HNZ" startDate="1980-01-01T00:00:00" locationCode="00">
+			<Channel code="HNZ" startDate="1980-01-01T00:00:00" locationCode="">
 				<Latitude>47.8274</Latitude>
 				<Longitude>-69.8914</Longitude>
 				<Elevation>0</Elevation>
@@ -2039,7 +2039,7 @@
 					</InstrumentSensitivity>
 				</Response>
 			</Channel>
-			<Channel code="HNN" startDate="1980-01-01T00:00:00" locationCode="00">
+			<Channel code="HNN" startDate="1980-01-01T00:00:00" locationCode="">
 				<Latitude>47.8274</Latitude>
 				<Longitude>-69.8914</Longitude>
 				<Elevation>0</Elevation>
@@ -2071,7 +2071,7 @@
 					</InstrumentSensitivity>
 				</Response>
 			</Channel>
-			<Channel code="HNE" startDate="1980-01-01T00:00:00" locationCode="00">
+			<Channel code="HNE" startDate="1980-01-01T00:00:00" locationCode="">
 				<Latitude>47.8274</Latitude>
 				<Longitude>-69.8914</Longitude>
 				<Elevation>0</Elevation>
