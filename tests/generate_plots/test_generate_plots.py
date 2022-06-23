@@ -49,134 +49,134 @@ def test_generate_plots(gather_stats_parameters):
                            start=gather_stats_parameters.startdate,
                            stop=gather_stats_parameters.startdate + timedelta(days=1))
         )
-    # adc_count_HNE_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.adc_count.png")
-    # max_gap_HNE_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.max_gap.png")
-    # num_gaps_HNE_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.num_gaps.png")
-    # num_overlaps_HNE_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.num_overlaps.png")
-    # pct_above_nhnm_HNE_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.pct_above_nhnm.png")
-    # pct_below_nlnm_HNE_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.pct_below_nlnm.png")
-    # spikes_HNE_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.spikes.png")
-    # adc_count_HNN_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.adc_count.png")
-    # max_gap_HNN_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.max_gap.png")
-    # num_gaps_HNN_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.num_gaps.png")
-    # num_overlaps_HNN_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.num_overlaps.png")
-    # pct_above_nhnm_HNN_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.pct_above_nhnm.png")
-    # pct_below_nlnm_HNN_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.pct_below_nlnm.png")
-    # spikes_HNN_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.spikes.png")
-    # adc_count_HNZ_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.adc_count.png")
-    # max_gap_HNZ_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.max_gap.png")
-    # num_gaps_HNZ_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.num_gaps.png")
-    # num_overlaps_HNZ_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.num_overlaps.png")
-    # pct_above_nhnm_HNZ_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.pct_above_nhnm.png")
-    # pct_below_nlnm_HNZ_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.pct_below_nlnm.png")
-    # spikes_HNZ_multiple_days = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.spikes.png")
-    # adc_count_HNE_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01.adc_count.png")
-    # max_gap_HNE_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01.max_gap.png")
-    # num_gaps_HNE_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01.num_gaps.png")
-    # num_overlaps_HNE_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01.num_overlaps.png")
-    # pct_above_nhnm_HNE_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01.pct_above_nhnm.png")
-    # pct_below_nlnm_HNE_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01.pct_below_nlnm.png")
-    # spikes_HNE_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNE.2022-04-01.spikes.png")
-    # adc_count_HNN_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01.adc_count.png")
-    # max_gap_HNN_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01.max_gap.png")
-    # num_gaps_HNN_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01.num_gaps.png")
-    # num_overlaps_HNN_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01.num_overlaps.png")
-    # pct_above_nhnm_HNN_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01.pct_above_nhnm.png")
-    # pct_below_nlnm_HNN_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01.pct_below_nlnm.png")
-    # spikes_HNN_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNN.2022-04-01.spikes.png")
-    # adc_count_HNZ_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.adc_count.png")
-    # max_gap_HNZ_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.max_gap.png")
-    # num_gaps_HNZ_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.num_gaps.png")
-    # num_overlaps_HNZ_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.num_overlaps.png")
-    # pct_above_nhnm_HNZ_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.pct_above_nhnm.png")
-    # pct_below_nlnm_HNZ_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.pct_below_nlnm.png")
-    # spikes_HNZ_single_day = Path(
-    #     "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.spikes.png")
-    # if adc_count_HNE_multiple_days.exists() \
-    #         and max_gap_HNE_multiple_days.exists()\
-    #         and num_gaps_HNE_multiple_days.exists()\
-    #         and num_overlaps_HNE_multiple_days.exists()\
-    #         and pct_above_nhnm_HNE_multiple_days.exists()\
-    #         and pct_below_nlnm_HNE_multiple_days.exists()\
-    #         and spikes_HNE_multiple_days.exists() \
-    #         and adc_count_HNN_multiple_days.exists() \
-    #         and max_gap_HNN_multiple_days.exists()\
-    #         and num_gaps_HNN_multiple_days.exists()\
-    #         and num_overlaps_HNN_multiple_days.exists()\
-    #         and pct_above_nhnm_HNN_multiple_days.exists()\
-    #         and pct_below_nlnm_HNN_multiple_days.exists()\
-    #         and spikes_HNN_multiple_days.exists()\
-    #         and adc_count_HNZ_multiple_days.exists() \
-    #         and max_gap_HNZ_multiple_days.exists()\
-    #         and num_gaps_HNZ_multiple_days.exists()\
-    #         and num_overlaps_HNZ_multiple_days.exists()\
-    #         and pct_above_nhnm_HNZ_multiple_days.exists()\
-    #         and pct_below_nlnm_HNZ_multiple_days.exists()\
-    #         and spikes_HNZ_multiple_days.exists()\
-    #         and adc_count_HNE_single_day.exists() \
-    #         and max_gap_HNE_single_day.exists()\
-    #         and num_gaps_HNE_single_day.exists()\
-    #         and num_overlaps_HNE_single_day.exists()\
-    #         and pct_above_nhnm_HNE_single_day.exists()\
-    #         and pct_below_nlnm_HNE_single_day.exists()\
-    #         and spikes_HNE_single_day.exists() \
-    #         and adc_count_HNN_single_day.exists() \
-    #         and max_gap_HNN_single_day.exists()\
-    #         and num_gaps_HNN_single_day.exists()\
-    #         and num_overlaps_HNN_single_day.exists()\
-    #         and pct_above_nhnm_HNN_single_day.exists()\
-    #         and pct_below_nlnm_HNN_single_day.exists()\
-    #         and spikes_HNN_single_day.exists()\
-    #         and adc_count_HNZ_single_day.exists() \
-    #         and max_gap_HNZ_single_day.exists()\
-    #         and num_gaps_HNZ_single_day.exists()\
-    #         and num_overlaps_HNZ_single_day.exists()\
-    #         and pct_above_nhnm_HNZ_single_day.exists()\
-    #         and pct_below_nlnm_HNZ_single_day.exists()\
-    #         and spikes_HNZ_single_day.exists():
-    #     assert True
-    # else:
-    #     assert False
+    adc_count_HNE_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.adc_count.png")
+    max_gap_HNE_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.max_gap.png")
+    num_gaps_HNE_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.num_gaps.png")
+    num_overlaps_HNE_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.num_overlaps.png")
+    pct_above_nhnm_HNE_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.pct_above_nhnm.png")
+    pct_below_nlnm_HNE_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.pct_below_nlnm.png")
+    spikes_HNE_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01_2022-04-03.spikes.png")
+    adc_count_HNN_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.adc_count.png")
+    max_gap_HNN_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.max_gap.png")
+    num_gaps_HNN_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.num_gaps.png")
+    num_overlaps_HNN_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.num_overlaps.png")
+    pct_above_nhnm_HNN_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.pct_above_nhnm.png")
+    pct_below_nlnm_HNN_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.pct_below_nlnm.png")
+    spikes_HNN_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01_2022-04-03.spikes.png")
+    adc_count_HNZ_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.adc_count.png")
+    max_gap_HNZ_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.max_gap.png")
+    num_gaps_HNZ_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.num_gaps.png")
+    num_overlaps_HNZ_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.num_overlaps.png")
+    pct_above_nhnm_HNZ_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.pct_above_nhnm.png")
+    pct_below_nlnm_HNZ_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.pct_below_nlnm.png")
+    spikes_HNZ_multiple_days = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01_2022-04-03.spikes.png")
+    adc_count_HNE_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01.adc_count.png")
+    max_gap_HNE_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01.max_gap.png")
+    num_gaps_HNE_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01.num_gaps.png")
+    num_overlaps_HNE_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01.num_overlaps.png")
+    pct_above_nhnm_HNE_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01.pct_above_nhnm.png")
+    pct_below_nlnm_HNE_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01.pct_below_nlnm.png")
+    spikes_HNE_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNE.2022-04-01.spikes.png")
+    adc_count_HNN_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01.adc_count.png")
+    max_gap_HNN_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01.max_gap.png")
+    num_gaps_HNN_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01.num_gaps.png")
+    num_overlaps_HNN_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01.num_overlaps.png")
+    pct_above_nhnm_HNN_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01.pct_above_nhnm.png")
+    pct_below_nlnm_HNN_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01.pct_below_nlnm.png")
+    spikes_HNN_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNN.2022-04-01.spikes.png")
+    adc_count_HNZ_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.adc_count.png")
+    max_gap_HNZ_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.max_gap.png")
+    num_gaps_HNZ_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.num_gaps.png")
+    num_overlaps_HNZ_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.num_overlaps.png")
+    pct_above_nhnm_HNZ_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.pct_above_nhnm.png")
+    pct_below_nlnm_HNZ_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.pct_below_nlnm.png")
+    spikes_HNZ_single_day = Path(
+        "stationvalidation_output/QW.QCC02..HNZ.2022-04-01.spikes.png")
+    if adc_count_HNE_multiple_days.exists() \
+            and max_gap_HNE_multiple_days.exists()\
+            and num_gaps_HNE_multiple_days.exists()\
+            and num_overlaps_HNE_multiple_days.exists()\
+            and pct_above_nhnm_HNE_multiple_days.exists()\
+            and pct_below_nlnm_HNE_multiple_days.exists()\
+            and spikes_HNE_multiple_days.exists() \
+            and adc_count_HNN_multiple_days.exists() \
+            and max_gap_HNN_multiple_days.exists()\
+            and num_gaps_HNN_multiple_days.exists()\
+            and num_overlaps_HNN_multiple_days.exists()\
+            and pct_above_nhnm_HNN_multiple_days.exists()\
+            and pct_below_nlnm_HNN_multiple_days.exists()\
+            and spikes_HNN_multiple_days.exists()\
+            and adc_count_HNZ_multiple_days.exists() \
+            and max_gap_HNZ_multiple_days.exists()\
+            and num_gaps_HNZ_multiple_days.exists()\
+            and num_overlaps_HNZ_multiple_days.exists()\
+            and pct_above_nhnm_HNZ_multiple_days.exists()\
+            and pct_below_nlnm_HNZ_multiple_days.exists()\
+            and spikes_HNZ_multiple_days.exists()\
+            and adc_count_HNE_single_day.exists() \
+            and max_gap_HNE_single_day.exists()\
+            and num_gaps_HNE_single_day.exists()\
+            and num_overlaps_HNE_single_day.exists()\
+            and pct_above_nhnm_HNE_single_day.exists()\
+            and pct_below_nlnm_HNE_single_day.exists()\
+            and spikes_HNE_single_day.exists() \
+            and adc_count_HNN_single_day.exists() \
+            and max_gap_HNN_single_day.exists()\
+            and num_gaps_HNN_single_day.exists()\
+            and num_overlaps_HNN_single_day.exists()\
+            and pct_above_nhnm_HNN_single_day.exists()\
+            and pct_below_nlnm_HNN_single_day.exists()\
+            and spikes_HNN_single_day.exists()\
+            and adc_count_HNZ_single_day.exists() \
+            and max_gap_HNZ_single_day.exists()\
+            and num_gaps_HNZ_single_day.exists()\
+            and num_overlaps_HNZ_single_day.exists()\
+            and pct_above_nhnm_HNZ_single_day.exists()\
+            and pct_below_nlnm_HNZ_single_day.exists()\
+            and spikes_HNZ_single_day.exists():
+        assert True
+    else:
+        assert False
     # subprocess.getoutput(
     #     "rm -rf 'stationvalidation_output'")

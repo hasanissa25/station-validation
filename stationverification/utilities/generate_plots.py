@@ -32,6 +32,7 @@ dead_channel_gsn_plot:
     Plots the dead_channel_gsn metric returned from ispaq
 
 '''
+from configparser import ConfigParser
 import logging
 import os
 from datetime import date, timedelta
@@ -45,6 +46,7 @@ import matplotlib.dates as mdates
 
 
 from .generate_report import StationMetricData
+from stationverification import CONFIG
 
 
 class PlotParameters(dict):
@@ -75,6 +77,12 @@ class PlotParameters(dict):
     @property
     def channel(self) -> str:
         return self["channel"]
+
+    @property
+    def thresholds(self):
+        thresholds = ConfigParser()
+        thresholds.read(CONFIG)
+        return thresholds
 
 
 def plot_metrics(plotParameters: PlotParameters):
@@ -271,7 +279,9 @@ def num_gaps_plot(
     stationMetricData = plotParameters.stationMetricData
     start = plotParameters.start
     stop = plotParameters.stop
-
+    thresholds = plotParameters.thresholds
+    num_gaps_threshold = thresholds.getfloat(
+        'thresholds', 'num_gaps', fallback=10)
     if location is None:
         snlc = f'{network}.{station}..{channel}'
     else:
@@ -314,7 +324,14 @@ def num_gaps_plot(
         # Add a grid to the plot to make the symmetry more obvious
         ax.set_axisbelow(True)
         plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
+        # Adding the threshold line
+        ax.axhline(num_gaps_threshold, color='r', linewidth="1",
+                   linestyle='--',
+                   label=f"Maximum number of gaps: \
+{num_gaps_threshold} gaps")
 
+        legend = ax.legend(bbox_to_anchor=(1, 1),
+                           loc='upper right', fontsize="9")
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
@@ -324,7 +341,7 @@ def num_gaps_plot(
 {(stop + timedelta(days=-1))}.num_gaps'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
-                    dpi=300, bbox_inches='tight')
+                    dpi=300, bbox_extra_artists=(legend,), bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
     plt.close()
 
@@ -339,7 +356,9 @@ def max_gap_plot(
     stationMetricData = plotParameters.stationMetricData
     start = plotParameters.start
     stop = plotParameters.stop
-
+    thresholds = plotParameters.thresholds
+    size_of_gaps_threshold = thresholds.getfloat(
+        'thresholds', 'max_gap', fallback=2)
     if location is None:
         snlc = f'{network}.{station}..{channel}'
     else:
@@ -381,7 +400,13 @@ def max_gap_plot(
         # Add a grid to the plot to make the symmetry more obvious
         ax.set_axisbelow(True)
         plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
+        ax.axhline(size_of_gaps_threshold, color='r', linewidth="1",
+                   linestyle='--',
+                   label=f"Maximum size of gaps: \
+{size_of_gaps_threshold} seconds")
 
+        legend = ax.legend(bbox_to_anchor=(1, 1),
+                           loc='upper right', fontsize="9")
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
@@ -391,7 +416,7 @@ def max_gap_plot(
 {(stop + timedelta(days=-1))}.max_gap'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
-                    dpi=300, bbox_inches='tight')
+                    dpi=300, bbox_extra_artists=(legend,), bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
     plt.close()
 
@@ -475,6 +500,9 @@ def pct_above_nhnm_plot(
     stationMetricData = plotParameters.stationMetricData
     start = plotParameters.start
     stop = plotParameters.stop
+    thresholds = plotParameters.thresholds
+    pct_above_nhnm_threshold = thresholds.getfloat(
+        'thresholds', 'pct_above_nhnm', fallback=40)
     if location is None:
         snlc = f'{network}.{station}..{channel}'
     else:
@@ -521,7 +549,13 @@ Percent above New High Noise Model')
         # Add a grid to the plot to make the symmetry more obvious
         ax.set_axisbelow(True)
         plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
+        ax.axhline(pct_above_nhnm_threshold, color='r', linewidth="1",
+                   linestyle='--',
+                   label=f"Percent Above New High Noise Modal threshold: \
+{pct_above_nhnm_threshold}%")
 
+        legend = ax.legend(bbox_to_anchor=(1, 1),
+                           loc='upper right', fontsize="9")
         # Save the plot to file and then close it so the next channel's metrics
         # aren't plotted on the same plot
         if start == stop - timedelta(days=1):
@@ -532,7 +566,7 @@ Percent above New High Noise Model')
 {(stop + timedelta(days=-1))}.pct_above_nhnm'
         # Write the plot to the output directory
         plt.savefig(f'stationvalidation_output/{plot_filename}.png',
-                    dpi=300, bbox_inches='tight')
+                    dpi=300, bbox_extra_artists=(legend,), bbox_inches='tight')
         logging.info(f'{plot_filename} created.')
     plt.close()
 
@@ -616,7 +650,7 @@ Percent below New Low Noise Model')
 #     stationMetricData = plotParameters.stationMetricData
 #     start = plotParameters.start
 #     stop = plotParameters.stop
-
+#     location = plotParameters.location
 #     # Generatre x-axis values as days since startdate
 #     difference = stop - start
 #     x_axis = np.arange(0, difference.days, 1)
@@ -627,7 +661,10 @@ Percent below New Low Noise Model')
 #     # this locator puts ticks at regular intervals in setps of "base"
 #     # loc = plticker.MultipleLocator(base=1.0)
 #     # ax.yaxis.set_major_locator(loc)
-
+#     if location is None:
+#         snlc = f'{network}.{station}..{channel}'
+#     else:
+#         snlc = f'{network}.{station}.{location}.{channel}'
 #     size_of_x_axis = x_axis.size
 #     size_of_metric_data = len(stationMetricData.get_values(
 #         'dead_channel_lin', network, station, channel))
@@ -653,9 +690,8 @@ Percent below New Low Noise Model')
 #         ax.set_axisbelow(True)
 #         plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
 
-#         # Save the plot to file and then close it so the next channel's\
-#  metrics
-#         # aren't plotted on the same plot
+#         # Save the plot to file and then close it so the next channel's
+#         # metrics aren't plotted on the same plot
 #         if start == stop - timedelta(days=1):
 #             plot_filename = f'{snlc}.{start}\
 # .dead_channel_lin'
@@ -678,7 +714,7 @@ Percent below New Low Noise Model')
 #     stationMetricData = plotParameters.stationMetricData
 #     start = plotParameters.start
 #     stop = plotParameters.stop
-
+#     location = plotParameters.location
 #     # Generatre x-axis values as days since startdate
 #     difference = stop - start
 #     x_axis = np.arange(0, difference.days, 1)
@@ -689,7 +725,10 @@ Percent below New Low Noise Model')
 #     # this locator puts ticks at regular intervals in setps of "base"
 #     # loc = plticker.MultipleLocator(base=1.0)
 #     # ax.yaxis.set_major_locator(loc)
-
+#     if location is None:
+#         snlc = f'{network}.{station}..{channel}'
+#     else:
+#         snlc = f'{network}.{station}.{location}.{channel}'
 #     size_of_x_axis = x_axis.size
 #     size_of_metric_data = len(stationMetricData.get_values(
 #         'dead_channel_gsn', network, station, channel))
@@ -715,9 +754,8 @@ Percent below New Low Noise Model')
 #         ax.set_axisbelow(True)
 #         plt.grid(visible=True, which='both', axis='both', linewidth=0.5)
 
-#         # Save the plot to file and then close it so the next channel's\
-#  metrics
-#         # aren't plotted on the same plot
+#         # Save the plot to file and then close it so the next channel's
+#         # metrics aren't plotted on the same plot
 #         if start == stop - timedelta(days=1):
 #             plot_filename = f'{snlc}.{start}\
 # .dead_channel_gsn'
