@@ -73,9 +73,10 @@ def get_latencies_from_apollo(files: list,
 
         array_of_daily_latency_objects_all_latencies.append(
             current_day_all_latencies)
-
+    logging.info("Creating Latency Dataframe...")
     combined_latency_dataframe_for_all_days_dataframe = pd.DataFrame(
         data=combined_latency_data_for_all_days, index=columns).T
+    logging.info("Finished creating latency dataframe")
     return combined_latency_dataframe_for_all_days_dataframe, \
         array_of_daily_latency_objects_max_latency_only,\
         array_of_daily_latency_objects_all_latencies
