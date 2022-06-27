@@ -173,6 +173,8 @@ def main():
                   fallback=3),
         location=user_inputs.location
     )
+    logging.info("Generating report..")
+
     report(
         combined_latency_dataframe_for_all_days_dataframe=combined_latency_dataframe_for_all_days_dataframe,  # noqa
         typeofinstrument=user_inputs.typeofinstrument,
@@ -187,6 +189,7 @@ def main():
     )
 
     # Delete temporary files and links and package the output in a tarball
+    logging.info("Cleaning up directory..")
     cleanup_directory(
         network=user_inputs.network,
         station=user_inputs.station,
