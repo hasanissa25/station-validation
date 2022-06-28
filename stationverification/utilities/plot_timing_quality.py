@@ -34,8 +34,9 @@ def plot_timing_quality(network: str,
     size_of_metric_data = len(results)
     if size_of_metric_data == size_of_x_axis:
         ax.bar(x_axis, [100], 0.1, color="red")
-        ax.bar(
+        bars = ax.bar(
             x_axis, results, 0.1)
+        ax.bar_label(bars)
 
         def timeTicks(x, pos):
             date = startdate + timedelta(days=x)
