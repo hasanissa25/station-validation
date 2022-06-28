@@ -20,10 +20,10 @@ Parameters:
 Sample Calls:
 
 stationverification script:
-    time nohup stationverification -T APOLLO -N QW -S BCL25 -L 00 -d 2022-6-15 -e 2022-6-26  >> logs/BCL25_log.out &
+    time nohup stationverification -T APOLLO -N QW -S BCV17 -L 00 -d 2022-6-15 -e 2022-6-26  >> logs/BCV17_log.out &
 
 latency script:
-    time nohup stationverificationlatency -T GURALP -N QW -S BCH09 -d 2022-6-10 -e 2022-6-20  >> logs/BCH09-latency_log.out &
+    time nohup stationverificationlatency -T APOLLO -N QW -S BCL25 -d 2022-6-15 -e 2022-6-26  >> logs/BCL25-Latency_log &
 
 stationverification script with stationXML, and overwritting default archive directories:
     time nohup stationverification -T APOLLO -N QW -S QCC01 -L 00 -d 2022-4-21 -e 2022-5-1 -m /apollo/archive/miniseed/ -l /apollo/archive/latency -i /home/ec2-user/ispaq/run_ispaq.py -H /apollo/archive/soh/ -s /home/ec2-user/station-validation/stationverification/data/QW.xml -o /validation >> logs/QCC01_log.out &

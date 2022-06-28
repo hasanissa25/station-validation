@@ -305,7 +305,7 @@ def num_gaps_plot(
     fig = plt.figure()
     ax = fig.add_subplot(111)
     # this locator puts ticks at regular intervals in setps of "base"
-    loc = plticker.MultipleLocator(base=10)
+    loc = plticker.MultipleLocator(base=1)
     ax.yaxis.set_major_locator(loc)
     ax.set_ylim([0, 20])
 

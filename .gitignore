@@ -12,6 +12,7 @@ __pycache__
 
 # Ignore visual studio code
 .vscode
+stationValidation.code-workspace
 
 # Ignore ispaq generated files
 */csv/*
