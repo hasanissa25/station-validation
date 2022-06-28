@@ -115,6 +115,8 @@ def timely_availability_plot(
                     percent_availability_array_HNN,
                     bar_width, label='HNN Percent Availability [%]',
                     color="green")
+        for bars in axes[0].containers:
+            axes[0].bar_label(bars)
         legend = axes[0].legend(bbox_to_anchor=(1.1, 1),
                                 loc='upper right', fontsize="10")
         # Show the grid
@@ -137,6 +139,8 @@ def timely_availability_plot(
                     percent_availability_array_HNE,
                     bar_width, label='HNE Percent Availability [%]',
                     color="green")
+        for bars in axes[1].containers:
+            axes[1].bar_label(bars)
         legend = axes[1].legend(bbox_to_anchor=(1.1, 1),
                                 loc='upper right')
         # Show the grid
@@ -158,6 +162,8 @@ def timely_availability_plot(
                     percent_availability_array_HNZ,
                     bar_width, label='HNZ Percent Availability [%]',
                     color="green")
+        for bars in axes[2].containers:
+            axes[2].bar_label(bars)
         legend = axes[2].legend(bbox_to_anchor=(1.1, 1),
                                 loc='upper right')
         # Show the grid

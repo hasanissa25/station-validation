@@ -234,9 +234,10 @@ def num_overlaps_plot(
     size_of_metric_data = len(stationMetricData.get_values(
         'num_overlaps', network, station, channel))
     if size_of_metric_data == size_of_x_axis:
-        ax.bar(
+        bars = ax.bar(
             x_axis, stationMetricData.get_values(
                 'num_overlaps', network, station, channel), 0.1)
+        ax.bar_label(bars)
         # Function for formatting the x values to actually be dates
 
         def timeTicks(x, pos):
@@ -313,9 +314,10 @@ def num_gaps_plot(
     size_of_metric_data = len(stationMetricData.get_values(
         'num_gaps', network, station, channel))
     if size_of_metric_data == size_of_x_axis:
-        ax.bar(
+        bars = ax.bar(
             x_axis, stationMetricData.get_values(
                 'num_gaps', network, station, channel), 0.1)
+        ax.bar_label(bars)
 
         # Function for formatting the x values to actually be dates
 
@@ -390,10 +392,11 @@ def max_gap_plot(
     size_of_metric_data = len(stationMetricData.get_values(
         'max_gap', network, station, channel))
     if size_of_metric_data == size_of_x_axis:
-        ax.bar(
+        bars = ax.bar(
             x_axis, stationMetricData.get_values(
                 'max_gap', network, station, channel), 0.1)
         # Function for formatting the x values to actually be dates
+        ax.bar_label(bars)
 
         def timeTicks(x, pos):
             date = start + timedelta(days=x)
@@ -467,9 +470,11 @@ def spikes_plot(
     size_of_metric_data = len(stationMetricData.get_values(
         'spikes', network, station, channel))
     if size_of_metric_data == size_of_x_axis:
-        ax.bar(
+        bars = ax.bar(
             x_axis, stationMetricData.get_values(
                 'spikes', network, station, channel), 0.1)
+        ax.bar_label(bars)
+
         ax.axhline(spikes_threshold, color='r', linewidth="2",
                    linestyle='--',
                    label=f"Maximum number of spikes threshold: \
@@ -544,9 +549,10 @@ def pct_above_nhnm_plot(
     size_of_metric_data = len(stationMetricData.get_values(
         'pct_above_nhnm', network, station, channel))
     if size_of_metric_data == size_of_x_axis:
-        ax.bar(
+        bars = ax.bar(
             x_axis, stationMetricData.get_values(
                 'pct_above_nhnm', network, station, channel), width=0.1)
+        ax.bar_label(bars)
 
         # legend = plt.legend(fancybox=True, framealpha=0.2,
         #                     loc='upper right', fontsize="9")
@@ -627,9 +633,11 @@ def pct_below_nlnm_plot(
     size_of_metric_data = len(stationMetricData.get_values(
         'pct_below_nlnm', network, station, channel))
     if size_of_metric_data == size_of_x_axis:
-        ax.bar(
+        bars = ax.bar(
             x_axis, stationMetricData.get_values(
                 'pct_below_nlnm', network, station, channel), 0.1)
+        ax.bar_label(bars)
+
         ax.axhline(below_nlnm_threshold, color='r', linewidth="2",
                    linestyle='--',
                    label=f"Percent Below New Low Noise Modal threshold: \

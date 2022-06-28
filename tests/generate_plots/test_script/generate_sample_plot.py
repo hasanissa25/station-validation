@@ -42,7 +42,7 @@ def test_generate_sample_plot():
     # Generatre x-axis values as days since startdate
     difference = stop - start
     x_axis = np.arange(0, difference.days, 1)
-
+    y_axis = [0, 0, 0]
     # Create plot
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -50,8 +50,9 @@ def test_generate_sample_plot():
     ax.yaxis.set_major_locator(loc)
     ########################################################################################
     ax.set_ylim([0, 20])
-    ax.bar(
-        x_axis, [0, 0, 0], 0.1)
+    bars = ax.bar(
+        x_axis, y_axis, 0.1)
+    ax.bar_label(bars)
     ########################################################################################
 
     # Function for formatting the x values to actually be dates
