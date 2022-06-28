@@ -69,7 +69,7 @@ def test_generate_sample_plot():
     plt.xticks(rotation=90)
 
     ########################################################################################
-    ax.set_title(f'{snlc} - Number of Gaps')
+    ax.set_title(f'{snlc} - Number of Gaps', pad=20)
     plt.ylabel('Gaps')
     ########################################################################################
 

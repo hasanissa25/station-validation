@@ -59,7 +59,7 @@ def plot_timing_quality(network: str,
             filename = f'{snlc}.{startdate}_\
 {enddate - timedelta(days=1)}'
         ax.set_title(
-            f'Timing Quality [%]\n{filename}')
+            f'Timing Quality [%]\n{filename}', pad=20)
         plt.ylabel('Timing Quality')
         ax.yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
         # Add a grid to the plot to make the symmetry more obvious

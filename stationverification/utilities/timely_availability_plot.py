@@ -71,7 +71,9 @@ def timely_availability_plot(
     plt.tick_params(labelcolor='none', which='both', top=False,
                     bottom=False, left=False, right=False)
     plt.title(
-        f'Timely Availability [%]\n{network}.{station} {startdate}_{enddate}')
+        f'Timely Availability [%]\n{network}.{station} {startdate}_{enddate}',
+        pad=20)
+
     axes[1].set_ylabel("Timely availability [%]", fontsize=20)
 
     # Setting up our X-axis data

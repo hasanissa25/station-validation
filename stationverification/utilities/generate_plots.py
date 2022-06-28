@@ -251,7 +251,7 @@ def num_overlaps_plot(
         ax.xaxis.set_major_locator(locator)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{snlc} - Number of overlaps')
+        ax.set_title(f'{snlc} - Number of overlaps', pad=20)
         plt.ylabel('Overlaps')
 
         # Add a grid to the plot to make the symmetry more obvious
@@ -331,7 +331,7 @@ def num_gaps_plot(
         plt.xticks(rotation=90)
         locator = mdates.DayLocator()
         ax.xaxis.set_major_locator(locator)
-        ax.set_title(f'{snlc} - Number of Gaps')
+        ax.set_title(f'{snlc} - Number of Gaps', pad=20)
         plt.ylabel('Gaps')
 
         # Add a grid to the plot to make the symmetry more obvious
@@ -409,7 +409,7 @@ def max_gap_plot(
         ax.xaxis.set_major_locator(locator)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{snlc} - Max Gaps')
+        ax.set_title(f'{snlc} - Max Gaps', pad=20)
         plt.ylabel('Gap size (Seconds)')
 
         # Add a grid to the plot to make the symmetry more obvious
@@ -495,7 +495,7 @@ def spikes_plot(
         ax.xaxis.set_major_locator(locator)
         plt.xticks(rotation=90)
 
-        ax.set_title(f'{snlc} - Spikes')
+        ax.set_title(f'{snlc} - Spikes', pad=20)
         plt.ylabel('Spikes')
 
         # Add a grid to the plot to make the symmetry more obvious
@@ -571,7 +571,7 @@ def pct_above_nhnm_plot(
 
         ax.set_title(
             f'{snlc} - \
-Percent above New High Noise Model')
+Percent above New High Noise Model', pad=20)
         plt.ylabel('Percentage')
         ax.yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
         # Add a grid to the plot to make the symmetry more obvious
@@ -660,7 +660,7 @@ def pct_below_nlnm_plot(
 
         ax.set_title(
             f'{snlc} - \
-Percent below New Low Noise Model')
+Percent below New Low Noise Model', pad=20)
         plt.ylabel('Percentage')
         ax.yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
         # Add a grid to the plot to make the symmetry more obvious
