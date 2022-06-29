@@ -80,8 +80,8 @@ def timely_availability_plot(
     x_axis = timely_availability_percentage_array_days_axis
     number_of_days = len(x_axis)
     number_of_days_as_array = np.arange(number_of_days)
-    width_between_ticks = 0.3
-    bar_width = 0.3
+    width_between_ticks = 0.4
+    bar_width = 0.4
     if len(HNN_timely_availability_percentage_array) == len(x_axis) and\
         len(HNE_timely_availability_percentage_array) == len(x_axis) and\
             len(HNE_timely_availability_percentage_array) == len(x_axis) and \
