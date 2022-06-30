@@ -32,7 +32,7 @@ def test_generate_sample_plot():
     channel = "HNE"
     location = None
     start = date(2022, 4, 1)
-    stop = date(2022, 4, 4)
+    stop = date(2022, 4, 11)
 
     if location is None:
         snlc = f'{network}.{station}..{channel}'
@@ -42,16 +42,18 @@ def test_generate_sample_plot():
     # Generatre x-axis values as days since startdate
     difference = stop - start
     x_axis = np.arange(0, difference.days, 1)
-    y_axis = [0, 0, 0]
+    y_axis = [99.8754, 99.8754, 99.8754, 99.8754, 99.8754,
+              99.8754, 99.8754, 99.8754, 99.8754, 99.8754]
+    y_axis_rounded = list(map(lambda value: float(round(value, 2)), y_axis))
     # Create plot
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    loc = plticker.MultipleLocator(base=10)
+    loc = plticker.MultipleLocator(base=10.0)
     ax.yaxis.set_major_locator(loc)
     ########################################################################################
-    ax.set_ylim([0, 20])
+    ax.set_ylim([0, 100])
     bars = ax.bar(
-        x_axis, y_axis, 0.1)
+        x_axis, y_axis_rounded, 0.1)
     ax.bar_label(bars)
     ########################################################################################
 
@@ -67,6 +69,7 @@ def test_generate_sample_plot():
     locator = mdates.DayLocator()
     ax.xaxis.set_major_locator(locator)
     plt.xticks(rotation=90)
+    ax.yaxis.set_major_formatter(ticker.PercentFormatter(xmax=100))
 
     ########################################################################################
     ax.set_title(f'{snlc} - Number of Gaps', pad=20)

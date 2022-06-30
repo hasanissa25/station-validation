@@ -32,10 +32,11 @@ def plot_timing_quality(network: str,
     ax.set_ylim(ymin=50, ymax=100)
     size_of_x_axis = x_axis.size
     size_of_metric_data = len(results)
+    y_axis_rounded = list(map(lambda value: float(round(value, 2)), results))
     if size_of_metric_data == size_of_x_axis:
         ax.bar(x_axis, [100], 0.1, color="red")
         bars = ax.bar(
-            x_axis, results, 0.1)
+            x_axis, y_axis_rounded, 0.1)
         ax.bar_label(bars)
 
         def timeTicks(x, pos):

@@ -548,10 +548,12 @@ def pct_above_nhnm_plot(
     size_of_x_axis = x_axis.size
     size_of_metric_data = len(stationMetricData.get_values(
         'pct_above_nhnm', network, station, channel))
+    y_axis = stationMetricData.get_values(
+        'pct_above_nhnm', network, station, channel)
+    y_axis_rounded = list(map(lambda value: float(round(value, 2)), y_axis))
     if size_of_metric_data == size_of_x_axis:
         bars = ax.bar(
-            x_axis, stationMetricData.get_values(
-                'pct_above_nhnm', network, station, channel), width=0.1)
+            x_axis, y_axis_rounded, width=0.1)
         ax.bar_label(bars)
 
         # legend = plt.legend(fancybox=True, framealpha=0.2,
@@ -632,12 +634,14 @@ def pct_below_nlnm_plot(
     size_of_x_axis = x_axis.size
     size_of_metric_data = len(stationMetricData.get_values(
         'pct_below_nlnm', network, station, channel))
+    y_axis = stationMetricData.get_values(
+        'pct_below_nlnm', network, station, channel)
+    y_axis_rounded = list(map(lambda value: float(round(value, 2)), y_axis))
+
     if size_of_metric_data == size_of_x_axis:
         bars = ax.bar(
-            x_axis, stationMetricData.get_values(
-                'pct_below_nlnm', network, station, channel), 0.1)
+            x_axis, y_axis_rounded, 0.1)
         ax.bar_label(bars)
-
         ax.axhline(below_nlnm_threshold, color='r', linewidth="2",
                    linestyle='--',
                    label=f"Percent Below New Low Noise Modal threshold: \
