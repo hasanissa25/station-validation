@@ -550,7 +550,7 @@ def pct_above_nhnm_plot(
         'pct_above_nhnm', network, station, channel))
     y_axis = stationMetricData.get_values(
         'pct_above_nhnm', network, station, channel)
-    y_axis_rounded = list(map(lambda value: float(round(value, 2)), y_axis))
+    y_axis_rounded = list(map(lambda value: float(round(value, 1)), y_axis))
     if size_of_metric_data == size_of_x_axis:
         bars = ax.bar(
             x_axis, y_axis_rounded, width=0.1)
@@ -636,7 +636,7 @@ def pct_below_nlnm_plot(
         'pct_below_nlnm', network, station, channel))
     y_axis = stationMetricData.get_values(
         'pct_below_nlnm', network, station, channel)
-    y_axis_rounded = list(map(lambda value: float(round(value, 2)), y_axis))
+    y_axis_rounded = list(map(lambda value: float(round(value, 1)), y_axis))
 
     if size_of_metric_data == size_of_x_axis:
         bars = ax.bar(

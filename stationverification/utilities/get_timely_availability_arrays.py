@@ -26,7 +26,7 @@ def get_timely_availability_arrays(
                 HNN_timely_availability_percentage_array.\
                     append(round(float(
                         number_of_HNN_latencies_below_threshold /
-                        total_number_of_HNN_latencies * 100), 2))
+                        total_number_of_HNN_latencies * 100), 1))
 
             HNE_latencies = latency_dataframe[latency_dataframe['channel'] ==
                                               "HNE"]
@@ -40,7 +40,7 @@ def get_timely_availability_arrays(
                 HNE_timely_availability_percentage_array.\
                     append(round(float(
                         number_of_HNE_latencies_below_threshold /
-                        total_number_of_HNE_latencies * 100), 2))
+                        total_number_of_HNE_latencies * 100), 1))
 
             HNZ_latencies = latency_dataframe[latency_dataframe['channel'] ==
                                               "HNZ"]
@@ -55,7 +55,7 @@ def get_timely_availability_arrays(
                 HNZ_timely_availability_percentage_array.\
                     append(round(float(
                         number_of_HNZ_latencies_below_threshold /
-                        total_number_of_HNZ_latencies * 100), 2))
+                        total_number_of_HNZ_latencies * 100), 1))
 
             current_dataframe_date = arrow.get(
                 latency_dataframe.iloc[0].startTime).format('YYYY-MM-DD')

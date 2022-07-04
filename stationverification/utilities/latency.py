@@ -90,7 +90,7 @@ def populate_json_with_latency_info(
 {round(float(average), 3)} seconds')  # :.3f
         json_dict['channels'][channel]['latency'] = {}
         json_dict['channels'][channel]['latency']['average_latency'] = \
-            round(float(average), 3)
+            round(float(average), 2)
         below_threshold = percentbelowthreshold(
             f'{station}.{channel}',
             combined_latency_dataframe_for_all_days_dataframe
@@ -119,9 +119,9 @@ def populate_json_with_latency_info(
         combined_latency_dataframe_for_all_days_dataframe.data_latency.mean()
     logging.info(
         f'Overall average latency for {network}-{station} is \
-{round(float(average), 3)} seconds')
+{round(float(average), 2)} seconds')
     json_dict['station_latency'] = {}
-    json_dict['station_latency']['average_latency'] = round(float(average), 3)
+    json_dict['station_latency']['average_latency'] = round(float(average), 2)
     below_threshold = percentbelowthreshold(
         station,
         combined_latency_dataframe_for_all_days_dataframe.data_latency,

@@ -38,7 +38,7 @@ def generate_CSV_from_failed_latencies(latencies: DataFrame,
                                                                'data_latency']]
 
     latencies_above_three_rounded["data_latency"] = round(
-        latencies_above_three_rounded.data_latency.astype(float), 2)
+        latencies_above_three_rounded.data_latency.astype(float), 1)
 
     if not os.path.isdir('./stationvalidation_output/'):
         os.mkdir('./stationvalidation_output/')

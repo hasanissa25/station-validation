@@ -272,7 +272,7 @@ def check_timing_quality(list_of_streams: List[obspy.Stream],
     for stream in list_of_streams:
         # Get the stats for the stream and append the average to an np array
         stats = getstats(stream)
-        results = np.append(results, round(stats.average, 3))
+        results = np.append(results, round(stats.average, 2))
         # Count how many of the days have an average timing quality below the
         # threshold
     plot_timing_quality(network=network,
