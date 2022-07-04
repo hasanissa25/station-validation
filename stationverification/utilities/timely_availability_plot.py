@@ -37,10 +37,19 @@ def timely_availability_plot(
     matplotlib.rc('font', **font)
     percent_availability_array_HNN = (stationMetricData.get_values(
         'percent_availability', network, station, "HNN"))
+    percent_availability_array_HNN_rounded = list(
+        map(lambda value: float(round(value, 2)),
+            percent_availability_array_HNN))
     percent_availability_array_HNE = (stationMetricData.get_values(
         'percent_availability', network, station, "HNZ"))
+    percent_availability_array_HNE_rounded = list(
+        map(lambda value: float(round(value, 2)),
+            percent_availability_array_HNE))
     percent_availability_array_HNZ = (stationMetricData.get_values(
         'percent_availability', network, station, "HNE"))
+    percent_availability_array_HNZ_rounded = list(
+        map(lambda value: float(round(value, 2)),
+            percent_availability_array_HNZ))
     register_matplotlib_converters()
     HNN_timely_availability_percentage_array, \
         HNE_timely_availability_percentage_array,\
@@ -114,7 +123,7 @@ def timely_availability_plot(
                     bar_width, label='HNN Timely Availability [%]',
                     color="blue")
         axes[0].bar(number_of_days_as_array + width_between_ticks,
-                    percent_availability_array_HNN,
+                    percent_availability_array_HNN_rounded,
                     bar_width, label='HNN Percent Availability [%]',
                     color="green")
         for bars in axes[0].containers:
@@ -138,7 +147,7 @@ def timely_availability_plot(
                     bar_width, label='HNE Timely Availability [%]',
                     color="blue")
         axes[1].bar(number_of_days_as_array + width_between_ticks,
-                    percent_availability_array_HNE,
+                    percent_availability_array_HNE_rounded,
                     bar_width, label='HNE Percent Availability [%]',
                     color="green")
         for bars in axes[1].containers:
@@ -161,7 +170,7 @@ def timely_availability_plot(
                     bar_width, label='HNZ Timely Availability [%]',
                     color="blue")
         axes[2].bar(number_of_days_as_array + width_between_ticks,
-                    percent_availability_array_HNZ,
+                    percent_availability_array_HNZ_rounded,
                     bar_width, label='HNZ Percent Availability [%]',
                     color="green")
         for bars in axes[2].containers:
