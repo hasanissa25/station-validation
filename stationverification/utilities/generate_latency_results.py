@@ -57,11 +57,11 @@ def generate_latency_results(typeofinstrument: str,
             logging.info("Calculating total availability..")
             total_availability = calculate_total_availability_for_nanometrics(
                 files)
-
+            logging.info("Generating daily latencies..")
             array_of_daily_latency_dataframes_max_latency_only = \
                 convert_array_of_latency_objects_into_array_of_dataframes(
                     array_of_latencies=array_of_daily_latency_objects_max_latency_only)  # noqa
-
+            logging.info("Generating all latencies dataframe..")
             array_of_daily_latency_dataframes_all_latencies = \
                 convert_array_of_latency_objects_into_array_of_dataframes(
                     array_of_latencies=array_of_daily_latency_objects_all_latencies)  # noqa
